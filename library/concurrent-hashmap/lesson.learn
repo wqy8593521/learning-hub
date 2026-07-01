@@ -1,65 +1,71 @@
-# ConcurrentHashMap — VML
+# ConcurrentHashMap — VML Strict v2
+mode strict
 lesson ConcurrentHashMap
 tags Java, 并发, 集合
 
 step 分段锁
+  layout flow-focus
   frames 3
-  cap JDK7分段数组 | 每段独立锁 | 不同段可并行写
+  cap JDK7分段数组 | 每段独立锁 | 不同段并行写
   @0
-    buckets 8 73 95
-    lock 67 205
-    text 段0加锁 107 242 fill=orange
+    buckets 8
+    caption Segment分段 fill=muted slot=top
   @1
-    cols 并行:30
-    buckets 8 73 95 hi=3
-    lock 301 205
-    threads 3 zone=并行 grow
+    buckets 8 hi=0
+    caption 段0加锁·他段并行 fill=orange fade
   @2
-    compare 0 0 300 HashMap|全表锁|串行 vs CHM|分段锁|并行
+    compare HashMap|全表锁|串行 vs CHM|分段锁|并行
+  @1 L1
+    note Segment数组·lock分段 layer=L1
 
 step CAS无锁读
+  layout three-tier
   frames 3
-  cap get不加锁 | volatile保证可见 | size用LongAdder
-  @all
-    cols 读线程:30 桶:310 写线程:600
+  cap get不加锁 | volatile保可见 | size用LongAdder
+  zones 读线程:30 | 桶:310 | 写线程:600
   @0
-    arrow 读线程 桶 GET
-    circle 50 80 9 fill=green
+    link 读线程→桶 GET
+    caption 无锁读 fill=green slot=top
   @1
-    threads 4 zone=读线程 grow
-    arrow 写线程 桶 PUT
-    circle 620 80 9 fill=orange
+    threads 4 in 读线程 grow
+    caption 读线程并发GET fill=green
   @2
-    badge 读写并行 330 200 fill=green
+    link 写线程→桶 PUT
+    caption 读写并行 fill=green fade
+  @2 L1
+    note Node.val volatile·弱一致size layer=L1
 
 step JDK8桶锁
+  layout three-tier
   frames 3
-  cap 取消分段 | 链表头CAS | 树化仍synchronized
-  @all
-    cols 写:30 桶:310
+  cap 取消分段 | 链表头CAS | 树化synchronized
+  zones 写:30 | 桶:310
   @0
     chain "n1" "n2"
-    circle 50 80 9 fill=green
-    arrow 写 桶 CAS头
+    caption 头节点CAS fill=green slot=top
   @1
     chain "n1" "n2" "n3"
-    text 链表≥8转树 380 200 fill=muted
+    caption 链表≥8转树 fill=muted fade
   @2
-    tree rb 380 95
-    lock 340 175
-    text 树化段加锁 380 215 fill=orange
+    tree rb
+    caption synchronized锁桶 fill=orange slot=top
+  @2 L2
+    note 锁桶首·非全表 layer=L2
 
 step 扩容协助
+  layout three-tier
   frames 3
-  cap 扩容时多线程协助 | 分段迁移桶 | 无全表阻塞
-  @all
-    cols 协助:30 桶:310
+  cap 扩容多线程协助 | 分段迁移桶 | 无全表阻塞
+  zones 协助:30 | 桶:310
   @0
-    buckets 8 73 95
-    text 8桶 380 55 fill=muted
+    buckets 8
+    caption 8桶待扩 fill=muted slot=top
   @1
-    buckets 16 73 95 hi=0,1,2
-    threads 4 zone=协助 grow
+    buckets 16
+    threads 4 in 协助 grow
+    caption 多线程协助 fill=green fade
   @2
-    meter 180 200 400 迁移 grow max=100
-    arrow 协助 桶 迁移
+    link 协助→桶 迁移
+    caption 分段迁移 fill=green slot=top
+  @2 L1
+    note transfer·ForwardingNode layer=L1

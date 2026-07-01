@@ -1,57 +1,58 @@
-# GC 算法对比 — VML
+# GC 算法对比 — VML Strict v2
+mode strict
 lesson GC 算法对比
 tags JVM, GC, 后端八股
 
 step 标记清除
+  layout flow-focus
   frames 3
   cap 标记存活对象 | 清除垃圾 | 产生内存碎片
   @all
-    flow 620 50 标记|清除|碎片
+    flow 标记|清除|碎片
   @0
-    circle 150 120 10 fill=green
-    circle 250 120 10 fill=green
-    circle 350 120 10 fill=muted opacity=0.3
+    buckets 8 hi=0,2,5
+    caption 标记存活 fill=green slot=top
   @1
-    circle 350 120 10 fill=red expired
+    buckets 8 hi=0,2
+    caption 清除垃圾 fill=red fade
   @2
-    text 碎片□□□ 200 180 fill=warn
-    compare 80 220 300 优点|实现简单 vs 缺点|碎片多
+    compare 优点|实现简单 vs 缺点|碎片多
 
 step 复制算法
+  layout flow-focus
   frames 3
   cap 分两块等量空间 | 存活复制到另一块 | 新生代常用
   @all
-    box 120 60 180 80 label=From stroke=orange
-    box 360 60 180 80 label=To stroke=green
+    compare From|源半区 vs To|目标半区
   @0
-    circle 150 90 8 fill=green
-    circle 200 90 8 fill=muted opacity=0.3
-    circle 250 90 8 fill=green
+    buckets 8 hi=0,2,5
+    caption From区混合 fill=orange slot=top
   @1
-    path M150 120 Q360 100 400 90 stroke=green draw
-    circle 400 90 8 fill=green
-    circle 450 90 8 fill=green
+    buckets 8 hi=0,1
+    caption 存活复制到To fill=green fade
   @2
-    text Eden+Survivor用复制 200 180 fill=green
+    caption Eden+Survivor用复制 fill=green
 
 step CMS与G1
+  layout flow-focus
   frames 3
   cap CMS并发标记 | 低停顿但有碎片 | G1 Region可预测
-  @all
-    compare 80 55 300 CMS|并发|碎片 vs G1|Region|可设停顿目标
   @0
-    flow 620 50 初始标记|并发标记|重新标记|并发清除
+    flow 初始标记|并发标记|重标记|并发清除
+    caption CMS四阶段 fill=muted slot=top
   @1
-    buckets 8 150 130 hi=2,5
-    text 优先回收垃圾Region 380 150 fill=green
+    buckets 8 hi=2,5
+    caption 优先收垃圾Region fill=green
   @2
-    table 60 220 算法,特点/标记清除,碎片/复制,无碎片费空间/CMS,并发低停顿/G1,可预测停顿
+    compare CMS|并发|碎片 vs G1|Region|可设停顿目标
+  @2 L1
+    table 算法,特点/标记清除,碎片/复制,费空间/G1,可预测 layer=L1
 
 step 选型建议
+  layout flow-focus
   frames 2
-  cap JDK9+默认G1 | 大堆低延迟选G1/ZGC | 关注停顿目标
+  cap JDK9+默认G1 | 大堆低延迟选G1/ZGC
   @0
-    text -XX:+UseG1GC 200 80 fill=green
-    text -XX:MaxGCPauseMillis=200 200 130 fill=blue
+    codeblock -XX:+UseG1GC|-XX:MaxGCPauseMillis=200 highlight=2
   @1
-    compare 80 180 300 吞吐量优先|Parallel vs 低延迟|G1/ZGC
+    compare 吞吐量优先|Parallel vs 低延迟|G1/ZGC

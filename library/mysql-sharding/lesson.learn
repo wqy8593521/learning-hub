@@ -1,57 +1,62 @@
-# 分库分表 — VML
+# 分库分表 — VML Strict v2
+mode strict
 lesson 分库分表原理
 tags MySQL, 分库分表, 后端八股
 
 step 为什么要分
+  layout flow-focus
   frames 3
   cap 单表数据过亿 | 单库连接/IO瓶颈 | 水平拆分
-  @all
-    meter 120 80 400 单表数据量 grow max=100 pulse
+  zones 数据:30
   @0
-    box 200 150 200 60 label=单库单表 stroke=red
-    text 查询变慢 200 230 fill=red
+    item 单库单表 in 数据 label=单库单表 stroke=red
+    caption 查询变慢 fill=red slot=top
   @1
-    box 120 150 120 50 label=DB1 stroke=green
-    box 280 150 120 50 label=DB2 stroke=green
-    box 440 150 120 50 label=DB3 stroke=green
+    item 多库 in 数据 label=DB1·DB2·DB3 stroke=green
+    caption 水平拆成多库 fill=green fade
   @2
-    compare 80 230 300 垂直拆分|按业务 vs 水平拆分|按行|大数据
+    compare 垂直拆分|按业务 vs 水平拆分|按行|大数据
+  @0 L1
+    stress 单表数据量 grow max=100 pulse
 
 step 路由规则
+  layout flow-focus
   frames 3
   cap 按user_id取模 | 一致性哈希 | 范围分片
+  zones 路由:30
   @all
-    math 200 80 "db = user\\_id \\bmod 4"
+    math "db = user\\_id \\bmod 4"
   @0
-    buckets 4 130 100 hi=1
-    text user_id=5→db1 200 200 fill=green
+    buckets 4 hi=1
+    caption user_id=5→db1 fill=green slot=top
   @1
-    text 一致性哈希 200 250 fill=purple
-    text 扩缩容迁移少 380 250 fill=purple
+    caption 一致性哈希 fill=purple slot=top
   @2
-    table 60 280 策略,特点/取模,简单|扩容麻烦/范围,范围查询好|热点风险
+    table 策略,特点/取模,简单|扩容麻烦/范围,范围查询好|热点风险
 
 step 跨分片问题
+  layout three-tier
   frames 3
   cap 跨库JOIN难 | 分布式ID | 跨片事务
-  @all
-    cols 分片1:30 分片2:310 中间件:600
+  zones 分片1:30 | 分片2:310 | 中间件:600
   @0
-    text 禁止跨库JOIN 200 130 fill=red
-    text 冗余字段/应用层拼 200 170 fill=warn
+    caption 禁止跨库JOIN fill=red slot=top
   @1
-    box 600 70 160 50 label=雪花ID stroke=blue
-    text 全局唯一ID 600 140 fill=blue
+    item 雪花ID in 中间件 label=雪花ID stroke=blue
+    caption 全局唯一ID fill=blue fade
   @2
-    text 跨片事务→最终一致 200 230 fill=orange
+    caption 跨片事务→最终一致 fill=orange slot=top
+  @0 L1
+    note 冗余字段/应用层拼接 layer=L1
 
 step 中间件
+  layout three-tier
   frames 2
   cap ShardingSphere路由 | 对应用透明 | 读写分离可叠加
-  @all
-    cols 应用:30 中间件:310 分片:600
+  zones 应用:30 | 中间件:310 | 分片:600
   @0
-    arrow 应用 中间件 SQL
-    arrow 中间件 分片 路由
+    link 应用→中间件 SQL
+    link 中间件→分片 路由
+    caption 应用无感分片 fill=muted slot=top
   @1
-    flow 620 50 解析SQL|算分片|改写|聚合|返回
+    flow 解析SQL|算分片|改写|聚合|返回

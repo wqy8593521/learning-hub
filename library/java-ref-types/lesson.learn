@@ -1,51 +1,55 @@
-# 四种引用类型 — VML
+# 四种引用类型 — VML Strict v2
+mode strict
 lesson 四种引用类型
 tags JVM, 引用, 后端八股
 
 step 强引用
+  layout three-tier
   frames 2
-  cap 普通new就是强引用 | GC永不回收可达对象 | 内存泄漏根源
-  @all
-    cols 栈:30 堆:400
+  cap 普通new是强引用 | GC不回收可达 | 强引用链=泄漏
+  zones 栈:30 | 堆:400
   @0
-    arrow 栈 堆 强引用
-    box 400 70 160 50 label=Object stroke=blue
-    circle 30 80 9 fill=green
+    link 栈→堆 强引用
+    item obj in 堆 label=Object stroke=blue
+    caption 强引用指向 fill=green slot=top
   @1
-    text GC不回收可达对象 200 150 fill=green
-    text 强引用链未断=泄漏 200 190 fill=red
+    caption GC不回收可达对象 fill=green fade
+    caption 强引用链未断=泄漏 fill=red slot=top
 
 step 软引用
+  layout flow-focus
   frames 3
-  cap 内存够时不回收 | 快OOM前回收 | 适合做缓存
-  @all
-    box 400 70 200 60 label=SoftReference stroke=orange
+  cap 内存够不回收 | 快OOM前回收 | 适合缓存
   @0
-    meter 120 150 400 内存 grow max=30
-    text 内存充足 200 200 fill=green
+    item soft in 堆 label=SoftReference stroke=orange
+    stress 内存 grow max=30
+    caption 内存充足 fill=green slot=top
   @1
-    meter 120 150 400 内存 grow max=90 pulse
-    text 快OOM才回收 200 200 fill=orange
+    stress 内存 grow max=90 pulse
+    caption 快OOM才回收 fill=orange fade
   @2
-    compare 80 240 300 强引用|永不收 vs 软引用|内存敏感|缓存
+    compare 强引用|永不收 vs 软引用|内存敏感|缓存
 
 step 弱引用
+  layout three-tier
   frames 3
-  cap 下次GC必回收 | ThreadLocal Entry用 | WeakHashMap
-  @all
-    box 400 70 200 60 label=WeakReference stroke=purple
+  cap 下次GC必回收 | ThreadLocal用 | WeakHashMap
+  zones 栈:30 | 堆:400
   @0
-    arrow 栈 堆 弱引用
+    link 栈→堆 弱引用
+    item weak in 堆 label=WeakReference stroke=purple
+    caption 弱引用指向 fill=purple slot=top
   @1
-    text 下次GC回收 200 150 fill=purple blink
+    caption 下次GC回收 fill=purple blink fade
   @2
-    text ThreadLocal防泄漏 200 200 fill=green
+    caption ThreadLocal防泄漏 fill=green slot=top
 
 step 虚引用
+  layout flow-focus
   frames 2
-  cap 无法通过虚引用取对象 | 跟踪回收时机 | PhantomReference
+  cap get()永远null | 跟踪回收时机 | PhantomReference
   @0
-    box 400 70 200 60 label=PhantomReference stroke=muted
-    text get()永远null 200 150 fill=muted
+    item phantom in 堆 label=PhantomReference stroke=muted
+    caption get()永远null fill=muted slot=top
   @1
-    flow 620 50 对象回收|入引用队列|堆外内存清理
+    flow 对象回收|入引用队列|堆外内存清理 slot=bottom

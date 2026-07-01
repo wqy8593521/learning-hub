@@ -1,65 +1,70 @@
-# 穿透与雪崩 — 动画强化版
+# 穿透与雪崩 — VML Strict v2
+mode strict
 lesson 缓存穿透与雪崩
 tags Redis, 缓存, 高并发
 
 step 穿透打穿
+  layout three-tier
   frames 3
-  cap 查不存在的id | 缓存永远miss | 每次请求直达DB
+  cap 查不存在的id | 缓存永远miss | 每次直达DB
+  zones 客户端:30 | Redis:310 | MySQL:600
   @all
-    cols 客户端:30 Redis:310 MySQL:600
-    arrow 客户端 Redis GET
+    link 客户端→Redis GET
   @0
-    box 320 65 120 44 label=id:-1 stroke=red
-    text GET 50 75 fill=muted
+    item badkey in Redis label=id:-1 stroke=red
+    caption 不存在key fill=red slot=top
   @1
-    box 320 65 120 44 label=nil stroke=red expired
-    arrow Redis MySQL 查询
+    item nil in Redis label=nil stroke=red blink
+    link Redis→MySQL 查询
   @2
-    threads 8 zone=客户端 grow
-    badge ×N 40 160 pulse
-    meter 120 230 400 DB连接 grow max=100 pulse
-    arrow 客户端 MySQL 打穿
+    threads 8 in 客户端 grow
+    stress DB连接 grow max=100 pulse
+  @2 L1
+    caption 穿透打穿DB fill=warn layer=L1
 
 step 布隆挡刀
+  layout three-tier
   frames 3
   cap 请求先过布隆 | 不存在直接拦 | 可能存在再查缓存
-  @all
-    cols 客户端:30 Redis:310 MySQL:600
-    flow 620 50 请求|布隆过滤|挡掉!|查Redis
+  zones 客户端:30 | Redis:310 | MySQL:600
   @0
-    buckets 16 80 130
-    arrow 客户端 Redis 查?
+    buckets 16 hi=0
+    link 客户端→Redis 查?
+    caption 布隆预判 fill=muted slot=top
   @1
-    line 50 120 114 130 stroke=red draw
-    box 40 145 100 36 label=拦截! stroke=red
+    caption 拦截! fill=red pulse
+    badge 挡掉 slot=right fill=red
   @2
-    buckets 16 80 130 hi=5
-    arrow 客户端 Redis 放行
-    box 320 65 120 44 label=可能存在 stroke=green
+    buckets 16 hi=5
+    link 客户端→Redis 放行
+    item maybe in Redis label=可能存在 stroke=green
+  @1 L2
+    note 误判率可控·省DB压力 layer=L2
 
 step 雪崩来袭
+  layout three-tier
   frames 3
   cap 大批key同时过期 | 并发全部miss | DB连接池打满
-  @all
-    cols 客户端:30 Redis:310 MySQL:600
+  zones 客户端:30 | Redis:310 | MySQL:600
   @0
-    box 200 55 90 40 label=k1 sub=0s stroke=red expired
-    box 310 55 90 40 label=k2 sub=0s stroke=red expired
-    box 420 55 90 40 label=k3 sub=0s stroke=red expired
+    item expired in Redis label=批量过期 stroke=red blink
+    caption TTL同时到期 fill=red slot=top
   @1
-    threads 10 zone=客户端 grow
-    arrow 客户端 Redis GET
-    arrow Redis MySQL 查询
+    threads 10 in 客户端 grow
+    link Redis→MySQL 查询
   @2
-    badge ×10000 600 140 pulse
-    meter 120 240 400 DB连接 grow max=100 pulse
-    lock 600 100
+    badge ×10000 slot=right pulse
+    stress DB连接 grow max=100 pulse
+  @2 L1
+    caption 连接池打满 fill=purple layer=L1
 
 step 三板斧
+  layout flow-focus
   frames 2
   cap 穿透用布隆 | 雪崩加抖动 | 击穿用互斥锁
+  @0
+    table 场景,手段/穿透,布隆+空值/雪崩,TTL抖动/击穿,互斥锁
   @1
-    table 60 70 场景,手段,动画/穿透,布隆+空值,挡刀/雪崩,TTL抖动,过期/击穿,互斥锁,锁
-    compare 80 210 300 穿透|不存在key|布隆 vs 雪崩|批量过期|随机TTL
+    compare 穿透|不存在key|布隆 vs 雪崩|批量过期|随机TTL
   @1 L2
-    note 100 310 560 30 三概念面试必区分·击穿见击穿课
+    note 三概念面试必区分·击穿见击穿课 layer=L2

@@ -1,75 +1,66 @@
-# MQ 可靠性 — 动画强化版
+# MQ 可靠性 — VML Strict v2
+mode strict
 lesson MQ 消息可靠性
 tags 消息队列, 分布式, 可靠性
 
 step 三处会丢
+  layout three-tier
   frames 3
   cap 生产没确认就丢 | Broker没刷盘就丢 | 消费先ACK就丢
+  zones 生产:30 | Broker:310 | 消费:600
   @all
-    cols 生产:30 Broker:310 消费:600
-    flow 620 50 发送|存储|消费|三处风险
+    flow 发送|存储|消费|三处风险 slot=bottom
   @0
-    circle 50 80 9 fill=green
-    arrow 生产 Broker 发送
-    box 310 65 140 44 label=消息 stroke=blue
-    circle 50 80 9 fill=red blink
-    text ①没确认 80 130 fill=red
+    link 生产→Broker 发送
+    caption ①没确认 fill=red
   @1
-    box 310 65 140 44 label=消息 stroke=orange
-    text ②未刷盘 330 130 fill=orange pulse
+    caption ②未刷盘 fill=orange pulse
   @2
-    arrow Broker 消费 投递
-    circle 620 80 9 fill=red
-    text ③先ACK 640 130 fill=red
+    link Broker→消费 投递
+    caption ③先ACK fill=red
 
 step 生产确认
+  layout three-tier
   frames 3
   cap 同步等Broker ACK | 本地消息表兜底 | 失败定时重发
-  @all
-    cols 业务:30 本地表:310 MQ:600
+  zones 业务:30 | 本地表:310 | MQ:600
   @0
-    stack 100 60 业务,发MQ,不等ACK
-    arrow 业务 MQ 发送
-    box 600 65 100 40 label=丢失! stroke=red
+    stack 业务,发MQ,不等ACK slot=bottom
+    caption 消息丢失! fill=red
   @1
-    box 310 65 140 44 label=消息表 stroke=green
-    arrow 业务 本地表 先写
-    arrow 本地表 MQ 再发
+    item MsgTable in 本地表 label=消息表 stroke=green
+    link 业务→本地表 先写
   @2
-    arrow MQ 业务 ACK
-    circle 50 80 9 fill=green blink
-    path M310 180 Q200 220 50 260 stroke=green draw
+    link MQ→业务 ACK
+    caption 确认后删本地记录 fill=green
 
 step Broker刷盘
+  layout flow-focus
   frames 3
   cap Master写入消息 | 同步复制到Slave | Master挂Slave顶上
+  zones Master:200 | Slave:500
   @all
-    cols Master:200 Slave:500
-    timeline 100 写Master|同步Slave|ACK|Master宕
+    timeline 写Master|同步Slave|ACK|Master宕 slot=bottom
   @0
-    box 200 70 140 50 label=Master stroke=blue
-    arrow Master Slave 同步
-    box 500 70 140 50 label=Slave stroke=muted opacity=0.4
+    item Master in Master label=Master stroke=blue
+    link Master→Slave 同步
   @1
-    box 500 70 140 50 label=Slave stroke=green
-    line 350 95 500 95 stroke=green draw
+    item Slave in Slave label=Slave stroke=green
   @2
-    box 200 70 140 50 label=Master stroke=red expired
-    box 500 70 140 50 label=新Master stroke=green blink
+    caption Master宕·Slave顶上 fill=green blink
 
 step 消费幂等
+  layout three-tier
   frames 3
   cap 先处理再ACK | 重复投递靠幂等 | 唯一键去重
+  zones 消费:30 | 业务:310 | 去重:600
   @all
-    cols 消费:30 业务:310 去重:600
-    state 300 拉取,处理,ACK,重投
+    state 拉取,处理,ACK,重投 slot=bottom
   @0
-    arrow 消费 业务 处理
-    circle 310 80 9 fill=green
+    link 消费→业务 处理
   @1
-    arrow 业务 消费 ACK
-    circle 50 80 9 fill=green blink
+    link 业务→消费 ACK
+    caption 先处理再ACK fill=green
   @2
-    arrow 消费 去重 查重
-    box 600 65 120 44 label=setnx stroke=green
-    codeblock 36 200 1 w=400 ON DUPLICATE KEY|Redis setnx
+    item Dedup in 去重 label=setnx stroke=green
+    caption 唯一键挡重复 fill=green

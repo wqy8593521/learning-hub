@@ -1,53 +1,55 @@
-# EXPLAIN 与慢 SQL — VML
+# EXPLAIN 与慢 SQL — VML Strict v2
+mode strict
 lesson EXPLAIN 与慢 SQL
 tags MySQL, 优化, 索引
 
 step EXPLAIN字段
+  layout flow-focus
   frames 3
   cap type访问类型 | key用的索引 | rows扫描行数
   @0
-    table 60 70 字段,含义/type,访问类型/key,索引/rows,扫描行/extra,额外信息
+    table 字段,含义/type,访问类型/key,索引/rows,扫描行/extra,额外信息
+    caption EXPLAIN字段 fill=muted slot=top
   @1
-    text type=ALL 380 200 fill=red pulse
-    text 全表扫描! 380 230 fill=red
+    caption type=ALL 全表扫描 fill=red pulse
   @2
-    text type=ref 380 200 fill=green
-    text key=idx_name 380 230 fill=green
+    caption type=ref key=idx fill=green fade
 
 step type等级
+  layout flow-focus
   frames 4
-  cap system>const>eq_ref>ref | range>index>ALL | 越右越慢
-  @all
-    flow 620 50 system|const|eq_ref|ref|range|index|ALL
+  cap system最快 | ref较好 | ALL最慢
   @0
-    box 300 120 100 36 label=ALL stroke=red
+    flow system|const|eq_ref|ref|range|index|ALL
+    caption type等级 fill=muted slot=top
   @1
-    box 300 120 100 36 label=index stroke=orange
+    caption ALL最慢 fill=red
   @2
-    box 300 120 100 36 label=range stroke=lyellow
+    caption range中等 fill=warn
   @3
-    box 300 120 100 36 label=ref stroke=green blink
+    caption ref较好 fill=green blink
 
 step 索引失效
+  layout flow-focus
   frames 3
   cap 对列运算函数 | 隐式类型转换 | 不满足最左前缀
   @0
-    codeblock 36 70 1 w=420 WHERE YEAR(create_time)=2024|→函数包裹·索引失效
-    text ✗失效 380 130 fill=red
+    codeblock WHERE YEAR(t)=2024 highlight=1
+    caption 函数包裹·失效 fill=red
   @1
-    codeblock 36 70 1 w=420 WHERE phone=13800138000|varchar列·数字传参
-    text 隐式转换 380 130 fill=red pulse
+    codeblock WHERE phone=13800138000 highlight=1
+    caption 隐式转换 fill=red pulse
   @2
-    buckets 8 130 80 hi=0
-    text WHERE b=? 跳a 380 200 fill=red
+    buckets 8 hi=0
+    caption 跳最左前缀 fill=red slot=top
 
 step 优化手段
+  layout flow-focus
   frames 3
-  cap 建合适联合索引 | 避免SELECT* | 分页用延迟关联
+  cap 加合适索引 | 改写SQL | 避免SELECT *
   @0
-    tree btree 380 70 levels=2
-    text 覆盖索引 380 150 fill=green
+    flow 慢SQL|EXPLAIN|加索引|改写|验证
   @1
-    compare 80 200 300 SELECT*|回表多|慢 vs 覆盖列|免回表|快
+    caption 覆盖索引减回表 fill=green
   @2
-    flow 620 50 慢SQL|EXPLAIN|找type/key|加索引|验证
+    compare 加索引|立竿见影 vs 改写SQL|治本

@@ -1,78 +1,73 @@
-# 锁升级 — 动画强化版
+# 锁升级 — VML Strict v2
+mode strict
 lesson 锁升级机制
 tags Java, 并发, synchronized
 
 step 锁状态机
+  layout three-tier
   frames 4
-  cap 对象头存锁标记 | 无锁起步 | 竞争加剧逐级升级
+  cap 对象头Mark Word | 无锁起步 | 竞争逐级升级
+  zones 对象:310 | 竞争:600
   @all
-    box 280 45 200 70 label=对象 sub=Mark Word stroke=blue
-    state 300 无锁,偏向锁,轻量锁,重量锁
-    cols 竞争:350 阻塞:350
+    state 无锁,偏向锁,轻量锁,重量锁 slot=bottom
   @0
-    circle 380 90 12 fill=muted opacity=0.3
+    item obj in 对象 label=对象 sub=Mark Word stroke=blue
+    caption 无锁状态 fill=muted slot=top
   @1
-    circle 380 90 12 fill=green
-    box 480 75 90 36 label=T1✓ stroke=green
+    item bias in 对象 label=偏向T1 stroke=green
+    caption 单线程偏向 fill=green fade
   @2
-    lock 380 82
-    threads 2 zone=竞争 grow
+    threads 2 in 竞争 grow
+    caption 竞争→轻量锁 fill=orange slot=top
   @3
-    queue 380 175 6 filled=4 label=EntryList
-    threads 4 zone=阻塞 grow
-    lock 380 82
+    queue EntryList slots=6 filled=4 in 竞争
+    caption 膨胀→重量锁 fill=red fade
   @3 L2
-    note 100 290 560 30 升级不可逆·偏向→轻量→重量
+    note 升级不可逆·偏向→轻量→重量 layer=L2
 
 step 偏向锁
+  layout three-tier
   frames 3
-  cap 单线程首次进入 | Mark记线程ID | 同线程再进零开销
-  @all
-    cols 线程A:30 对象:310 状态:600
+  cap 单线程首次进入 | Mark记线程ID | 同线程零开销
+  zones 线程A:30 | 对象:310 | 状态:600
   @0
-    threads 1 zone=线程A
-    arrow 线程A 对象 首次
-    box 310 70 150 56 label=obj stroke=blue
+    threads 1 in 线程A
+    link 线程A→对象 首次
+    caption 首次进入 fill=muted slot=top
   @1
-    box 310 70 150 56 label=obj sub=偏向T1 stroke=green
-    circle 50 80 9 fill=green
+    item bias in 对象 label=obj sub=偏向T1 stroke=green
+    caption Mark记线程ID fill=green fade
   @2
-    arrow 线程A 对象 再进
-    circle 50 80 9 fill=green blink
-    box 600 70 100 44 label=直接过 stroke=green
+    link 线程A→对象 再进
+    caption 同线程直接过 fill=green slot=top
 
 step 轻量锁
+  layout three-tier
   frames 3
-  cap 第二线程杀到 | CAS抢锁记录 | 失败者自旋等待
-  @all
-    cols 线程A:30 对象:310 线程B:600
+  cap 第二线程竞争 | CAS抢锁 | 失败者自旋
+  zones 线程A:30 | 对象:310 | 线程B:600
   @0
-    threads 2 zone=线程A grow
-    text 撤销偏向 380 45 fill=orange fade
+    threads 2 in 线程A grow
+    caption 撤销偏向 fill=orange slot=top
   @1
-    circle 50 95 9 fill=green
-    lock 340 88
-    arrow 线程A 对象 持锁
-    circle 620 95 9 fill=warn
+    link 线程A→对象 持锁
+    caption CAS获锁 fill=green fade
   @2
-    circle 620 95 9 fill=warn blink
-    path M620 120 Q580 160 620 200 stroke=warn draw
-    text 自旋… 640 160 fill=warn
-  @2 L1
-    meter 310 200 280 自旋 grow max=100 pulse
+    link 线程B→对象 自旋
+    stress 自旋 grow max=100 pulse
+    caption 自旋等待 fill=warn slot=top
 
 step 重量锁
+  layout three-tier
   frames 3
-  cap 自旋超时膨胀 | Monitor接管 | 未获锁进队列阻塞
-  @all
-    cols Owner:30 Monitor:310 等待:600
+  cap 自旋超时膨胀 | Monitor接管 | 未获锁进队列
+  zones Owner:30 | Monitor:310 | 等待:600
   @0
-    lock 340 75
-    circle 50 80 9 fill=green
-    text Owner 80 86 fill=green
+    link Owner→Monitor 持锁
+    caption Owner持有 fill=green slot=top
   @1
-    queue 310 155 8 filled=6 label=EntryList
-    threads 6 zone=等待 grow
-    meter 600 200 120 阻塞 grow max=100
+    queue EntryList slots=8 filled=6 in Monitor
+    threads 6 in 等待 grow
+    caption 阻塞等待 fill=red fade
   @2
-    compare 80 230 300 轻量|CAS自旋|短持有 vs 重量|OS阻塞|长等待
+    compare 轻量|CAS自旋|短持有 vs 重量|OS阻塞|长等待

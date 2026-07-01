@@ -1,55 +1,51 @@
-# Redis 哨兵与集群 — VML
+# Redis 哨兵与集群 — VML Strict v2
+mode strict
 lesson Redis 哨兵与集群
 tags Redis, 哨兵, 集群, 后端八股
 
 step 主从故障
+  layout three-tier
   frames 2
   cap 主库宕机 | 从库无法自动升主 | 需人工切换
-  @all
-    cols 主库:30 从库:400
+  zones 主库:30 | 从库:400
   @0
-    box 30 70 140 50 label=Master stroke=blue
-    box 400 70 140 50 label=Slave stroke=green
-    arrow 主库 从库 复制
+    item master in 主库 label=Master stroke=blue
+    item slave in 从库 label=Slave stroke=green
+    link 主库→从库 复制
   @1
-    box 30 70 140 50 label=Master✗ stroke=red
-    text 服务中断! 200 180 fill=red
+    item down in 主库 label=Master✗ stroke=red blink
+    caption 服务中断! fill=red pulse
 
 step 哨兵Sentinel
+  layout three-tier
   frames 3
   cap 监控主从健康 | 投票选举新主 | 通知客户端
-  @all
-    cols 哨兵:30 主库:310 从库:600
+  zones 哨兵:30 | 主库:310 | 从库:600
   @0
-    box 30 70 100 44 label=S1 stroke=purple
-    box 30 130 100 44 label=S2 stroke=purple
-    box 30 190 100 44 label=S3 stroke=purple
+    items S1 S2 S3 stroke=purple
+    caption 3个哨兵监控 fill=purple slot=top
   @1
-    arrow 哨兵 从库 选举
-    box 600 70 140 50 label=新Master stroke=green blink
+    link 哨兵→从库 选举
+    item newMaster in 从库 label=新Master stroke=green blink
   @2
-    flow 620 50 监控|下线判定|选举|切换|通知
+    flow 监控|下线判定|选举|切换|通知
 
 step Cluster分片
+  layout flow-focus
   frames 3
   cap 16384槽位 | 多主多从 | 水平扩展
-  @all
-    buckets 16 80 130 hi=0
   @0
-    text 16384 slots 200 30 fill=blue
+    buckets 16 hi=0
+    caption 16384 slots fill=blue slot=top
   @1
-    box 200 180 100 44 label=Node1 stroke=blue
-    box 320 180 100 44 label=Node2 stroke=green
-    box 440 180 100 44 label=Node3 stroke=orange
+    items Node1 Node2 Node3 stroke=blue
+    caption 多主多从 fill=green
   @2
-    math 200 250 "slot = CRC16(key) \\bmod 16384"
-  @2 L1
-    text MOVED重定向 200 300 fill=warn
+    math "slot=CRC16(key) mod 16384" slot=bottom
 
-step 选型对比
+step 选型
+  layout flow-focus
   frames 2
-  cap 哨兵=高可用 | 集群=高可用+分片 | 小数据用哨兵
-  @0
-    compare 80 55 300 哨兵|主从+自动故障转移|不分片 vs 集群|多主分片|大数据量
+  cap 主从+哨兵高可用 | Cluster水平扩展 | 按规模选
   @1
-    table 60 200 场景,方案/单机→主从,主从复制/<10G高可用,哨兵/>10G分片,Cluster
+    compare 哨兵|主从HA|中小规模 vs Cluster|分片|大规模

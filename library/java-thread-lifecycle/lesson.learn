@@ -1,65 +1,74 @@
-# 线程状态转换 — VML
+# 线程状态转换 — VML Strict v2
+mode strict
 lesson 线程状态转换
 tags Java, 并发, 线程
 
 step 六种状态
+  layout flow-focus
   frames 2
   cap NEW未启动 | RUNNABLE可运行 | BLOCKED等锁
   @0
-    state 100 新建,可运行,阻塞,等待,超时等待,终止
+    state 新建,可运行,阻塞,等待,超时等待,终止 slot=bottom
+    caption 六种状态 fill=muted slot=top
   @1
-    table 60 180 状态,含义/NEW,未start/RUNNABLE,运行或就绪/BLOCKED,等synchronized/WAITING,wait()
+    table 状态,含义/NEW,未start/RUNNABLE,运行或就绪/BLOCKED,等synchronized/WAITING,wait()
+    caption RUNNABLE含就绪与运行 fill=green
+  @1 L1
+    note TERMINATED终态·不可回退 layer=L1
 
 step 运行与阻塞
+  layout three-tier
   frames 4
-  cap start进入RUNNABLE | 竞争锁失败BLOCKED | 获锁恢复运行
-  @all
-    cols 线程:30 锁:310 CPU:600
+  cap start进RUNNABLE | 竞争锁失败BLOCKED | 获锁恢复运行
+  zones 线程:30 | 锁:310 | CPU:600
   @0
-    box 30 70 100 40 label=NEW stroke=muted
-    arrow 线程 CPU start
+    item NEW in 线程 label=NEW stroke=muted
+    link 线程→CPU start
+    caption 未启动 fill=muted slot=top
   @1
-    circle 50 80 9 fill=green
-    arrow 线程 CPU 运行
-    box 600 70 100 40 label=RUNNING stroke=green
+    link 线程→CPU 运行
+    caption RUNNABLE fill=green fade
   @2
-    lock 310 60
-    circle 50 80 9 fill=red
-    box 30 130 100 40 label=BLOCKED stroke=red
+    item BLOCKED in 线程 label=BLOCKED stroke=red
+    caption 等锁阻塞 fill=red pulse
   @3
-    lock 310 60
-    circle 50 80 9 fill=green blink
-    arrow 线程 CPU 恢复
+    link 线程→CPU 恢复
+    caption 获锁恢复 fill=green blink
+  @2 L1
+    note synchronized竞争失败→BLOCKED layer=L1
 
 step wait与notify
+  layout three-tier
   frames 4
-  cap wait释放锁并WAITING | notify唤醒一个 | 被唤醒需重新抢锁
-  @all
-    cols 线程A:200 线程B:500 锁:350
+  cap wait释放锁WAITING | notify唤醒一个 | 醒后需重新抢锁
+  zones 线程A:200 | 锁:350 | 线程B:500
   @0
-    circle 200 80 9 fill=green
-    lock 350 60
+    link 线程A→锁 持锁
+    caption 线程A持锁 fill=green slot=top
   @1
-    arrow 线程A 锁 wait
-    lock 350 60 opacity=0.2
-    box 200 130 100 40 label=WAITING stroke=orange
+    link 线程A→锁 wait
+    item WAITING in 线程A label=WAITING stroke=orange
+    caption 释放锁等待 fill=orange fade
   @2
-    circle 500 80 9 fill=green
-    arrow 线程B 锁 notify
+    link 线程B→锁 notify
+    caption notify唤醒 fill=green slot=top
   @3
-    circle 200 80 9 fill=warn blink
-    queue 350 180 4 filled=2 label=等锁
-    text 醒后抢锁 220 200 fill=warn
+    queue 等锁 slots=4 filled=2 in 锁
+    caption 醒后抢锁 fill=warn blink
+  @3 L2
+    note 必须在synchronized内调用 layer=L2
 
 step sleep与yield
+  layout flow-focus
   frames 3
-  cap sleep不释放锁 | 进入TIMED_WAITING | yield让出CPU
+  cap sleep不释放锁 | TIMED_WAITING | yield让出CPU
   @0
-    lock 310 60
-    circle 50 80 9 fill=green
-    text sleep持锁 80 130 fill=green
+    caption sleep持锁 fill=green slot=top
   @1
-    box 50 160 120 40 label=TIMED_WAIT stroke=orange
-    meter 120 220 400 计时 grow max=100
+    item TIMED in 线程 label=TIMED_WAIT stroke=orange
+    stress 计时 grow max=100
+    caption 定时等待 fill=orange fade
   @2
-    compare 80 260 300 sleep|持锁|定时醒 vs wait|释放锁|需notify
+    compare sleep|持锁|定时醒 vs wait|释放锁|需notify
+  @2 L1
+    note Thread.sleep·不释放monitor layer=L1

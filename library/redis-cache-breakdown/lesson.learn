@@ -1,70 +1,75 @@
-# Redis 缓存击穿 — VML 示例（AI 只写这个文件）
+# Redis 缓存击穿 — VML Strict v2
+mode strict
 lesson 缓存击穿
 tags Redis, 缓存, 高并发
 
 step 热点过期
+  layout flow-focus
   frames 2
   cap 热点 key 在缓存里 | key 过期 GET 空 | dict 删除非变旧
+  zones Redis:310
   @all
-    flow 620 55 热点在缓存|TTL到期|GET空|准备查DB
+    flow 热点在缓存|TTL到期|GET空|准备查DB
   @0
-    label Redis内存 380 28
-    box 200 40 360 110 stroke=red
-    box 320 68 120 48 label=hotkey sub=TTL=3s stroke=red
-    callout 380 68 520 55 热点key
+    item hotkey in Redis label=hotkey sub=TTL=3s stroke=red pulse
+    caption Redis内存 fill=muted slot=top
   @1
-    box 320 68 120 48 label=hotkey sub=EXPIRED stroke=red expired opacity=0.15
-    text GET→nil 380 140 fade fill=red
+    item hotkey in Redis label=hotkey sub=EXPIRED stroke=red blink
+    caption GET→nil fill=red fade
   @1 L1
-    text miss→查DB 380 168 fade fill=warn
+    caption miss→查DB fill=warn
   @1 L2
-    note 180 195 400 48 惰性删除·释放内存·后续GET全冷启动
+    note 惰性删除·释放内存·后续GET全冷启动 layer=L2
 
 step 并发击穿
+  layout three-tier
   frames 3
   cap 1000请求同时到 | 都miss都查库 | check-then-act竞态
+  zones 线程:30 | Redis:310 | MySQL:600
   @all
-    cols 线程:30 Redis:310 MySQL:600
-    text hotkey→∅ 380 68 fill=red
-    arrow 线程 Redis GET
+    caption hotkey→∅ fill=red slot=top
+    link 线程→Redis GET
   @1+
-    threads 6 zone=线程 grow
-    arrow Redis MySQL 查询
-    badge ×? 660 150
-    meter 120 280 400 DB连接 grow max=100 pulse
-  @2+
-    badge ×1000 660 150 pulse
-  @1+ L1
-    codeblock 36 168 2 w=420 if (cache.get() == null)|    db.query();|    cache.set(k, v);
-  @2+ L2
-    text 连接池打满→超时 380 240 fill=purple
+    threads 6 in 线程 grow
+    link Redis→MySQL 查询
+    stress DB连接 grow max=100 pulse
+  @1
+    badge ×? slot=right fill=warn
+  @2
+    badge ×1000 slot=right fill=red pulse
+  @1 L1
+    codeblock if (cache.get() == null)|    db.query();|    cache.set(k, v); highlight=2 layer=L1
+  @2 L2
+    caption 连接池打满→超时 fill=purple layer=L2
 
 step 互斥锁
+  layout three-tier
   frames 3
   cap 多线程竞争查库 | SET NX 仅一个成功 | Redis单线程保证原子
+  zones 线程:30 | Redis:310 | MySQL:600
   @all
-    cols 线程:30 Redis:310 MySQL:600
-    state 300 竞争,SETNX,查库,回填,完成
+    state 竞争,SETNX,查库,回填,完成 slot=bottom
   @0
-    queue 380 200 6 filled=4 label=等待队列
-  @1+
-    circle 90 80 9 fill=green
-    text T1✓锁 108 84 fill=lblue
-    lock 340 88
-    arrow 线程 Redis 抢锁
-    arrow Redis MySQL 查库
-    text DB×1 660 92 fill=green
-  @2+
-    box 320 145 120 36 label=已回填 stroke=green
-  @1+ L2
-    note 150 248 460 42 Redis主线程串行·SET NX原子
+    queue 等待队列 slots=6 filled=4 in Redis
+  @1
+    item T1锁 in 线程 label=T1✓锁 stroke=green
+    item lockKey in Redis label=SETNX stroke=purple
+    link 线程→Redis 抢锁
+    badge DB×1 slot=right fill=green
+  @2
+    item cached in Redis label=已回填 stroke=green
+    link Redis→MySQL 查库
+  @1 L2
+    note Redis主线程串行·SET NX原子 layer=L2
 
 step 逻辑过期
+  layout flow-focus
   frames 2
   cap key永远不删 | value内过期仍返旧值 | CAP选可用性
+  zones Redis:310
   @1
-    compare 80 55 300 互斥锁|DB仅×1|解miss竞态 vs 逻辑过期|永不过期|消灭miss
-    box 250 200 260 70 label=hotkey在Redis stroke=red
-    text GET→返旧值✓ 380 290 fade fill=green
+    compare 互斥锁|DB仅×1|解miss竞态 vs 逻辑过期|永不过期|消灭miss
+    item hotkey in Redis label=hotkey在Redis stroke=red
+    caption GET→返旧值✓ fill=green fade
   @1 L2
-    note 150 305 460 30 牺牲短暂一致性·换零等待
+    note 牺牲短暂一致性·换零等待 layer=L2

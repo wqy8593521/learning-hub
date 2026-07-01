@@ -1,55 +1,64 @@
-# MySQL 主从复制 — VML
+# MySQL 主从复制 — VML Strict v2
+mode strict
 lesson MySQL 主从复制
 tags MySQL, 主从, 高可用, 后端八股
 
 step 复制架构
+  layout three-tier
   frames 2
   cap 主库写binlog | 从库IO+SQL线程 | 异步复制
-  @all
-    cols 主库:30 从库:400
+  zones 主库:30 | 从库:400
   @0
-    box 30 70 140 50 label=Master stroke=blue
-    box 400 70 140 50 label=Slave stroke=green
-    arrow 主库 从库 binlog
+    item Master in 主库 label=Master stroke=blue
+    item Slave in 从库 label=Slave stroke=green
+    link 主库→从库 binlog
   @1
-    flow 620 50 主写|dump线程|IO线程|relay log|SQL线程
+    flow 主写|dump线程|IO线程|relay log|SQL线程
+  @1 L2
+    note 默认异步·主从不强一致 layer=L2
 
 step binlog同步
+  layout three-tier
   frames 3
   cap 主库提交写binlog | dump线程推送 | 从库写relay log
+  zones 主库:30 | 从库:400
   @all
-    cols 主库:30 从库:400
+    link 主库→从库 dump
   @0
-    box 30 130 120 44 label=binlog stroke=orange
-    arrow 主库 从库 dump
+    item binlog in 主库 label=binlog stroke=orange
+    caption 提交后写binlog fill=muted slot=top
   @1
-    box 400 130 140 44 label=relay log stroke=purple
-    text IO线程 400 190 fill=purple
+    item relay in 从库 label=relay log stroke=purple
+    caption IO线程接收 fill=purple fade
   @2
-  @2 L1
-    text 异步=主从不强一致 80 250 fill=warn
+    caption 异步=主从不强一致 fill=warn slot=top
 
 step SQL线程回放
+  layout three-tier
   frames 3
   cap 从库SQL线程读relay | 重放SQL | 数据追平
+  zones relay:200 | 从库表:500
   @all
-    cols relay:200 从库表:500
+    link relay→从库表 回放
   @0
-    arrow relay 从库表 回放
-    box 500 70 140 50 label=从库数据 stroke=green
+    item 从库数据 in 从库表 label=从库数据 stroke=green
+    caption SQL线程重放 fill=green slot=top
   @1
-    meter 120 200 400 延迟 grow max=100
-    text 复制延迟 200 260 fill=warn
+    stress 复制延迟 grow max=100 pulse
+    caption 复制延迟 fill=warn slot=top
   @2
-    compare 80 200 300 同步复制|强一致|慢 vs 异步|快|可能延迟
+    compare 同步复制|强一致|慢 vs 异步|快|可能延迟
 
 step 读写分离
+  layout three-tier
   frames 2
   cap 写走主库 | 读走从库 | 注意主从延迟
-  @all
-    cols 应用:30 主库:300 从库:550
+  zones 应用:30 | 主库:300 | 从库:550
   @0
-    arrow 应用 主库 写
-    arrow 应用 从库 读
+    link 应用→主库 写
+    link 应用→从库 读
+    caption 读写分流 fill=muted slot=top
   @1
-    callout 300 150 520 50 写完立刻读可能脏读
+    caption 写完立刻读可能脏读 fill=warn slot=top
+  @1 L1
+    note 主从延迟导致读到旧数据 layer=L1

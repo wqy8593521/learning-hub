@@ -1,47 +1,63 @@
-# 索引失效场景 — VML
+# 索引失效场景 — VML Strict v2
+mode strict
 lesson 索引失效场景
 tags MySQL, 索引, 后端八股
 
 step 最左前缀
+  layout flow-focus
   frames 3
-  cap 联合索引(a,b,c) | 跳过最左列失效 | 已有基础再强化
+  cap 联合索引(a,b,c) | 跳过最左列失效 | 部分列可用
+  zones 索引:30
   @all
-    table 60 75 条件,走索引?/WHERE a=1,✓/WHERE b=1,✗/WHERE a=1 AND c=1,部分
+    table 条件,走索引?/WHERE a=1,✓/WHERE b=1,✗/WHERE a=1 AND c=1,部分
   @0
-    buckets 8 130 80 hi=0
-    text 命中a 200 175 fill=green
+    buckets 8 hi=0
+    caption 命中最左列a fill=green slot=top
   @1
-    buckets 8 130 80
-    text 跳过a→全表 200 175 fill=red pulse
+    buckets 8
+    caption 跳过a→全表 fill=red pulse
   @2
-    codeblock 40 220 1 WHERE a=? AND c=?|索引只用到a
+    codeblock WHERE a=? AND c=?|索引只用到a highlight=2
+  @2 L1
+    note 联合索引从左连续匹配 layer=L1
 
 step 函数与计算
+  layout flow-focus
   frames 3
   cap 对索引列做函数 | 隐式类型转换 | 优化器无法用索引
+  zones SQL:30
   @all
-    tree btree 380 70 levels=2
+    tree btree levels=2
   @0
-    codeblock 40 200 1 WHERE YEAR(create_time)=2024|函数包裹列✗
+    codeblock WHERE YEAR(create_time)=2024|函数包裹列✗ highlight=1
+    caption 列上函数→失效 fill=red slot=top
   @1
-    codeblock 40 200 1 WHERE phone=13800138000|phone是varchar|列转换✗
+    codeblock WHERE phone=13800138000|phone是varchar highlight=1
+    caption 隐式转换 fill=red pulse
   @2
-    compare 80 250 300 列上函数|失效 vs 常量侧函数|可能可用
+    compare 列上函数|失效 vs 常量侧函数|可能可用
 
 step 模糊与范围
+  layout flow-focus
   frames 3
   cap LIKE '%abc'左模糊 | 范围后列失效 | OR未全走索引
+  zones SQL:30
   @0
-    codeblock 40 150 2 WHERE name LIKE '%张'\|前缀%可,后缀%不行
+    codeblock WHERE name LIKE '%张'|前缀%可·后缀%不行 highlight=1
+    caption 左模糊不走索引 fill=red slot=top
   @1
-    codeblock 40 200 2 WHERE a>1 AND b=2\|a范围后b难用索引
+    codeblock WHERE a>1 AND b=2|a范围后b难用索引 highlight=2
+    caption 范围截断后续列 fill=warn slot=top
   @2
-    text OR两边需都有索引 200 260 fill=warn
+    caption OR两边需都有索引 fill=warn slot=top
 
 step 优化建议
+  layout flow-focus
   frames 2
   cap EXPLAIN验证 | 改写SQL | 建合适联合索引
+  zones 优化:30
   @0
-    flow 620 50 怀疑失效|EXPLAIN|type=ALL?|改写/加索引
+    flow 怀疑失效|EXPLAIN|type=ALL?|改写/加索引
+    caption 先EXPLAIN再优化 fill=muted slot=top
   @1
-    compare 80 200 300 全表扫描|rows大|慢 vs 索引ref|rows小|快
+    compare 全表扫描|rows大|慢 vs 索引ref|rows小|快

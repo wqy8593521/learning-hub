@@ -1,64 +1,64 @@
-# String 与常量池 — VML
+# String 与常量池 — VML Strict v2
+mode strict
 lesson String 与常量池
 tags Java, String, JVM
 
 step 字面量创建
+  layout flow-focus
   frames 3
   cap "abc"直接进池 | 堆中仅一份 | 多引用共享
-  @all
-    box 280 60 200 70 label=字符串常量池 stroke=blue
   @0
-    box 300 80 120 44 label="abc" stroke=green
-    circle 120 100 9 fill=green
-    line 129 100 300 100 stroke=green draw
+    item abc in 常量池 label="abc" stroke=green
+    caption 字面量入池 fill=green slot=top
   @1
-    circle 500 100 9 fill=green
-    line 420 100 491 100 stroke=green draw
-    text 2引用1对象 380 170 fill=green
+    caption 2引用1对象 fill=green fade
   @2
-    compare 80 200 300 new String|堆新对象|可重复 vs 字面量|常量池|共享
+    compare new String|堆新对象|可重复 vs 字面量|常量池|共享
+  zones 常量池:310
 
 step new与intern
+  layout three-tier
   frames 4
-  cap new在堆建新对象 | intern查池复用 | 池无则放入
-  @all
-    cols 代码:30 堆:310 常量池:600
+  cap new在堆建新 | intern查池复用 | 池无则放入
+  zones 代码:30 | 堆:310 | 常量池:600
   @0
-    box 310 70 140 50 label=new对象 stroke=orange
-    arrow 代码 堆 new
+    link 代码→堆 new
+    item heap in 堆 label=new对象 stroke=orange
+    caption 堆上新对象 fill=orange slot=top
   @1
-    arrow 代码 常量池 intern
-    box 600 70 120 44 label=查池 stroke=blue
+    link 代码→常量池 intern
+    caption 查常量池 fill=blue fade
   @2
-    box 600 70 120 44 label=已有✓ stroke=green blink
-    line 380 95 600 95 stroke=green draw
+    item found in 常量池 label=已有✓ stroke=green blink
+    caption 池中有→复用 fill=green slot=top
   @3
-    box 310 70 140 50 label=堆对象 stroke=orange expired
-    box 600 130 120 44 label=入池 stroke=green
+    item pooled in 常量池 label=入池 stroke=green
+    caption 池无则放入 fill=green fade
 
 step 不可变性
+  layout flow-focus
   frames 3
-  cap String类final | 内部char[]不可变 | 修改=新建对象
+  cap String类final | char[]不可变 | 修改=新建
   @0
-    box 300 70 160 56 label="hello" stroke=green
-    lock 300 60
+    item hello in 堆 label="hello" stroke=green
+    caption final不可变 fill=muted slot=top
   @1
-    box 300 70 160 56 label="hello" stroke=muted opacity=0.3
-    box 480 70 160 56 label="hello!" stroke=orange blink
-    path M380 98 Q430 50 480 98 stroke=orange draw
+    item hello2 in 堆 label="hello!" stroke=orange blink
+    caption 修改=新建对象 fill=orange fade
   @2
-    compare 80 200 300 String|不可变|线程安全 vs StringBuilder|可变|拼接
+    compare String|不可变|线程安全 vs StringBuilder|可变|拼接
+  zones 堆:310
 
 step 拼接原理
+  layout flow-focus
   frames 3
-  cap +拼接编译优化 | 循环+产生大量对象 | StringBuilder复用
+  cap +编译优化 | 循环+大量对象 | Builder复用
   @0
-    codeblock 36 70 1 w=400 String s = "a" + "b";
-    box 300 130 120 44 label=1个对象 stroke=green
+    codeblock String s = "a" + "b";
+    caption 编译期优化 fill=green slot=top
   @1
-    badge ×1000 40 200 pulse
-    box 300 200 200 60 label=循环+垃圾 stroke=red
-    meter 120 280 400 GC压力 grow max=100
+    badge ×1000 slot=right pulse
+    stress GC压力 grow max=100
+    caption 循环+垃圾 fill=red fade
   @2
-    box 300 130 180 50 label=StringBuilder stroke=green
-    text append复用 380 200 fill=green
+    caption StringBuilder复用 fill=green slot=top

@@ -1,74 +1,72 @@
-# volatile 与 CAS — 动画强化版
+# volatile 与 CAS — VML Strict v2
+mode strict
 lesson volatile 与 CAS
 tags Java, 并发, JMM
 
 step 可见性裂缝
+  layout three-tier
   frames 3
-  cap A改flag本地缓存 | B读到的仍是0 | 各线程各看各的
-  @all
-    cols 线程A:30 主内存:310 线程B:600
+  cap A改flag本地缓存 | B仍读到0 | 各线程各看各的
+  zones 线程A:30 | 主内存:310 | 线程B:600
   @0
-    box 320 70 120 48 label=flag=0 stroke=blue
-    circle 50 80 9 fill=green
+    item flag0 in 主内存 label=flag=0 stroke=blue
+    caption 初始值0 fill=muted slot=top
   @1
-    box 120 130 90 40 label=flag=1 stroke=green
-    arrow 线程A 主内存 写?
-    text 未刷盘! 140 175 fill=red pulse
+    link 线程A→主内存 写?
+    caption 未刷主内存 fill=red pulse
   @2
-    circle 620 80 9 fill=red
-    box 600 130 90 40 label=flag=0 stroke=red
-    arrow 线程B 主内存 读旧
+    link 线程B→主内存 读旧
+    caption B读到旧值 fill=red slot=top
   @2 L1
-    callout 320 70 480 55 看不见A的修改
+    note 看不见A的修改 layer=L1
 
 step volatile打通
+  layout three-tier
   frames 3
   cap 写操作刷主内存 | 读强制拉最新 | 内存屏障挡重排
-  @all
-    cols 线程A:30 主内存:310 线程B:600
+  zones 线程A:30 | 主内存:310 | 线程B:600
   @0
-    circle 50 80 9 fill=green
-    arrow 线程A 主内存 写
-    box 320 70 120 48 label=flag=1 stroke=green
+    link 线程A→主内存 写
+    item flag1 in 主内存 label=flag=1 stroke=green
+    caption volatile写 fill=green slot=top
   @1
-    path M200 120 Q310 100 420 120 stroke=green draw
-    text 屏障 310 105 fill=lyellow
+    caption 内存屏障 fill=lyellow fade
   @2
-    arrow 主内存 线程B 读
-    circle 620 80 9 fill=green
-    box 600 130 90 40 label=flag=1 stroke=green blink
+    link 主内存→线程B 读
+    caption B读到最新 fill=green slot=top
 
 step CAS抢改
+  layout three-tier
   frames 4
   cap 读旧值expect | 比对成功才改 | 失败则重试
-  @all
-    box 300 60 160 56 label=count stroke=blue
-    cols 线程A:30 count:310 线程B:600
+  zones 线程A:30 | count:310 | 线程B:600
   @0
-    math 280 140 "count \\stackrel{?}{=} 5"
-    circle 50 80 9 fill=green
+    item cnt in count label=count=5 stroke=blue
+    caption expect=5 fill=muted slot=top
   @1
-    text expect=5 80 130 fill=muted
-    arrow 线程A count CAS
+    link 线程A→count CAS
+    caption 比对旧值 fill=muted fade
   @2
-    box 300 60 160 56 label=count=6 stroke=green
-    circle 50 80 9 fill=green blink
+    item cnt6 in count label=count=6 stroke=green blink
+    caption CAS成功 fill=green slot=top
   @3
-    circle 620 80 9 fill=red
-    text 并发失败 640 86 fill=red
-    path M620 110 Q560 150 620 190 stroke=red draw
+    link 线程B→count 失败
+    caption 并发失败重试 fill=red fade
   @3 L1
-    codeblock 36 250 1 w=380 while(true)|  if(CAS) break;
+    codeblock while(true)|  if(CAS) break; highlight=1 layer=L1
 
 step ABA陷阱
+  layout flow-focus
   frames 3
-  cap 值从5变6又回5 | CAS误以为没变 | 版本号戳破幻觉
+  cap 5变6又回5 | CAS误判没变 | 版本号戳破
   @all
-    timeline 100 读5|改6|改回5|CAS误判
+    timeline 读5|改6|改回5|CAS误判 slot=bottom
   @0
-    box 300 130 80 44 label=5 stroke=blue
+    item v5 in 值 label=5 stroke=blue
+    caption 初始值5 fill=muted slot=top
   @1
-    box 300 130 80 44 label=6 stroke=orange
+    item v6 in 值 label=6 stroke=orange
+    caption 改为6 fill=orange fade
   @2
-    box 300 130 80 44 label=5 stroke=red expired
-    compare 80 200 300 无版本|值相同|ABA险 vs 带stamp|版本+1|识破
+    compare 无版本|值相同|ABA险 vs 带stamp|版本+1|识破
+  zones 值:310

@@ -2,3 +2,4 @@ node_modules/
 .venv/
 library/*/index.html
 cursor_career_path_guidance.md
+prototypes/vml-v2/

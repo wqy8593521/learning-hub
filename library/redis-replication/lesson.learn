@@ -1,68 +1,65 @@
-# Redis 主从复制 — VML
+# Redis 主从复制 — VML Strict v2
+mode strict
 lesson Redis 主从复制
 tags Redis, 主从, 高可用
 
 step 建立连接
+  layout three-tier
   frames 3
   cap Slave发PSYNC | 首次全量同步 | 建立长连接
-  @all
-    cols Master:200 Slave:500
+  zones Master:200 | Slave:500
   @0
-    arrow Slave Master PSYNC
-    box 200 70 140 50 label=Master stroke=green
-    box 500 70 140 50 label=Slave stroke=blue
+    item master in Master label=Master stroke=green
+    item slave in Slave label=Slave stroke=blue
+    link Slave→Master PSYNC
   @1
-    line 340 95 500 95 stroke=green draw
-    text 连接建立 380 140 fill=green
+    caption 连接建立 fill=green fade
   @2
-    state 300 断开,连接,全量,增量,在线
+    state 断开,连接,全量,增量,在线 slot=bottom
 
 step 全量同步
+  layout three-tier
   frames 4
   cap Master bgsave RDB | 传RDB+缓冲命令 | Slave加载并回放
-  @all
-    cols Master:200 Slave:500
+  zones Master:200 | Slave:500
   @0
-    box 200 70 140 50 label=bgsave stroke=orange
-    arrow Master Slave RDB文件
+    item bgsave in Master label=bgsave stroke=orange
+    link Master→Slave RDB文件
   @1
-    box 500 70 140 50 label=写盘加载 stroke=orange
-    queue 200 160 6 filled=4 label=复制缓冲区
+    item load in Slave label=写盘加载 stroke=orange
+    queue 复制缓冲 slots=6 filled=4 in Master
   @2
-    arrow Master Slave 缓冲命令
-    box 500 130 140 44 label=回放 stroke=green
+    link Master→Slave 缓冲命令
+    item replay in Slave label=回放 stroke=green
   @3
-    circle 500 80 9 fill=green blink
-    text 数据一致 380 200 fill=green
+    caption 数据一致 fill=green blink
 
 step 增量同步
+  layout three-tier
   frames 3
   cap 断线重连尝试 | 偏移量在缓冲内 | 只传增量命令
-  @all
-    cols Master:200 Slave:500
+  zones Master:200 | Slave:500
   @0
-    line 340 95 500 95 stroke=red draw
-    text 断线! 380 80 fill=red
+    caption 断线! fill=red pulse slot=top
   @1
-    arrow Slave Master 重连
-    box 200 130 160 44 label=repl_offset stroke=purple
+    link Slave→Master 重连PSYNC
+    caption 偏移量在缓冲内 fill=warn
   @2
-    arrow Master Slave 增量
-    text 仅传差量 380 200 fill=green
+    link Master→Slave 增量命令
+    caption 只传增量 fill=green fade
 
-step 哨兵故障转移
+step 读写分离
+  layout three-tier
   frames 3
-  cap Sentinel监控主从 | Master宕机投票 | 提升Slave为新Master
-  @all
-    cols Sentinel:30 Master:310 Slave:600
+  cap 写走Master | 读走Slave | 复制延迟读旧
+  zones 写:30 | Master:310 | Slave:600
   @0
-    circle 30 80 9 fill=purple
-    circle 330 80 9 fill=green
-    circle 630 80 9 fill=blue
+    link 写→Master SET
+    caption 写主库 fill=green slot=top
   @1
-    box 310 70 140 50 label=Master stroke=red expired
-    text 主观下线 380 140 fill=red pulse
+    link 读→Slave GET
+    caption 读从库 fill=blue
   @2
-    box 600 70 140 50 label=新Master stroke=green blink
-    arrow Sentinel Slave 晋升
-    path M30 160 Q380 200 630 160 stroke=green draw
+    caption 可能读到旧数据 fill=warn fade
+  @2 L1
+    note 复制延迟·最终一致 layer=L1

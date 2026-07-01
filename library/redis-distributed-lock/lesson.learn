@@ -1,68 +1,72 @@
-# Redis 分布式锁 — VML
+# Redis 分布式锁 — VML Strict v2
+mode strict
 lesson Redis 分布式锁
 tags Redis, 分布式锁, 高并发
 
 step SET NX抢锁
+  layout three-tier
   frames 3
   cap 多实例抢同一把锁 | SET key NX EX | 仅一个成功
+  zones 实例A:30 | Redis:310 | 实例B:600
   @all
-    cols 实例A:30 Redis:310 实例B:600
-    state 300 竞争,SETNX,持锁,释放
+    state 竞争,SETNX,持锁,释放 slot=bottom
   @0
-    threads 4 zone=实例A grow
-    threads 4 zone=实例B grow
-    arrow 实例A Redis 抢锁
-    arrow 实例B Redis 抢锁
+    threads 4 in 实例A grow
+    link 实例A→Redis 抢锁
   @1
-    circle 50 80 9 fill=green
-    lock 340 70
-    text A✓ 70 86 fill=green
-    circle 620 80 9 fill=red
+    item winner in 实例A label=A✓锁 stroke=green
+    item lock in Redis label=SETNX stroke=purple
   @2
-    box 310 130 140 44 label=lock:order stroke=green
+    item lockKey in Redis label=lock:order stroke=green
+    caption 仅一个成功 fill=green fade
+  @0 L1
+    link 实例B→Redis 抢锁 layer=L1
 
 step 过期误释放
+  layout three-tier
   frames 3
   cap 业务超时锁过期 | B抢到锁 | A删了B的锁
-  @all
-    cols 实例A:30 Redis:310 实例B:600
-    timeline 100 A持锁|A阻塞|锁过期|B获锁|A误删
+  zones 实例A:30 | Redis:310 | 实例B:600
   @0
-    circle 50 80 9 fill=green
-    lock 340 70
-    box 310 130 120 40 label=TTL=5s stroke=orange
+    item lockA in Redis label=TTL=5s stroke=orange
+    caption A持锁 fill=green slot=top
   @1
-    box 310 130 120 40 label=过期! stroke=red expired
-    circle 620 80 9 fill=orange
-    lock 340 70
+    item expired in Redis label=过期! stroke=red blink
+    caption B获锁 fill=orange
   @2
-    arrow 实例A Redis DEL
-    circle 620 80 9 fill=red blink
-    text 误删B的锁! 640 130 fill=red pulse
+    link 实例A→Redis DEL
+    caption 误删B的锁! fill=red pulse
+  @1 L2
+    note 超时释放·竞态经典坑 layer=L2
 
 step UUID防误删
+  layout flow-focus
   frames 3
   cap value存唯一标识 | 释放时Lua校验 | 只删自己的锁
+  zones Redis:310
   @0
-    box 310 70 200 50 label=uuid-A stroke=green
-    lock 340 70
+    item uuid in Redis label=uuid-A stroke=green
+    caption value=唯一ID fill=muted slot=top
   @1
-    codeblock 36 160 2 w=420 if redis.call('get',KEYS[1])==ARGV[1]|  then return redis.call('del',KEYS[1]) end
+    codeblock if redis.call('get',KEYS[1])==ARGV[1]|  then return redis.call('del',KEYS[1]) end highlight=1
   @2
-    circle 50 80 9 fill=green blink
-    text 校验通过才删 80 200 fill=green
+    caption 校验通过才删 fill=green fade
+  @2 L1
+    note Lua原子·防误删他人锁 layer=L1
 
 step Redisson续期
+  layout three-tier
   frames 3
   cap watchdog自动续期 | 业务没完锁不失效 | 防过期误释放
-  @all
-    cols 业务:30 Redisson:310 Redis:600
+  zones 业务:30 | Redisson:310 | Redis:600
   @0
-    box 310 70 140 44 label=watchdog stroke=purple
-    arrow 业务 Redisson 持锁
+    item watchdog in Redisson label=watchdog stroke=purple
+    link 业务→Redisson 持锁
   @1
-    path M310 120 Q450 160 600 120 stroke=purple draw
-    text 续期 450 145 fill=purple
-    arrow Redisson Redis 续期
+    link Redisson→Redis 续期
+    caption 自动续期 fill=purple fade
   @2
-    box 600 70 120 44 label=TTL刷新 stroke=green blink
+    item ttl in Redis label=TTL刷新 stroke=green blink
+    caption 业务没完锁不失效 fill=green
+  @2 L2
+    note watchdog·看门狗续期 layer=L2

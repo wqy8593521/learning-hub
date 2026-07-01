@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { readManifest, validateManifestShape } from './lib/manifest.mjs';
-import { parseLearnFile } from './lib/load-vml.mjs';
+import { parseLearnFile, lintLearnLesson } from './lib/load-vml.mjs';
 import { parseQuizFile } from './lib/load-quiz.mjs';
 import { parseNarrateFile } from './lib/load-narrate.mjs';
 import { renderLessonHtml, TEMPLATE_PATH } from './lib/lesson-html.mjs';
@@ -43,14 +43,21 @@ function validateLessonDir(dir) {
   }
 
   let lesson = null;
+  let learnSource = '';
   if (hasLearn) {
     try {
+      learnSource = fs.readFileSync(learnPath, 'utf8');
       lesson = parseLearnFile(learnPath);
       if (!lesson.title) errors.push('lesson.learn 未解析出 title');
       if (!lesson.steps?.length) errors.push('lesson.learn 至少需要一个 step');
       if (lesson.steps?.length > 5) warnings.push(`step 数 ${lesson.steps.length} 超过建议上限 5`);
       for (const step of lesson.steps || []) {
         if (step.frames > 4) warnings.push(`step「${step.short}」frames=${step.frames} 超过建议上限 4`);
+      }
+      for (const issue of lintLearnLesson(lesson, learnSource)) {
+        const msg = `[${issue.id}] ${issue.msg}`;
+        if (issue.level === 'error') errors.push(msg);
+        else warnings.push(msg);
       }
     } catch (e) {
       errors.push(`lesson.learn 解析失败: ${e.message}`);
@@ -143,6 +150,7 @@ function validateLessonDir(dir) {
     if (html) {
       if (!html.includes('lesson-player.js')) errors.push('播放器模板未引用 lesson-player.js');
       if (!html.includes('vml.js')) errors.push('播放器模板未引用 vml.js');
+      if (!html.includes('vml-strict.js')) warnings.push('播放器模板未引用 vml-strict.js（strict 课无法播放）');
       if (manifest.quiz && !html.includes('quizOverlay') && !html.includes('quizLayer')) {
         warnings.push('manifest.quiz=true 但播放器模板无测验层 (quizLayer/quizOverlay)');
       }

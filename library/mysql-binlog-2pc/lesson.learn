@@ -1,60 +1,75 @@
-# binlog 与两阶段提交 — VML
+# binlog 与两阶段提交 — VML Strict v2
+mode strict
 lesson binlog 与两阶段提交
 tags MySQL, binlog, 事务
 
 step binlog作用
+  layout three-tier
   frames 3
-  cap Server层逻辑日志 | 主从复制靠binlog | 数据归档恢复
+  cap Server层逻辑日志 | 主从复制靠binlog | 归档恢复数据
+  zones 主库:200 | 从库:500
   @all
-    cols 主库:200 从库:500
+    link 主库→从库 binlog传
   @0
-    box 200 70 160 50 label=UPDATE stroke=purple
-    arrow 主库 从库 binlog传
+    item UPDATE in 主库 label=UPDATE stroke=purple
+    caption 写操作落binlog fill=muted slot=top
   @1
-    box 500 70 160 50 label=重放 stroke=green
-    line 360 95 500 95 stroke=green draw
+    item 重放 in 从库 label=重放 stroke=green
+    caption 从库重放SQL fill=green fade
   @2
-    flow 620 50 写binlog|传从库|重放|一致
+    flow 写binlog|传从库|重放|数据一致
+  @2 L2
+    note ROW格式记行变更·更安全 layer=L2
 
 step 写入时机
+  layout flow-focus
   frames 3
-  cap STATEMENT/ROW/MIXED | ROW记录行变更 | 事务提交时写
+  cap STATEMENT记SQL | ROW记行变更 | 提交时写binlog
+  zones 事务:30 | binlog:400
   @0
-    compare 80 55 300 STATEMENT|记SQL|可能不一致 vs ROW|记行变更|安全
+    compare STATEMENT|记SQL|可能不一致 vs ROW|记行变更|安全
   @1
-    box 300 150 200 50 label=row格式 stroke=green
-    text 记录前后行 380 220 fill=green
+    item row格式 in binlog label=ROW格式 stroke=green
+    caption 记录前后行 fill=green slot=top
   @2
-    cols 事务:30 binlog:400
-    arrow 事务 binlog 提交时写
-    lock 400 130
+    link 事务→binlog 提交时写
+    item 提交锁 in binlog label=落盘 stroke=purple
+  @2 L1
+    note 事务提交后才写binlog layer=L1
 
 step 两阶段协调
+  layout three-tier
   frames 4
-  cap InnoDB先redo prepare | 写binlog落盘 | redo commit标记
+  cap redo先prepare | 写binlog落盘 | redo commit
+  zones InnoDB:200 | binlog:400
   @all
-    cols InnoDB:200 binlog:400
-    timeline 100 prepare|binlog|commit|返回
+    timeline InnoDB prepare|binlog|commit|返回
   @0
-    box 200 70 140 44 label=redo prepare stroke=orange
+    item prepare in InnoDB label=redo prepare stroke=orange
+    caption 阶段1·prepare fill=orange slot=top
   @1
-    arrow InnoDB binlog 写
-    box 400 70 140 44 label=binlog stroke=purple
+    link InnoDB→binlog 写
+    item binlog in binlog label=binlog stroke=purple
   @2
-    box 200 70 140 44 label=redo commit stroke=green
+    item commit in InnoDB label=redo commit stroke=green
+    caption 阶段2·commit fill=green slot=top
   @3
-    circle 50 80 9 fill=green blink
+    caption 事务提交完成✓ fill=green blink
+  @3 L2
+    note 2PC协调redo与binlog layer=L2
 
 step 崩溃恢复
+  layout three-tier
   frames 3
   cap redo有binlog无→回滚 | 都有→提交 | 保证主从一致
+  zones InnoDB:200 | binlog:400
   @0
-    box 200 70 100 40 label=redo✓ stroke=green
-    box 400 70 100 40 label=bin✗ stroke=red
-    text 回滚 380 140 fill=red
+    item redo在 in InnoDB label=redo✓ stroke=green
+    item bin无 in binlog label=bin✗ stroke=red
+    caption 回滚事务 fill=red slot=top
   @1
-    box 200 70 100 40 label=redo✓ stroke=green
-    box 400 70 100 40 label=bin✓ stroke=green
-    text 提交 380 140 fill=green blink
+    item redo在 in InnoDB label=redo✓ stroke=green
+    item bin有 in binlog label=bin✓ stroke=green
+    caption 提交事务 fill=green blink
   @2
-    compare 80 200 300 无2PC|redo/bin不一致|主从裂 vs 2PC|协调|一致
+    compare 无2PC|redo/bin不一致|主从裂 vs 2PC|协调|一致

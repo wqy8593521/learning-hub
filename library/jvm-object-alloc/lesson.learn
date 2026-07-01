@@ -1,59 +1,61 @@
-# 对象创建与内存分配 — VML
+# 对象创建与内存分配 — VML Strict v2
+mode strict
 lesson 对象创建与内存分配
 tags JVM, 对象, 内存, 后端八股
 
 step new对象流程
+  layout flow-focus
   frames 4
   cap 类加载检查 | 分配内存 | 零值初始化 | 构造方法
+  zones 堆:310
   @all
-    flow 620 50 检查|分配|零值|构造|<init>
+    flow 检查|分配|零值|构造|<init>
   @0
-    code 30 200 300 40 "Object o = new Object();" java
+    codeblock Object o = new Object(); highlight=1
   @1
-    box 120 60 200 80 label=堆 stroke=blue
-    circle 160 90 10 fill=green blink
+    item obj in 堆 label=堆上对象 stroke=green blink
   @2
-    text 字段=0/null 160 160 fill=muted
+    caption 字段=0/null fill=muted slot=top
   @3
-    text 执行构造方法 160 200 fill=green
+    caption 执行<init>构造 fill=green fade
 
 step 栈与堆
+  layout three-tier
   frames 3
   cap 对象在堆 | 引用在栈 | 方法局部变量
-  @all
-    cols 栈:30 堆:400
-    stack 30 70 main,method
+  zones 栈:30 | 堆:400
   @0
-    box 30 150 100 40 label=ref→ stroke=green
-    arrow 栈 堆 指向
+    item ref in 栈 label=ref→ stroke=green
+    link 栈→堆 指向
   @1
-    box 400 70 180 80 label=对象实例 stroke=blue
+    item instance in 堆 label=对象实例 stroke=blue
   @2
-    compare 80 200 300 栈|引用+基本类型|线程私有 vs 堆|对象实例|共享
+    compare 栈|引用+基本类型|私有 vs 堆|对象实例|线程共享
 
 step TLAB分配
+  layout three-tier
   frames 3
   cap 线程本地分配缓冲 | 避免竞争堆锁 | 提升分配速度
-  @all
-    threads 4 zone=线程
-    box 120 150 400 50 label=堆 stroke=blue
+  zones 线程:30 | 堆:200
   @0
-    box 30 130 80 40 label=TLAB stroke=green
-    box 130 130 80 40 label=TLAB stroke=green
+    item tlab in 线程 label=TLAB stroke=green
+  @1+
+    threads 4 in 线程 grow
+    caption 每线程一块缓冲 fill=muted slot=top
   @1
-    text 线程先在TLAB分配 200 200 fill=green
+    caption 先在TLAB分配 fill=green fade
   @2
-    text TLAB满才抢堆锁 200 240 fill=warn
+    caption TLAB满才抢堆锁 fill=warn
 
 step 逃逸分析
+  layout flow-focus
   frames 3
   cap 对象未逃出方法 | JIT栈上分配 | 可能消除锁
   @all
-    stack 200 60 main,method
+    stack main,method
   @0
-    box 200 130 140 50 label=局部对象 stroke=orange
-    text 未return 200 200 fill=green
+    caption 局部对象未return fill=green slot=top
   @1
-    text 栈上分配/标量替换 200 250 fill=green
+    caption 栈上分配/标量替换 fill=green fade
   @2
-    compare 80 280 300 逃逸|需堆分配 vs 未逃逸|栈上优化
+    compare 逃逸|需堆分配 vs 未逃逸|栈上优化

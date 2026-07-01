@@ -34,13 +34,125 @@ shared/vml.js     ← 解析+渲染器（你维护一份）
 2. 用户给考点 → 拆 3-5 step，每步 2-3 帧
 3. 写 `library/{id}/lesson.learn` 和 `lesson.quiz`
 4. 更新 `manifest.yaml` 的 tags、steps、quiz 字段
-5. 校验：`node bin/learning-hub.js validate library/{id}`
+5. 校验：`node bin/learning-hub.js validate library/{id}`（**lint 零 error**）
 6. 同步目录：`node bin/learning-hub.js sync`
 7. 预览：`node bin/learning-hub.js serve` → 验证自动播放 + L0/L1/L2 + 插题
 
 完整 SOP 见 `workflows/new-lesson.md`。
 
-## VML 语法速查
+## 当前策略（重要）
+
+| 范围 | 模式 | 说明 |
+|------|------|------|
+| `library/*` | **Strict v2** | 54 门课已整文件重写（`mode strict`） |
+| `prototypes/vml-v2/*` | **对照/试验** | 标杆课与 element-catalog |
+| `migrate-vml` / 批量重写 | **禁止** | validate 通过 ≠ 视觉合格 |
+
+## Strict v2（仅原型试验）
+
+引擎是 `shared/vml-strict.js`，与原型页引用**同一份文件**。原型能看，是因为：
+
+1. 只测了 **3–4 门手写课**（redis-cache-breakdown / redis-hot-key / hashmap-collision / element-catalog）
+2. 每帧 **刻意控制元素数量**（通常 1–2 个主图元）
+3. 对比页右侧当时加载的是 **legacy library**，不是 strict
+
+批量「重写」54 门课 ≠ 原型测试：Agent 把 legacy 信息密度原样塞进 strict，同 zone 多 `item` 叠在一起、`link` 指向 item 名等，**引擎没坏，内容写法不合格**。
+
+## 如何让 AI 整文件重写（禁止 patch）
+
+Agent 默认倾向 `StrReplace` 小改。要**删除重写**，需同时满足：
+
+### 1. 用户指令写清楚（推荐原文）
+
+```
+完全重写 library/<id>/lesson.learn，不要 patch：
+- 用 Write 整文件覆盖，禁止 StrReplace
+- 旧文件只读考点，不复制任何 DSL 行
+- mode strict，参考 prototypes/vml-v2/redis-cache-breakdown.learn 的写法密度
+- 一次只改这一门课，写完 validate
+```
+
+### 2. 启用 Cursor 规则
+
+已添加 `.cursor/rules/lesson-full-rewrite.mdc`，编辑 `lesson.learn` 时会自动注入「禁止 patch」约束。
+
+### 3. 流程约束
+
+| 步骤 | 动作 |
+|------|------|
+| 参考 | 读 legacy / manifest 提取 **step 名 + 考点** |
+| 标杆 | 对照 `prototypes/vml-v2/*.learn` 的帧密度 |
+| 写入 | `Write` 全新全文到 `prototypes/vml-v2/` 或 `library/<id>/` |
+| 验收 | `validate` → `serve` → 原型对比页肉眼检查 |
+| 入库 | 仅验收通过后复制到 library |
+
+### 4. 避免踩坑
+
+- 不说「迁移」「转换」「批量」——会触发机械替换
+- 不说「改一下」——会触发 patch；改说 **「从零重写」**
+- 一次一课，不要「全部课程重写」
+
+```python
+mode strict
+lesson 课程标题
+tags 标签1, 标签2
+
+step 步骤短名
+  layout three-tier      # 配方（必填）
+  frames 3
+  cap L0 | L1 | L2
+  zones 线程:30 | Redis:310 | MySQL:600   # 名:坐标，对齐 legacy cols
+  @all
+    item hotkey in Redis label=hotkey stroke=red
+  @0
+    link 线程→Redis GET
+    stress QPS grow max=100
+  @1 L2
+    note 底层说明 layer=L2
+```
+
+`zones` 可省略坐标（引擎自动均分），但 **三列架构课务必写 `:30 :310 :600`**，与 legacy `cols 线程:30 Redis:310 MySQL:600` 一致。
+
+### 配方选型
+
+| 考点 | layout |
+|------|--------|
+| 缓存/并发/三列架构 | `three-tier` |
+| 因果链/单主线 | `flow-focus` |
+| 横向 items + 公式 | `row-items` |
+| buckets/chain/tree | `flow-focus`（结构 step） |
+
+### Strict 语义命令
+
+| 命令 | 示例 |
+|------|------|
+| `zones` | `zones 线程:30 \| Redis:310 \| MySQL:600` |
+| `item` | `item hotkey in Redis label=hotkey sub=TTL=3s stroke=red` |
+| `items` | `items keyA keyB keyC stroke=blue` |
+| `link` | `link 请求→Redis GET` |
+| `threads` | `threads 6 in 请求 grow` |
+| `stress` / `meter` | `stress DB连接 grow max=100 pulse` |
+| `caption` / `note` | `caption 说明 fill=warn` / `note 底层 layer=L2` |
+| `badge` / `callout` | `badge ×1000 slot=right` / `callout hotkey 说明` |
+| `flow` / `compare` | `flow 步骤1\|步骤2` / `compare A\|快 vs B\|慢` |
+| `state` / `timeline` | `state 新建,运行,结束 slot=bottom` |
+| `buckets` / `chain` / `tree` | `buckets 16 hi=0` / `chain "Aa" "BB"` / `tree list 8` |
+| `queue` / `stack` / `table` | `queue 等待 slots=6 filled=4 in Redis` |
+| `math` / `codeblock` | `math "O(n \\log n)" slot=bottom` |
+
+**插画型**（仅占位，不可配置）：`tree rb`、`tree btree`
+
+### Strict 硬约束
+
+- 每帧主图元建议 ≤3，cap 每段 ≤20 字
+- 三列架构课 `zones` 必须带坐标 `:30 :310 :600`
+- 标杆参考：`library/redis-cache-breakdown/`、`library/hashmap-collision/`
+
+### Legacy 坐标写法
+
+历史存档或对照用。新内容勿用。
+
+## Legacy 语法速查（旧课 / mode free）
 
 ```python
 lesson 课程标题
@@ -191,6 +303,8 @@ step 步骤短名          # 须与 lesson.learn 的 step 一致
 
 ```bash
 node bin/learning-hub.js narrate library/<id>
+# 默认 zh-CN-YunxiNeural + rate 0.95（讲解男声、略慢）
+node bin/learning-hub.js narrate library/<id> --voice zh-CN-XiaoyiNeural --rate 0.9 --force
 # → audio/s0-f0-d0.mp3 + audio/narrate.json（含 cues 时间轴）
 ```
 

@@ -1,0 +1,37 @@
+---
+description: lesson.learn/.quiz/.narrate 必须整文件重写，禁止 patch 旧 DSL
+globs: library/**/lesson.learn,library/**/lesson.quiz,library/**/lesson.narrate,prototypes/**/*.learn
+alwaysApply: false
+---
+
+# 课程内容：整文件重写，禁止 patch
+
+## 何时触发
+
+用户说「重写」「完全重写」「从零写」「不要 patch」「不要迁移」等，或修改 `lesson.learn` / `lesson.quiz` / `lesson.narrate` 时默认遵守本规则。
+
+## 必须做
+
+1. **整文件覆盖**：用 `Write` 写出完整新文件；**禁止**对 `.learn` / `.quiz` / `.narrate` 使用 `StrReplace`、行级 diff、或「保留原结构只改几行」。
+2. **先读再写，不写边改**：可读旧文件或 `manifest.yaml` 仅提取 **考点、step 主题、tags**；旧 DSL 行 **不得** 复制进新文件。
+3. **一次一课**：每次任务只重写 **一个** `library/<id>/`（或一个 `prototypes/vml-v2/*.learn`），写完 `validate library/<id>` 再下一课。
+4. **Strict 试点**：新 strict 内容先写 `prototypes/vml-v2/<id>.learn`，浏览器验收后再复制入库；**禁止** `migrate-vml` 或批量脚本改 library。
+5. **帧密度**：每帧 ≤2 个主图元 + ≤1 条 caption/note；同 zone 同帧禁止多个 `item` 叠放。
+
+## 禁止做
+
+- ❌ `StrReplace` / 局部替换旧坐标行
+- ❌ `migrate-vml` 或启发式 cols→zones 转换
+- ❌ 一次 PR/对话内批量改 54 门 `library/*`
+- ❌ 把 legacy 的 `box 320 68` 机械换成 `item` 而保留同一帧所有图元
+
+## 推荐用户指令（可复制）
+
+```
+重写 library/redis-cache-breakdown/lesson.learn：
+- 删除原内容，从零写 mode strict
+- 只用 Write，禁止 StrReplace
+- 参考考点：缓存击穿四步…
+- 参考标杆：prototypes/vml-v2/redis-cache-breakdown.learn
+- 写完 validate 并说明与 legacy 逐步对照结果
+```

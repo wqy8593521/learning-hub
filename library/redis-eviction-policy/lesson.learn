@@ -1,51 +1,54 @@
-# Redis 内存淘汰 — VML
+# Redis 内存淘汰 — VML Strict v2
+mode strict
 lesson Redis 内存淘汰
 tags Redis, 内存, 淘汰, 后端八股
 
 step maxmemory
+  layout flow-focus
   frames 3
   cap 设置内存上限 | 达到阈值触发淘汰 | 或拒绝写入
   @all
-    meter 120 80 400 内存 grow max=100
+    stress 内存 grow max=100
   @0
-    text maxmemory 2gb 200 60 fill=blue
+    caption maxmemory 2gb fill=blue slot=top
   @1
-    badge 100% 520 80 fill=red pulse
-    text 达到上限! 200 130 fill=red
+    badge 100% slot=right fill=red pulse
+    caption 达到上限! fill=red
   @2
-    compare 80 180 300 noeviction|拒绝写 vs 淘汰策略|删key腾空间
+    compare noeviction|拒绝写 vs 淘汰策略|删key腾空间
 
 step LRU与LFU
+  layout flow-focus
   frames 3
   cap LRU淘汰最久未用 | LFU淘汰访问频率低 | Redis4.0+支持LFU
+  zones Redis:310
   @all
-    queue 380 80 6 filled=5 label=Key列表
+    queue Key列表 slots=6 filled=5 in Redis
   @0
-    box 380 180 100 40 label=keyA stroke=muted
-    text 最久未访问 380 230 fill=orange
-    arrow keyA 淘汰 删除
+    caption 最久未访问 fill=orange
   @1
-    text volatile-lru 200 280 fill=green
-    text 只淘汰设了TTL的key 380 280 fill=green
+    caption volatile-lru·仅TTL key fill=green
   @2
-    compare 80 300 300 LRU|看时间|经典 vs LFU|看频率|防热点误杀
+    compare LRU|看时间|经典 vs LFU|看频率|防热点误杀
 
 step 淘汰策略
+  layout flow-focus
   frames 2
   cap volatile-*只淘汰TTL key | allkeys-*全部key | random随机
   @0
-    table 60 65 策略,说明/allkeys-lru,所有key LRU/volatile-lru,仅TTL key/allkeys-lfu,所有key LFU/noeviction,不淘汰拒绝写
+    table 策略,说明/allkeys-lru,所有key LRU/volatile-lru,仅TTL key/allkeys-lfu,所有key LFU/noeviction,不淘汰拒绝写
   @1
-    text 生产常用allkeys-lru 200 200 fill=green
+    caption 生产常用allkeys-lru fill=green
 
 step 过期与淘汰
+  layout flow-focus
   frames 3
   cap 惰性删除 | 定期删除 | 内存淘汰是另一层
   @all
-    flow 620 50 访问时检查|定期采样|内存满→淘汰
+    flow 访问时检查|定期采样|内存满→淘汰
   @0
-    text 惰性:访问时删 200 130 fill=blue
+    caption 惰性:访问时删 fill=blue
   @1
-    text 定期:随机抽查 200 170 fill=blue
+    caption 定期:随机抽查 fill=blue
   @2
-    text 内存淘汰=最后防线 200 220 fill=red
+    caption 内存淘汰=最后防线 fill=red

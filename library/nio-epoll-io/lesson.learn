@@ -1,52 +1,53 @@
-# NIO 与 IO 多路复用 — VML
+# NIO 与 IO 多路复用 — VML Strict v2
+mode strict
 lesson NIO 与 IO 多路复用
 tags 操作系统, NIO, epoll, 后端八股
 
 step BIO阻塞
+  layout flow-focus
   frames 3
   cap 一连接一线程 | accept后read阻塞 | 线程数暴涨
-  @all
-    threads 6 zone=连接 grow
   @0
-    box 200 70 120 44 label=accept stroke=blue
-    meter 120 200 400 线程数 grow max=100
+    items accept stroke=blue
+    stress 线程数 grow max=100
   @1
-    circle 200 80 9 fill=orange blink
-    text read阻塞 200 130 fill=warn
+    caption read阻塞 fill=warn
   @2
-    badge ×1000 660 150 pulse
-    text 万连接=万线程 380 250 fill=red
+    badge ×1000 slot=right fill=red pulse
+    caption 万连接=万线程 fill=red
 
 step NIO非阻塞
+  layout three-tier
   frames 3
   cap Channel+Buffer | Selector轮询 | 就绪才读写
-  @all
-    cols 连接:30 Selector:310 线程:600
+  zones 连接:30 | Selector:310 | 线程:600
   @0
-    queue 30 150 8 filled=5 label=Channel
+    queue Channel slots=8 filled=5 in 连接
   @1
-    box 310 70 160 50 label=Selector stroke=purple
-    arrow 连接 Selector 注册
+    item Sel in Selector label=Selector stroke=purple
+    link 连接→Selector 注册
   @2
-    arrow Selector 线程 就绪事件
-    text 单线程管多连接 600 130 fill=green
+    link Selector→线程 就绪事件
+    caption 单线程管多连接 fill=green
 
 step epoll
+  layout flow-focus
   frames 3
   cap Linux高效多路复用 | 事件驱动 | Redis/Netty底层
   @all
-    flow 620 50 epoll_create|epoll_ctl|epoll_wait|回调
+    flow epoll_create|epoll_ctl|epoll_wait|回调
   @0
-    box 200 70 200 44 label=epoll_wait stroke=green
+    items epoll_wait stroke=green
   @1
-    box 200 130 280 50 label=就绪fd列表 stroke=orange blink
+    caption 就绪fd列表 fill=orange blink
   @2
-    compare 80 200 300 select|O(n)轮询 vs epoll|O(1)事件|高并发
+    compare select|O(n)轮询 vs epoll|O(1)事件|高并发
 
 step 三种模型
+  layout flow-focus
   frames 2
   cap BIO同步阻塞 | NIO同步非阻塞 | AIO异步
   @0
-    table 60 65 模型,特点/BIO,一连接一线程/NIO,Selector多路复用/AIO,回调异步
+    table 模型,特点/BIO,一连接一线程/NIO,Selector多路复用/AIO,回调异步
   @1
-    text Netty基于NIO+epoll 200 250 fill=green
+    caption Netty基于NIO+epoll fill=green

@@ -1,52 +1,53 @@
-# RDB 与 AOF — VML
+# RDB 与 AOF — VML Strict v2
+mode strict
 lesson RDB 与 AOF
 tags Redis, 持久化, 原理
 
 step RDB快照
+  layout three-tier
   frames 3
   cap 定时fork子进程 | 写压缩二进制快照 | 恢复快体积小
-  @all
-    cols 主进程:200 子进程:500
+  zones 主进程:200 | 子进程:500
   @0
-    box 200 70 160 50 label=内存数据 stroke=green
-    meter 120 140 400 写入 grow max=80
+    item mem in 主进程 label=内存数据 stroke=green
+    stress 写入 grow max=80
   @1
-    path M200 120 Q350 100 500 120 stroke=blue draw
-    box 500 70 140 50 label=fork写盘 stroke=blue
-    text dump.rdb 500 140 fill=blue
+    item fork in 子进程 label=fork写盘 stroke=blue
+    link 主进程→子进程 fork
+    caption dump.rdb fill=blue
   @2
-    compare 80 200 300 RDB|快照|恢复快 vs 两次fork间|可能丢数据
+    compare RDB|快照|恢复快 vs 两次fork间|可能丢数据
 
 step AOF日志
+  layout three-tier
   frames 3
   cap 每条写命令追加 | 重启重放恢复 | always/everysec/no
-  @all
-    cols 写命令:30 AOF文件:310
+  zones 写命令:30 | AOF文件:310
   @0
-    arrow 写命令 AOF文件 APPEND
-    box 310 70 180 50 label=appendonly.aof stroke=orange
+    link 写命令→AOF文件 APPEND
+    item aof in AOF文件 label=appendonly.aof stroke=orange
   @1
-    box 310 70 180 50 label=SET k v stroke=orange
-    box 310 130 180 36 label=INCR c stroke=orange
-    box 310 170 180 36 label=HSET h f stroke=orange
+    caption SET·INCR·HSET fill=orange slot=top
   @2
-    timeline 100 启动|重放AOF|恢复数据
+    timeline 启动|重放AOF|恢复数据 slot=bottom
 
 step 混合持久化
+  layout flow-focus
   frames 3
   cap RDB做全量基底 | AOF记增量 | Redis4.0+推荐
   @0
-    box 200 70 140 50 label=RDB基底 stroke=blue
-    box 380 70 180 50 label=AOF增量 stroke=orange
+    items RDB AOF stroke=blue
+    caption 混合持久化 fill=muted slot=top
   @1
-    line 340 95 380 95 stroke=green draw
-    text 混合文件 380 140 fill=green
+    caption RDB基底+AOF增量 fill=green fade
   @2
-    compare 80 200 300 纯RDB|丢多|快恢复 vs 纯AOF|文件大|恢复慢 vs 混合|均衡
+    compare 纯RDB|丢多|快恢复 vs 纯AOF|文件大|慢 vs 混合|均衡
 
 step 选型
+  layout flow-focus
   frames 2
-  cap 可丢用RDB | 少丢用AOF | 生产混合+主从
+  cap 可丢用RDB | 少丢用AOF | 生产用混合
+  @0
+    flow 可丢数据?|RDB|少丢?|AOF|生产|混合
   @1
-    flow 620 50 能丢?|RDB|不能丢?|AOF|生产|混合+副本
-    table 60 200 策略,丢数据/RDB,分钟级/AOF,秒级/混合,秒级+快恢复
+    table 场景,推荐/缓存,混合/消息,纯AOF/灾备,RDB

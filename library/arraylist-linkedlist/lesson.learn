@@ -1,56 +1,59 @@
-# ArrayList vs LinkedList — VML
+# ArrayList vs LinkedList — VML Strict v2
+mode strict
 lesson ArrayList vs LinkedList
 tags Java, 集合, 后端八股
 
 step 底层结构
+  layout flow-focus
   frames 3
-  cap ArrayList连续数组 | LinkedList双向链表 | 内存布局完全不同
+  cap ArrayList连续数组 | LinkedList双向链表 | 内存布局不同
   @0
-    buckets 8 80 130
-    text 连续内存 380 50 fill=green
+    buckets 8
+    caption 连续内存 fill=green slot=top
   @1
-    tree list 380 90 6
-    text 节点分散 380 50 fill=orange
+    tree list 6
+    caption 节点分散 fill=orange fade
   @2
-    compare 80 200 300 ArrayList|数组|连续 vs LinkedList|链表|节点
+    compare ArrayList|数组|连续 vs LinkedList|链表|节点
+  @1 L1
+    note ArrayList Object[]·LL Node双向 layer=L1
 
 step 随机访问
+  layout flow-focus
   frames 3
-  cap 数组下标O(1)直达 | 链表要从头遍历 | get(index)差很大
-  @all
-    cols ArrayList:200 LinkedList:500
+  cap 数组下标O(1) | 链表从头遍历 | get差很大
   @0
-    line 200 130 280 130 stroke=green draw
-    text arr[3] 220 140 fill=green
-    math 200 180 "O(1)"
+    caption arr[3]直达 fill=green slot=top
+    math "O(1)" slot=bottom
   @1
-    path M500 130 Q560 160 620 190 stroke=orange draw
-    path M620 190 Q560 220 500 250 stroke=orange draw
-    math 500 280 "O(n)"
+    caption 从头遍历 fill=orange fade
+    math "O(n)" slot=bottom
   @2
-    meter 200 200 120 ArrayList grow max=100
-    meter 500 200 120 LinkedList grow max=20
+    compare ArrayList|get快|O(1) vs LinkedList|get慢|O(n)
+  @2 L1
+    note 随机访问ArrayList碾压 layer=L1
 
 step 头尾插入
+  layout flow-focus
   frames 3
-  cap 数组尾部摊还O(1) | 头部插入要搬移 | 链表头插O(1)
-  @all
-    cols 尾部:30 数组:310
+  cap 数组尾部摊还O(1) | 头部插入搬移 | 链表头插O(1)
   @0
-    buckets 8 80 130
-    arrow 尾部 数组 追加
-    text 尾部快 220 200 fill=green
+    buckets 8
+    caption 尾部追加快 fill=green slot=top
   @1
-    path M114 130 Q60 100 114 70 stroke=red draw
-    text 头部搬移 220 200 fill=red pulse
+    caption 头部搬移慢 fill=red pulse
   @2
-    tree list 380 90 4
-    circle 380 70 8 fill=green
-    text 头插O(1) 380 200 fill=green
+    tree list 4
+    caption 头插O(1) fill=green fade
+  @2 L1
+    note add(0)ArrayList O(n)·LL O(1) layer=L1
 
 step 选型结论
+  layout flow-focus
   frames 2
-  cap 查多用ArrayList | 头尾插多用LinkedList | 实际ArrayList更常见
+  cap 查多用ArrayList | 头插多用LinkedList | 默认ArrayList
   @1
-    table 60 80 操作,Array,Linked/get(i),O(1),O(n)/头插,O(n),O(1)/尾插,O(1),O(1)
-    flow 620 50 查多?|ArrayList|头插多?|LinkedList|默认ArrayList
+    table 操作,Array,Linked/get(i),O(1),O(n)/头插,O(n),O(1)/尾插,O(1),O(1) slot=bottom
+    flow 查多?|ArrayList|头插多?|LinkedList|默认ArrayList slot=bottom
+  @1 L2
+    note 工程默认ArrayList·缓存友好 layer=L2

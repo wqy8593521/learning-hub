@@ -1,58 +1,67 @@
-# 类加载与双亲委派 — VML
+# 类加载与双亲委派 — VML Strict v2
+mode strict
 lesson 类加载与双亲委派
 tags JVM, 类加载, Java
 
 step 加载三阶段
+  layout flow-focus
   frames 3
   cap 加载读字节码 | 链接验证准备解析 | 初始化执行clinit
+  zones 加载:30 | 解析:310
   @all
-    cols 加载:30 解析:310
-    flow 620 50 加载|链接|初始化|可用
-    state 300 加载,链接,初始化,就绪
+    flow 加载|链接|初始化|可用
+    state 加载,链接,初始化,就绪 slot=bottom
   @0
-    box 310 70 180 50 label=.class文件 stroke=blue
-    arrow 加载 解析 读入
+    item classfile in 解析 label=.class文件 stroke=blue
+    link 加载→解析 读入
+    caption 读入字节码 fill=muted slot=top
   @1
-    box 300 70 180 50 label=验证+准备 stroke=orange
-    text 验证字节码 380 140 fill=orange
+    item verify in 解析 label=验证+准备 stroke=orange
+    caption 链接三子步 fill=lyellow fade
   @2
-    box 300 70 180 50 label=初始化 stroke=green blink
-    codeblock 36 160 1 w=400 static { ... }
+    item init in 解析 label=初始化 stroke=green blink
+  @2 L1
+    codeblock static {|  clinit();} highlight=1 layer=L1
+  @2 L2
+    note 类首次主动使用才初始化 layer=L2
 
 step 双亲委派
+  layout three-tier
   frames 4
   cap 子加载器先问父 | 父能加载则父加载 | 保证核心类安全
-  @all
-    cols 应用:30 扩展:250 启动:500
+  zones 应用:30 | 扩展:250 | 启动:500
   @0
-    arrow 应用 扩展 委派
-    box 250 70 120 44 label=Ext stroke=blue
+    link 应用→扩展 委派
+    item ext in 扩展 label=Ext stroke=blue
   @1
-    arrow 扩展 启动 委派
-    box 500 70 120 44 label=Bootstrap stroke=green
+    link 扩展→启动 委派
+    item boot in 启动 label=Bootstrap stroke=green
   @2
-    box 500 70 120 44 label=java.lang.String stroke=green blink
-    text 父加载成功 380 150 fill=green
+    item str in 启动 label=java.lang.String stroke=green blink
+    caption 父加载成功 fill=green fade
   @3
-    compare 80 200 300 双亲委派|防篡改|核心类安全 vs 破坏|自定义加载|SPI
+    compare 双亲委派|防篡改|核心类安全 vs 破坏委派|自定义加载|SPI
 
 step 类加载器
+  layout three-tier
   frames 3
   cap Bootstrap加载核心库 | Ext加载扩展库 | App加载classpath
+  zones 启动:500 | 扩展:250 | 应用:30
   @0
-    stack 500 60 Bootstrap,rt.jar
-    stack 250 60 Ext,lib/ext
-    stack 30 60 App,classpath
+    item boot in 启动 label=Bootstrap sub=rt.jar stroke=green
   @1
-    box 500 130 140 44 label=String stroke=green
-    box 250 180 140 44 label=扩展类 stroke=blue
-    box 30 230 140 44 label=业务类 stroke=orange
+    item ext in 扩展 label=Extension sub=lib/ext stroke=blue
   @2
-    line 80 250 500 130 stroke=muted draw
+    item app in 应用 label=AppClassLoader sub=classpath stroke=orange
+    caption 自上而下委派 fill=muted slot=top
 
 step 打破委派
+  layout flow-focus
   frames 2
-  cap SPI需线程上下文类加载器 | Tomcat隔离Web应用 | 自定义loadClass
+  cap SPI需线程上下文类加载器 | Tomcat隔离Web应用
+  @0
+    timeline 请求|TCCL|加载实现|注入SPI
   @1
-    compare 80 55 300 SPI|TCCL|父无法加载子加载 vs Tomcat|WebApp隔离|防冲突
-    timeline 100 请求|TCCL|加载实现|注入
+    compare SPI|TCCL|父无法加载子 vs Tomcat|WebApp隔离|防冲突
+  @1 L2
+    note 自定义loadClass可打破委派 layer=L2

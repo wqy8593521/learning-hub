@@ -1,67 +1,63 @@
-# JVM 分代 GC — VML
+# JVM 分代 GC — VML Strict v2
+mode strict
 lesson JVM 分代 GC
 tags JVM, GC, 后端八股
 
 step 分代布局
+  layout flow-focus
   frames 3
   cap 新生代放新对象 | 老年代放长寿对象 | 元空间放类信息
+  zones 新生代:120 | 老年代:400
   @0
-    box 120 60 200 80 label=新生代 stroke=green
-    box 360 60 280 80 label=老年代 stroke=blue
-    box 120 160 520 40 label=元空间 stroke=muted
+    item young in 新生代 label=新生代 stroke=green
+    item old in 老年代 label=老年代 stroke=blue
   @1
-    circle 150 90 8 fill=green
-    circle 180 90 8 fill=green
-    text 新对象→新生代 200 155 fill=green
+    item newobj in 新生代 label=新对象 stroke=green pulse
+    caption 新对象先进新生代 fill=green slot=top
   @2
-  @2 L1
-    compare 80 220 300 新生代|Minor GC|频繁快 vs 老年代|Major GC|慢
+    compare 新生代|MinorGC频繁快 vs 老年代|MajorGC慢
+  @1 L1
+    caption 元空间存类元数据 fill=purple layer=L1
 
 step Minor GC
+  layout three-tier
   frames 3
   cap Eden满触发 | 复制存活到Survivor | 年龄够进老年代
-  @all
-    box 120 60 120 60 label=Eden stroke=green
-    box 260 60 60 60 label=S0 stroke=muted
-    box 340 60 60 60 label=S1 stroke=muted
+  zones Eden:120 | Survivor:280 | 老年代:450
   @0
-    circle 130 80 8 fill=green
-    circle 160 80 8 fill=green
-    circle 190 80 8 fill=green
-    meter 120 140 120 Eden满 grow max=100 pulse
+    stress Eden满 grow max=100 pulse
+    caption Eden区对象满 fill=warn slot=top
   @1
-    path M150 120 Q260 100 280 80 stroke=green draw
-    circle 280 80 8 fill=green
-    text 存活复制 300 130 fill=green
+    link Eden→Survivor 复制存活
+    caption 存活者复制 fill=green fade
   @2
-    path M280 100 Q380 80 420 80 stroke=blue draw
-    text age≥15→老年代 420 130 fill=blue
+    link Survivor→老年代 晋升
+    caption age≥15进老年代 fill=blue
 
 step 标记清除
+  layout flow-focus
   frames 3
   cap 从GC Roots遍历 | 标记存活对象 | 清除未标记
   @all
-    flow 620 50 Roots|标记|清除|碎片?
+    flow Roots|标记|清除|碎片?
   @0
-    stack 100 60 栈,静态,JNI
-    circle 150 150 8 fill=green
-    circle 250 150 8 fill=green
-    circle 350 150 8 fill=muted opacity=0.3
+    stack 栈,静态,JNI
+    caption GC Roots入口 fill=muted slot=top
   @1
-    circle 150 150 10 fill=green blink
-    circle 250 150 10 fill=green blink
-    text 标记存活 380 150 fill=green
+    buckets 8 hi=0,2,5 blink
+    caption 标记可达对象 fill=green
   @2
-    circle 350 150 8 fill=red expired
-    text 清除垃圾 380 200 fill=red
+    buckets 8 hi=0,2
+    caption 清除未标记 fill=red fade
 
 step G1 Region
+  layout flow-focus
   frames 2
-  cap 堆切均等Region | 优先回收垃圾多 | 可预测停顿
+  cap 堆切均等Region | 优先回收垃圾多
   @0
-    buckets 8 70 130
-    text 每块Region 380 50 fill=lyellow
+    buckets 8
+    caption 堆均分Region fill=lyellow slot=top
   @1
-    buckets 8 70 130 hi=2,5,7
-    meter 120 220 400 回收 grow max=100
-    text 优先回收脏块 380 230 fill=green
+    buckets 8 hi=2,5,7
+    stress 回收 grow max=100
+    caption 优先回收脏块 fill=green fade

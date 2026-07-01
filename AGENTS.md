@@ -42,6 +42,17 @@ Skill 路径：`.cursor/skills/visual-lesson-generator/SKILL.md`
 - 优先高阶组件（`flow` `cols` `chain` `buckets` 等），少手写坐标
 - 校验失败必须修复后再 sync
 
+## 重写 vs Patch（重要）
+
+改 `lesson.learn` / `lesson.quiz` / `lesson.narrate` 时：
+
+| 做法 | 说明 |
+|------|------|
+| ✅ **整文件重写** | `Write` 覆盖全文；先读旧课只提取考点，不复制旧 DSL 行 |
+| ❌ **Patch** | `StrReplace`、保留旧结构改几行、migrate-vml、批量替换 |
+
+用户说「重写」「完全重写」时，Agent **必须**整文件写，禁止局部 diff。详见 `.cursor/rules/lesson-full-rewrite.mdc`。
+
 ## 关键参考
 
 - VML 语法：`.cursor/skills/visual-lesson-generator/SKILL.md`

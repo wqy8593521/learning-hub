@@ -1,54 +1,55 @@
-# Redis 单线程模型 — VML
+# Redis 单线程模型 — VML Strict v2
+mode strict
 lesson Redis 单线程模型
 tags Redis, 原理, 高性能
 
 step 事件循环
+  layout three-tier
   frames 3
   cap 单线程处理命令 | IO多路复用epoll | 事件驱动无阻塞
-  @all
-    cols 客户端:30 事件循环:310 内核:600
+  zones 客户端:30 | 事件循环:310 | 内核:600
   @0
-    threads 6 zone=客户端 grow
-    arrow 客户端 事件循环 连接
+    threads 6 in 客户端 grow
+    link 客户端→事件循环 连接
   @1
-    box 310 70 180 50 label=epoll监听 stroke=purple
-    arrow 内核 事件循环 就绪事件
+    item epoll in 事件循环 label=epoll监听 stroke=purple
+    link 内核→事件循环 就绪事件
   @2
-    flow 620 50 等事件|读命令|执行|写回|循环
-    circle 310 150 9 fill=green blink
+    flow 等事件|读命令|执行|写回|循环
+    caption 单线程串行 fill=green blink
 
 step 为何快
+  layout flow-focus
   frames 3
   cap 纯内存操作 | 高效数据结构 | 无锁无上下文切换
   @0
-    compare 80 55 300 磁盘DB|ms级IO vs Redis|内存|μs级
+    compare 磁盘DB|ms级IO vs Redis|内存|μs级
   @1
-    meter 120 180 400 QPS grow max=100 pulse
-    badge 10万+ 600 180
+    stress QPS grow max=100 pulse
+    badge 10万+ slot=right
   @2
-    text 无锁竞争 380 260 fill=green
-    line 200 280 560 280 stroke=green draw
+    caption 无锁·无上下文切换 fill=green
 
 step 6.0多线程IO
+  layout flow-focus
   frames 3
   cap 命令仍单线程 | 网络IO可多线程 | 解析与执行分离
-  @all
-    cols IO线程:200 主线程:450
+  zones IO线程:200 | 主线程:450
   @0
-    threads 3 zone=IO线程 grow
-    arrow IO线程 主线程 解析
+    threads 3 in IO线程 grow
+    link IO线程→主线程 解析
   @1
-    circle 450 80 9 fill=green
-    text 命令执行仍单线程 450 130 fill=lyellow
+    caption 命令执行仍单线程 fill=lyellow
   @2
-    compare 80 200 300 6.0前|IO单线程|瓶颈 vs 6.0后|IO多线程|更高吞吐
+    compare 6.0前|IO单线程|瓶颈 vs 6.0后|IO多线程|更高吞吐
 
 step 阻塞点
+  layout three-tier
   frames 2
   cap 大key删除会阻塞 | 持久化fork可能慢 | 应用避免慢命令
+  zones 命令排队:30 | 事件循环:310
   @1
-    lock 310 60
-    box 310 100 160 50 label=DEL大key stroke=red pulse
-    queue 30 180 6 filled=5 label=命令排队
+    queue 命令排队 slots=6 filled=5 in 命令排队
+    item DEL大key in 事件循环 label=DEL大key stroke=red pulse
   @1 L2
-    note 100 280 560 30 KEYS/FLUSHALL等·生产禁用
+    note KEYS/FLUSHALL等·生产禁用 layer=L2

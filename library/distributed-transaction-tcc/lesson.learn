@@ -1,59 +1,56 @@
-# 分布式事务 TCC — VML
+# 分布式事务 TCC — VML Strict v2
+mode strict
 lesson 分布式事务 TCC
 tags 分布式, 事务, TCC, 后端八股
 
 step 本地事务局限
+  layout three-tier
   frames 2
   cap 跨服务跨库 | 本地@Transactional失效 | 需分布式协调
-  @all
-    cols 订单:30 库存:310 账户:600
+  zones 订单:30 | 库存:310 | 账户:600
   @0
-    arrow 订单 库存 扣减
-    arrow 订单 账户 扣款
-    path M160 120 Q380 180 600 120 stroke=red draw
+    link 订单→库存 扣减
+    link 订单→账户 扣款
   @1
-    text 任一失败需全部回滚 380 200 fill=red
+    caption 任一失败需全部回滚 fill=red
 
 step TCC三阶段
+  layout flow-focus
   frames 4
   cap Try预留资源 | Confirm确认 | Cancel取消
   @all
-    flow 620 50 Try|Confirm|Cancel
-    state 300 初始,Try,Confirm,Cancel
+    flow Try|Confirm|Cancel
+    state 初始,Try,Confirm,Cancel slot=bottom
   @0
-    box 30 70 120 44 label=Try冻结 stroke=orange
-    box 310 70 120 44 label=Try冻结 stroke=orange
+    caption Try冻结 fill=orange slot=top
   @1
-    box 30 70 120 44 label=Confirm stroke=green
-    box 310 70 120 44 label=Confirm stroke=green
+    caption Confirm提交 fill=green
   @2
-    box 30 70 120 44 label=Cancel stroke=red
-    box 310 70 120 44 label=Cancel stroke=red
+    caption Cancel回滚 fill=red
   @3
-    compare 80 200 300 2PC|强一致|阻塞 vs TCC|业务层|最终一致
+    compare 2PC|强一致|阻塞 vs TCC|业务层|最终一致
 
 step Try预留
+  layout three-tier
   frames 3
   cap 冻结库存不扣 | 冻结余额不转 | 资源仍可见
-  @all
-    cols 库存:30 账户:400
+  zones 库存:30 | 账户:400
   @0
-    box 30 70 160 50 label=库存100→冻结10 stroke=orange
+    item Stock in 库存 label=库存100→冻10 stroke=orange
   @1
-    box 400 70 160 50 label=余额500→冻结50 stroke=orange
+    item Balance in 账户 label=余额500→冻50 stroke=orange
   @2
-    text 未真正扣减 200 180 fill=warn
+    caption 未真正扣减 fill=warn
 
 step 失败Cancel
+  layout three-tier
   frames 3
   cap 任一步失败 | 调Cancel释放 | 最终一致
-  @all
-    cols 订单:30 库存:310 账户:600
+  zones 订单:30 | 库存:310 | 账户:600
   @0
-    text 账户服务超时! 600 130 fill=red
+    caption 账户服务超时! fill=red slot=top
   @1
-    arrow 订单 库存 Cancel
-    arrow 订单 账户 Cancel
+    link 订单→库存 Cancel
+    link 订单→账户 Cancel
   @2
-    box 310 70 120 44 label=解冻 stroke=green
-    text 数据回到初始 380 200 fill=green
+    caption 数据回到初始 fill=green

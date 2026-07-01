@@ -1,50 +1,54 @@
-# Spring AOP — VML
+# Spring AOP — VML Strict v2
+mode strict
 lesson Spring AOP 原理
 tags Spring, AOP, 后端八股
 
 step 切面概念
+  layout flow-focus
   frames 2
-  cap 横切关注点 | 切点+通知 | 不侵入业务
+  cap 横切关注点 | 切点+通知组合 | 不侵入业务代码
   @all
-    flow 620 50 切点|前置|环绕|后置|异常
+    flow 切点|前置|环绕|后置|异常
   @0
-    stack 200 70 Controller,Service,DAO
-    box 200 200 300 40 label=日志/事务/权限 stroke=purple
+    stack Controller,Service,DAO slot=bottom
+    caption 横切日志/事务/权限 fill=purple slot=top
   @1
-    compare 80 200 300 硬编码|耦合 vs AOP|解耦|复用
+    compare 硬编码|耦合 vs AOP|解耦|复用
 
 step JDK动态代理
+  layout three-tier
   frames 3
-  cap 基于接口 | Proxy.newProxyInstance | 调用转发到增强
-  @all
-    cols 客户端:30 代理:310 目标:600
+  cap 基于接口代理 | Proxy转发调用 | 调用增强后目标
+  zones 客户端:30 | 代理:310 | 目标:600
   @0
-    box 600 70 120 50 label=UserService stroke=blue
-    box 310 70 160 50 label=JDK代理 stroke=purple
+    item UserService in 目标 label=接口 stroke=blue
   @1
-    arrow 客户端 代理 调用
-    arrow 代理 目标 转发+增强
+    item JDKProxy in 代理 label=JDK代理 stroke=purple
+    link 客户端→代理 调用
   @2
-    text 必须有接口 310 150 fill=warn
+    link 代理→目标 转发+增强
+    caption 必须有接口 fill=warn
 
 step CGLIB代理
+  layout three-tier
   frames 3
-  cap 无接口时 | 子类继承目标 | 不能代理final
-  @all
-    cols 代理子类:310 父类:600
+  cap 无接口时用子类 | 继承目标方法 | final无法代理
+  zones 调用方:30 | 代理:310 | 目标:600
   @0
-    box 600 70 140 50 label=目标类 stroke=blue
-    box 310 70 160 50 label=子类代理 stroke=orange
+    item Target in 目标 label=目标类 stroke=blue
   @1
-    arrow 代理子类 父类 继承
+    item SubProxy in 代理 label=CGLIB子类 stroke=orange
+    link 调用方→代理 调用
   @2
-    text final方法无法代理 310 150 fill=red
+    link 代理→目标 覆写方法
+    caption final无法代理 fill=red
 
 step 执行顺序
+  layout flow-focus
   frames 2
   cap @Around包目标 | @Before先执行 | @After最后
   @0
-    timeline 80 客户端|@Before|目标方法|@After|@AfterReturning
+    timeline 客户端|@Before|目标|@After|@Returning slot=bottom
   @1
-    codeblock 40 200 3 @Around\|proceed()\|@After
-    text 事务常放@Around 200 280 fill=green
+    codeblock @Around|proceed()|@After highlight=2
+    caption 事务常放@Around fill=green

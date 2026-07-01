@@ -1,56 +1,59 @@
-# Spring 事务传播 — VML
+# Spring 事务传播 — VML Strict v2
+mode strict
 lesson Spring 事务传播
 tags Spring, 事务, 后端八股
 
 step 事务边界
+  layout three-tier
   frames 3
-  cap @Transactional开启事务 | AOP代理拦截 | 提交或回滚
+  cap @Transactional开启 | AOP代理拦截 | 提交或回滚
+  zones 调用方:30 | Service:310 | DB:600
   @all
-    cols 调用方:30 Service:310 DB:600
-    stack 100 60 controller,service,dao
+    stack controller,service,dao slot=bottom
   @0
-    circle 50 80 9 fill=green
-    arrow 调用方 Service 调用
+    link 调用方→Service 调用
   @1
-    box 310 70 160 50 label=@Transactional stroke=purple
-    lock 310 60
-    arrow Service DB 开启
+    item TxAnn in Service label=@Transactional stroke=purple
+    link Service→DB 开启
   @2
-    state 300 开启,执行,提交,回滚
-    arrow Service DB 提交
+    state 开启,执行,提交,回滚 slot=bottom
+    link Service→DB 提交
 
 step REQUIRED
+  layout three-tier
   frames 3
   cap 有事务就加入 | 没有就新建 | 最常用默认
-  @all
-    cols 外层A:200 内层B:500
+  zones 外层A:200 | 内层B:500
   @0
-    box 200 70 120 44 label=Tx-A stroke=green
-    arrow 外层A 内层B 调用
+    item TxA in 外层A label=Tx-A stroke=green
+    link 外层A→内层B 调用
   @1
-    box 200 70 120 44 label=Tx-A stroke=green
-    box 500 70 120 44 label=加入A stroke=green blink
+    item JoinA in 内层B label=加入A stroke=green blink
+    caption 同一事务 fill=green slot=top
   @2
-    text 同一事务 380 180 fill=green
-    line 200 100 500 100 stroke=green draw
+    caption 内外同生共死 fill=green
 
 step REQUIRES_NEW
+  layout three-tier
   frames 3
   cap 总是新建事务 | 挂起外层事务 | 内外互不影响
-  @all
-    cols 外层A:200 内层B:500
+  zones 外层A:200 | 内层B:500
   @0
-    box 200 70 120 44 label=Tx-A stroke=green
-    arrow 外层A 内层B 调用
+    item TxA2 in 外层A label=Tx-A stroke=green
+    link 外层A→内层B 调用
   @1
-    box 200 70 120 44 label=挂起 stroke=orange expired
-    box 500 70 120 44 label=新Tx-B stroke=purple blink
+    item Suspended in 外层A label=挂起 stroke=orange
   @2
-    compare 80 180 300 REQUIRED|加入外层|同生共死 vs REQUIRES_NEW|独立|日志常用
+    item NewTx in 内层B label=新Tx-B stroke=purple blink
+    compare REQUIRED|加入外层|同生共死 vs REQUIRES_NEW|独立|日志常用
 
 step 回滚规则
+  layout flow-focus
   frames 2
-  cap 默认仅RuntimeException | checked需指定 | rollbackFor
+  cap 默认Runtime回滚 | checked需指定 | rollbackFor配置
+  @0
+    caption 默认仅Runtime回滚 fill=warn slot=top
   @1
-    codeblock 36 150 1 w=480 @Transactional(rollbackFor=Exception.class)
-    table 60 220 异常,默认回滚/RuntimeException,✓/IOException,✗/指定rollbackFor,✓
+    table 异常,默认回滚/RuntimeException,✓/IOException,✗/rollbackFor,✓
+  @1 L1
+    codeblock @Transactional(rollbackFor=Exception.class) highlight=1 layer=L1

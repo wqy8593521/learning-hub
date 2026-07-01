@@ -1,66 +1,61 @@
-# 并发工具类 — VML
+# 并发工具类 — VML Strict v2
+mode strict
 lesson 并发工具类
 tags Java, 并发, JUC
 
 step CountDownLatch
+  layout three-tier
   frames 3
-  cap 计数器减到0放行 | 主线程await等待 | 子任务countDown
-  @all
-    cols 主线程:30 门闩:310 子任务:600
+  cap 计数减到0放行 | 主线程await | 子任务countDown
+  zones 主线程:30 | 门闩:310 | 子任务:600
   @0
-    box 310 70 120 44 label=count=3 stroke=orange
-    circle 50 80 9 fill=warn
-    arrow 主线程 门闩 await
+    item count3 in 门闩 label=count=3 stroke=orange
+    link 主线程→门闩 await
+    caption 主线程等待 fill=warn slot=top
   @1
-    arrow 子任务 门闩 countDown
-    box 310 70 120 44 label=count=2 stroke=orange
-    arrow 子任务 门闩 countDown
-    box 310 70 120 44 label=count=1 stroke=orange
+    link 子任务→门闩 countDown
+    item count1 in 门闩 label=count=1 stroke=orange
+    caption 逐个减计数 fill=orange fade
   @2
-    box 310 70 120 44 label=count=0 stroke=green blink
-    circle 50 80 9 fill=green blink
-    arrow 门闩 主线程 放行
+    item count0 in 门闩 label=count=0 stroke=green blink
+    link 门闩→主线程 放行
+    caption 归零放行 fill=green slot=top
 
 step CyclicBarrier
+  layout three-tier
   frames 3
-  cap 多线程到齐才继续 | 可循环复用 | 适合分阶段并行
-  @all
-    cols T1:150 T2:380 T3:610
+  cap 多方到齐才继续 | 可循环复用 | 适合分阶段并行
+  zones T1:150 | 屏障:380 | T3:610
   @0
-    path M150 120 Q380 80 610 120 stroke=muted draw
-    box 380 60 120 44 label=屏障=3 stroke=blue
+    item barrier in 屏障 label=屏障=3 stroke=blue
+    caption 等待到齐 fill=muted slot=top
   @1
-    circle 150 100 9 fill=green
-    circle 380 100 9 fill=green
-    circle 610 100 9 fill=warn
-    text 2/3到达 380 150 fill=warn
+    threads 2 in T1
+    caption 2/3到达 fill=warn fade
   @2
-    circle 610 100 9 fill=green blink
-    path M150 180 Q380 220 610 180 stroke=green draw
-    text 齐→下一阶段 380 230 fill=green
+    threads 3 in T3 grow
+    caption 齐→下一阶段 fill=green slot=top
 
 step Semaphore
+  layout three-tier
   frames 3
-  cap 信号量控制并发数 | acquire拿许可 | release归还
-  @all
-    cols 许可:300 通过:350 等待:620 归还:620
-    box 300 60 200 60 label=许可=3 stroke=blue
+  cap 信号量限并发 | acquire拿许可 | release归还
+  zones 许可:300 | 通过:350 | 等待:620
   @0
-    threads 3 zone=通过
-    circle 350 90 8 fill=green
-    circle 380 90 8 fill=green
-    circle 410 90 8 fill=green
+    item permits in 许可 label=许可=3 stroke=blue
+    threads 3 in 通过
+    caption 3个并发 fill=green slot=top
   @1
-    threads 5 zone=等待 grow
-    circle 620 100 9 fill=red
-    queue 300 150 4 filled=2 label=等待许可
+    threads 5 in 等待 grow
+    queue 等待许可 slots=4 filled=2 in 许可
+    caption 超额等待 fill=red fade
   @2
-    circle 350 90 8 fill=green blink
-    arrow 归还 许可 release
-    circle 620 100 9 fill=green
+    link 等待→许可 release
+    caption 归还放行 fill=green slot=top
 
 step 选型对比
+  layout flow-focus
   frames 2
-  cap 等子任务用Latch | 多轮齐步用Barrier | 限并发用Semaphore
+  cap 等子任务Latch | 多轮齐步Barrier | 限并发Semaphore
   @1
-    table 60 70 工具,场景/CountDownLatch,等N个完成/CyclicBarrier,N方齐步/Semaphore,限并发数
+    table 工具,场景/CountDownLatch,等N个完成/CyclicBarrier,N方齐步/Semaphore,限并发数

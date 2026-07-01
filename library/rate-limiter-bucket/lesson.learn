@@ -1,63 +1,57 @@
-# 令牌桶限流 — VML
+# 令牌桶限流 — VML Strict v2
+mode strict
 lesson 令牌桶限流
 tags 限流, 高并发, 后端
 
 step 令牌积累
+  layout flow-focus
   frames 3
   cap 桶以固定速率产令牌 | 桶满则丢弃 | 请求消耗令牌
   @all
-    box 300 60 200 100 label=令牌桶 stroke=blue
+    items 令牌桶 stroke=blue
   @0
-    circle 350 100 8 fill=green
-    circle 380 100 8 fill=green
-    text 2个令牌 380 50 fill=muted
+    caption 少量令牌 fill=muted slot=top
   @1
-    circle 330 90 8 fill=green
-    circle 350 90 8 fill=green
-    circle 370 90 8 fill=green
-    circle 390 90 8 fill=green
-    circle 410 90 8 fill=green
-    text 攒满 380 50 fill=green
+    caption 攒满 fill=green
   @2
-    meter 120 200 400 产率 grow max=100
-    text r/秒产令牌 380 200 fill=lyellow
+    stress 产率 grow max=100
+    caption r/秒产令牌 fill=warn
 
 step 请求通过
+  layout three-tier
   frames 3
   cap 有令牌则放行 | 拿走一个令牌 | 无令牌则拒绝
-  @all
-    cols 请求:30 桶:310 结果:600
+  zones 请求:30 | 桶:310 | 结果:600
   @0
-    arrow 请求 桶 取令牌
-    circle 350 100 8 fill=green
+    link 请求→桶 取令牌
   @1
-    circle 50 80 9 fill=green
-    arrow 桶 结果 通过
-    box 600 70 100 44 label=200 OK stroke=green
+    link 桶→结果 通过
+    item OK in 结果 label=200 OK stroke=green
   @2
-    path M350 120 Q200 180 50 200 stroke=green draw
+    caption 无令牌→拒绝 fill=red
 
 step 突发流量
+  layout flow-focus
   frames 3
   cap 桶内有余量 | 允许短时突发 | 比漏桶更灵活
-  @all
-    cols 请求:30
   @0
-    badge ×100 40 80 pulse
-    box 300 60 200 100 label=满桶 stroke=green
+    badge ×100 slot=right pulse
+    caption 满桶放行 fill=green
   @1
-    threads 10 zone=请求 grow
-    meter 120 200 400 通过 grow max=100
+    threads 10 in 请求 grow
+    stress 通过 grow max=100
   @2
-    compare 80 230 300 令牌桶|允许突发|灵活 vs 漏桶|恒定速率|平滑
+    compare 令牌桶|允许突发|灵活 vs 漏桶|恒定速率|平滑
 
 step 集群限流
+  layout three-tier
   frames 2
-  cap 多实例共享计数 | Redis+Lua原子扣减 | 或网关统一限流
-  @all
-    cols 实例1:150 实例2:380 Redis:610
+  cap 多实例共享计数 | Redis+Lua原子扣减 | 网关统一限流
+  zones 实例1:150 | 实例2:380 | Redis:610
+  @0
+    link 实例1→Redis 扣令牌
   @1
-    arrow 实例1 Redis 扣令牌
-    arrow 实例2 Redis 扣令牌
-    lock 610 60
-    codeblock 36 200 1 w=400 redis.call('decr',KEYS[1])
+    link 实例2→Redis 扣令牌
+    caption Lua原子扣减 fill=purple
+  @1 L1
+    codeblock redis.call('decr',KEYS[1]) layer=L1

@@ -1,20 +1,24 @@
-# {{title}} — 用 VML 编写，删除本注释行
+# {{title}} — VML Strict v2
+mode strict
 lesson {{title}}
 tags 待分类
 
 step 第一步
+  layout flow-focus
   frames 2
   cap L0 现象描述 | L1 机制说明 | L2 底层细节
   @0
-    label 标题区 380 28
-    text 第一步内容 380 120
+    flow 现象|机制|结果
+    caption 标题区 fill=muted slot=top
   @1
-    text 状态变化 380 160 fade fill=warn
+    caption 状态变化 fill=warn fade
 
 step 第二步
+  layout three-tier
   frames 2
   cap 第二步 L0 | 第二步 L1 | 第二步 L2
+  zones 左:30 | 中:310 | 右:600
   @0
-    text 继续讲解 380 120
+    caption 继续讲解 slot=center
   @1
-    note 180 200 400 48 总结要点
+    note 总结要点 layer=L2

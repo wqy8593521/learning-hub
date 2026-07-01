@@ -1,58 +1,50 @@
-# equals 与 hashCode — VML
+# equals 与 hashCode — VML Strict v2
+mode strict
 lesson equals 与 hashCode
 tags Java, 基础, 集合
 
 step equals契约
+  layout flow-focus
   frames 3
-  cap 自反性对称性 | 传递性一致性 | null比较返回false
-  @all
-    flow 620 50 自反|对称|传递|一致|非null
+  cap 自反对称传递 | 一致性 | null返回false
   @0
-    box 200 80 100 44 label=a stroke=blue
-    box 360 80 100 44 label=b stroke=blue
-    line 250 102 360 102 stroke=green draw
-    text a.equals(b) 380 140 fill=green
+    flow 自反|对称|传递|一致|非null slot=bottom
+    caption a.equals(b) fill=green slot=top
   @1
-    line 360 102 250 102 stroke=green draw
-    text b.equals(a) 380 170 fill=green
+    caption b.equals(a) fill=green fade
   @2
-    circle 500 80 9 fill=red
-    text null→false 520 86 fill=red
+    caption null→false fill=red slot=top
 
 step hashCode契约
+  layout flow-focus
   frames 3
-  cap equals相等hash必同 | hash相等未必equals | 重写equals必重写hash
+  cap equals等hash必同 | hash同未必equals | 重写equals必重写hash
   @0
-    box 200 80 120 44 label=obj1 stroke=green
-    box 360 80 120 44 label=obj2 stroke=green
-    text hash=42 200 140 fill=lyellow
-    text hash=42 360 140 fill=lyellow
+    compare obj1|hash=42|equals✓ vs obj2|hash=42|equals✓
+    caption equals相等 fill=green slot=top
   @1
-    box 500 80 120 44 label=obj3 stroke=orange
-    text hash=42 500 140 fill=lyellow
-    text equals?✗ 520 170 fill=red pulse
+    compare obj3|hash=42|equals✗ vs 碰撞|同hash|不同对象
+    caption hash碰撞 fill=orange fade
   @2
-    callout 200 200 480 50 equals相同→hashCode必同
+    caption equals同→hash必同 fill=warn slot=top
 
 step HashMap依赖
+  layout flow-focus
   frames 3
-  cap 先算hashCode定位桶 | 再equals比对key | 只重写equals会坏
-  @all
-    buckets 8 80 130
+  cap hashCode定位桶 | equals比对key | 只写equals会坏
   @0
-    box 200 50 100 40 label=key1 stroke=blue
-    text hash→桶3 200 200 fill=blue
-    buckets 8 80 130 hi=3
+    buckets 8 hi=3
+    caption hash→桶3 fill=blue slot=top
   @1
-    box 360 50 100 40 label=key2 stroke=orange
-    text 同hash不同equals 380 200 fill=orange
     chain "k1" "k2"
+    caption 同hash不同equals fill=orange fade
   @2
-    text 只写equals→全落同桶 380 260 fill=red pulse
-    meter 120 290 400 冲突 grow max=100
+    stress 冲突 grow max=100 pulse
+    caption 只写equals→全落同桶 fill=red slot=top
 
 step 正确重写
+  layout flow-focus
   frames 2
-  cap 相同字段参与计算 | 用Objects.equals | IDE生成模板
+  cap 相同字段参与 | Objects.equals | IDE生成模板
   @1
-    codeblock 36 120 2 w=480 public boolean equals(Object o)|  return Objects.equals(this.id, other.id);|public int hashCode() { return Objects.hash(id); }
+    codeblock public boolean equals(Object o)|  return Objects.equals(this.id, other.id);|public int hashCode() { return Objects.hash(id); }

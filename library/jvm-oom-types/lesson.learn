@@ -1,57 +1,57 @@
-# JVM OOM — VML
+# JVM OOM — VML Strict v2
+mode strict
 lesson JVM OOM 类型与排查
 tags JVM, OOM, 后端八股
 
 step 堆内存溢出
+  layout flow-focus
   frames 3
-  cap new对象太多 | 堆放不下 | java.lang.OutOfMemoryError:Java heap space
-  @all
-    box 120 60 400 80 label=堆 Heap stroke=blue
+  cap new对象太多 | 堆放不下 | Java heap space
+  zones 堆:200
   @0
-    circle 150 90 8 fill=green
-    circle 200 90 8 fill=green
-    circle 250 90 8 fill=green
+    buckets 8 hi=0,1,2,3,4
+    caption 堆逐渐填满 fill=orange slot=top
   @1
-    meter 120 160 400 堆占用 grow max=100 pulse
-    badge 100% 520 150 fill=red
+    stress 堆占用 grow max=100 pulse
+    badge 100% fill=red
   @2
-    text heap space 200 200 fill=red
-    code 30 230 400 50 "List<byte[]> list = new ArrayList<>();\nwhile(true) list.add(new byte[1MB]);" java
+    codeblock List<byte[]> list|while(true) list.add(new byte[1MB]); highlight=2
+    caption heap space fill=red fade
 
 step 栈溢出
+  layout flow-focus
   frames 3
   cap 递归太深 | 栈帧堆积 | StackOverflowError
   @all
-    stack 200 60 main,foo,foo,foo,foo
+    stack main,foo,foo,foo
   @0
-    arrow 200 200 自调用
-    path M200 200 Q280 180 200 160 stroke=red draw
+    flow 递归|自调用|栈帧叠加
+    caption 无限递归 fill=red slot=top
   @1
-    stack 200 60 main,foo×N stroke=red
-    meter 120 220 400 栈深度 grow max=100
+    stress 栈深度 grow max=100 pulse
   @2
-    text StackOverflowError 200 280 fill=red
+    caption StackOverflowError fill=red
 
 step 元空间溢出
+  layout flow-focus
   frames 3
   cap 类加载太多 | 元空间存类元数据 | Metaspace OOM
-  @all
-    box 120 60 400 50 label=元空间 Metaspace stroke=purple
+  zones 元空间:200
   @0
-    box 140 70 80 30 label=ClassA stroke=muted
-    box 230 70 80 30 label=ClassB stroke=muted
+    item cls in 元空间 label=Class元数据 stroke=purple
   @1
-    badge ×9999 400 70 pulse
-    meter 120 130 400 元空间 grow max=100
+    badge ×9999 pulse
+    stress 元空间 grow max=100
   @2
-    text Metaspace OOM 200 180 fill=red
+    caption Metaspace OOM fill=red
   @2 L1
-    text 动态代理/CGLIB易触发 200 220 fill=warn
+    note 动态代理/CGLIB易触发 layer=L1
 
 step 排查思路
+  layout flow-focus
   frames 2
-  cap dump堆快照 | MAT看大对象 | jmap/jstack
+  cap dump堆快照 | MAT看大对象定位
   @0
-    flow 620 50 OOM|heap dump|MAT分析|定位泄漏
+    flow OOM|heap dump|MAT分析|定位泄漏
   @1
-    compare 80 200 300 heap|对象太多|dump分析 vs stack|递归|看调用栈
+    compare heap|对象太多|dump分析 vs stack|递归|看调用栈

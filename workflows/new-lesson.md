@@ -26,9 +26,9 @@ library/<id>/
 
 Agent 根据考点拆 3–5 个 `step`，每步 2–3 `frames`，三层 `cap`（L0/L1/L2）。
 
-语法见 `shared/vml-cheatsheet.md` 与 `library/redis-cache-breakdown/lesson.learn`。
+**library 新课默认 legacy 坐标 DSL**（见 `templates/lesson/lesson.learn`）。Strict v2 仅在 `prototypes/vml-v2/` 试验，验收后再入库。
 
-**不要**写 JavaScript 或修改 `shared/vml.js`。
+**不要**写 JavaScript或修改 `shared/vml.js`。strict 试点先在 `prototypes/vml-v2/` 验收，再入库。
 
 ## 3. 编写 lesson.quiz（推荐）
 
@@ -48,6 +48,7 @@ Agent 根据考点拆 3–5 个 `step`，每步 2–3 `frames`，三层 `cap`（
 
 ```bash
 node bin/learning-hub.js narrate library/<id>
+# 默认音色 YunxiNeural、语速 0.95；换音色或重生成加 --voice / --rate / --force
 # → audio/s0-f0-d0.mp3 … + audio/narrate.json（含 cues 时间轴）
 ```
 
@@ -112,3 +113,14 @@ GitHub Actions 会自动 validate → sync → 部署 Pages。
 ## 修改已有课程
 
 只改 `lesson.learn` / `lesson.quiz` / `lesson.narrate` / `manifest.yaml`，然后 `validate` → `sync`。改旁白稿后重跑 `narrate` 并提交 `audio/`。
+
+### 重写（非 patch）
+
+需要换 DSL 或重做动画时：
+
+1. **禁止** `StrReplace` 改 `.learn`——用 `Write` **整文件覆盖**
+2. 旧文件只作**考点参考**（step 主题、cap 文案意图），不复制坐标行
+3. Strict 先写 `prototypes/vml-v2/<id>.learn`，对比页验收后再入库
+4. 一次只重写一门课，验收通过再下一门
+
+规则文件：`.cursor/rules/lesson-full-rewrite.mdc`

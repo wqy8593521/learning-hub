@@ -7,6 +7,7 @@
   const COLORS = {
     red: '#dc2626', blue: '#3b82f6', orange: '#d97706', green: '#22c55e',
     purple: '#a855f7', warn: '#fbbf24', muted: '#6b7280', fill: '#fca5a5',
+    'rb-black': '#1e293b',
     lblue: '#93c5fd', lpurple: '#c4b5fd', lgreen: '#86efac', lyellow: '#fde68a'
   };
 
@@ -484,15 +485,20 @@
         return s;
       }
       case 'chain': {
-        let s = '', bx = 340, by = 100;
-        s += `<rect x="${bx}" y="${by}" width="90" height="80" rx="6" fill="${surf('box-on')}" stroke="${col('green')}" stroke-width="2"/>`;
+        const n = c.keys.length;
+        const bucketW = 90, nodeW = 72, step = 90;
+        const totalW = bucketW + (n > 0 ? 120 + (n - 1) * step + nodeW : 0);
+        const bx = c.x != null ? c.x : Math.round((CANVAS_W - totalW) / 2);
+        const by = c.y != null ? c.y : 100;
+        let s = '';
+        s += `<rect x="${bx}" y="${by}" width="${bucketW}" height="80" rx="6" fill="${surf('box-on')}" stroke="${col('green')}" stroke-width="2"/>`;
         s += `<text x="${bx + 45}" y="${by + 45}" text-anchor="middle" fill="${col('lgreen')}" font-size="${fs(11)}">[0]</text>`;
         const colors = [col('blue'), col('warn'), col('green')];
         c.keys.forEach((k, i) => {
-          const nx = bx + 120 + i * 90, ny = by + 40;
-          s += `<line x1="${bx + 90}" y1="${by + 40}" x2="${nx}" y2="${ny + 22}" stroke="${colors[i]}" stroke-width="2" class="draw-line"/>`;
-          s += `<rect x="${nx}" y="${ny}" width="72" height="44" rx="6" fill="${surf('panel')}" stroke="${colors[i]}" stroke-width="2"/>`;
-          s += `<text x="${nx + 36}" y="${ny + 26}" text-anchor="middle" fill="${colors[i]}" font-size="${fs(10)}">${esc(k)}</text>`;
+          const nx = bx + 120 + i * step, ny = by + 40;
+          s += `<line x1="${bx + bucketW}" y1="${by + 40}" x2="${nx}" y2="${ny + 22}" stroke="${colors[i % colors.length]}" stroke-width="2" class="draw-line"/>`;
+          s += `<rect x="${nx}" y="${ny}" width="${nodeW}" height="44" rx="6" fill="${surf('panel')}" stroke="${colors[i % colors.length]}" stroke-width="2"/>`;
+          s += `<text x="${nx + nodeW / 2}" y="${ny + 26}" text-anchor="middle" fill="${colors[i % colors.length]}" font-size="${fs(10)}">${esc(k)}</text>`;
         });
         return s;
       }
@@ -519,7 +525,7 @@
       const y = y0 + i * stepH;
       const cur = i === f;
       s += `<rect x="${x - 70}" y="${y}" width="140" height="32" rx="6" fill="${cur ? surf('box-hi') : surf('box')}" stroke="${cur ? col('green') : col('blue')}" stroke-width="${cur ? 2 : 1}"/>`;
-      s += `<text x="${x}" y="${y + 20}" text-anchor="middle" fill="${cur ? col('lgreen') : col('lblue')}" font-size="${fs(9)}">${esc(c.steps[i])}</text>`;
+      s += `<text x="${x}" y="${y + 21}" text-anchor="middle" fill="${cur ? col('lgreen') : col('lblue')}" font-size="${fs(10)}">${esc(c.steps[i])}</text>`;
       if (i < show - 1) {
         s += `<line x1="${x}" y1="${y + 32}" x2="${x}" y2="${y + stepH}" stroke="${col('muted')}" stroke-width="1.5" class="draw-line"/>`;
         s += `<polygon points="${x - 4},${y + stepH - 6} ${x},${y + stepH} ${x + 4},${y + stepH - 6}" fill="${col('muted')}"/>`;
@@ -529,13 +535,18 @@
   }
 
   function renderState(c, f, col) {
-    const y = c.y, x0 = 60, step = Math.min(130, 620 / c.states.length);
+    const y = c.y != null ? c.y : Math.round(CANVAS_H / 2);
+    const step = Math.min(130, 620 / Math.max(c.states.length, 1));
+    const span = (c.states.length - 1) * step;
+    // legacy 默认 x0=60；strict 配方可传 x0 或 layout=recipe 自动居中
+    const x0 = c.x0 != null ? c.x0
+      : (c.layout === 'recipe' ? Math.round((CANVAS_W - span) / 2) : 60);
     let s = '';
     c.states.forEach((st, i) => {
       const x = x0 + i * step;
       const done = i < f, cur = i === f;
       s += `<circle cx="${x}" cy="${y}" r="14" fill="${cur ? col('green') : done ? col('blue') : surf('state-idle')}" stroke="${cur ? col('lgreen') : done ? col('lblue') : surf('border-dim')}" stroke-width="2"/>`;
-      s += `<text x="${x}" y="${y + 32}" text-anchor="middle" fill="${cur ? col('lgreen') : col('muted')}" font-size="${fs(8)}">${esc(st)}</text>`;
+      s += `<text x="${x}" y="${y + 32}" text-anchor="middle" fill="${cur ? col('lgreen') : col('muted')}" font-size="${fs(9)}">${esc(st)}</text>`;
       if (i < c.states.length - 1) {
         s += `<line x1="${x + 16}" y1="${y}" x2="${x + step - 16}" y2="${y}" stroke="${i < f ? col('green') : surf('border-dim')}" stroke-width="${i < f ? 2 : 1}"/>`;
       }
@@ -558,7 +569,7 @@
 
   function renderQueue(c, f, col) {
     const slotW = 28, totalW = c.slots * slotW;
-    const x0 = c.cx - totalW / 2;
+    const x0 = Math.max(8, c.cx - totalW / 2);
     const filled = c.filled != null ? c.filled : (c.grow ? Math.min(c.slots, (f + 1) * 2) : c.slots);
     let s = '';
     if (c.label) s += `<text x="${c.cx}" y="${c.cy - 12}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(9)}">${esc(c.label)}</text>`;
@@ -584,16 +595,20 @@
 
   function renderTable(c, f, col) {
     if (!c.rows.length) return '';
-    const cols = c.rows[0].length;
     const colW = 90, rowH = 24;
+    const cols = c.rows[0].length;
+    const totalW = cols * colW;
+    const totalH = c.rows.length * rowH;
+    const x = c.x != null ? c.x : Math.round((CANVAS_W - totalW) / 2);
+    const y = c.y != null ? c.y : Math.round((CANVAS_H - totalH) / 2);
     let s = '';
     c.rows.forEach((row, ri) => {
       const highlight = ri > 0 && ri - 1 === f;
       row.forEach((cell, ci) => {
-        const x = c.x + ci * colW, y = c.y + ri * rowH;
+        const cx = x + ci * colW, cy = y + ri * rowH;
         const isHead = ri === 0;
-        s += `<rect x="${x}" y="${y}" width="${colW - 4}" height="${rowH - 2}" rx="3" fill="${highlight ? surf('box-on') : isHead ? surf('box-head') : surf('box')}" stroke="${highlight ? col('green') : surf('border')}"/>`;
-        s += `<text x="${x + (colW - 4) / 2}" y="${y + 15}" text-anchor="middle" fill="${isHead ? col('lblue') : highlight ? col('lgreen') : col('muted')}" font-size="${fs(8)}">${esc(cell)}</text>`;
+        s += `<rect x="${cx}" y="${cy}" width="${colW - 4}" height="${rowH - 2}" rx="3" fill="${highlight ? surf('box-on') : isHead ? surf('box-head') : surf('box')}" stroke="${highlight ? col('green') : surf('border')}"/>`;
+        s += `<text x="${cx + (colW - 4) / 2}" y="${cy + 15}" text-anchor="middle" fill="${isHead ? col('lblue') : highlight ? col('lgreen') : col('muted')}" font-size="${fs(9)}">${esc(cell)}</text>`;
       });
     });
     return s;
@@ -709,20 +724,20 @@
       }
       return s;
     }
-    // rb — 红黑树示意
+    // rb — 红黑树静态示意（固定拓扑，仅表达「树化」隐喻，不可配置节点）
     const show = f >= 1;
     if (!show) {
       return `<text x="${cx}" y="${cy}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(10)}">链表过长…</text>`;
     }
-  let s = '';
+    let s = '';
     const nodes = [
-      { x: cx, y: cy - 30, r: 14, c: 'purple', t: '根' },
-      { x: cx - 55, y: cy + 15, r: 11, c: 'purple', t: '' },
-      { x: cx + 55, y: cy + 15, r: 11, c: 'purple', t: '' },
-      { x: cx - 90, y: cy + 55, r: 9, c: 'lpurple', t: '' },
-      { x: cx - 25, y: cy + 55, r: 9, c: 'lpurple', t: '' },
-      { x: cx + 30, y: cy + 55, r: 9, c: 'lpurple', t: '' },
-      { x: cx + 85, y: cy + 55, r: 9, c: 'lpurple', t: '' }
+      { x: cx, y: cy - 30, r: 14, c: 'rb-black', t: '根' },
+      { x: cx - 55, y: cy + 15, r: 11, c: 'red', t: '' },
+      { x: cx + 55, y: cy + 15, r: 11, c: 'red', t: '' },
+      { x: cx - 90, y: cy + 55, r: 9, c: 'rb-black', t: '' },
+      { x: cx - 25, y: cy + 55, r: 9, c: 'rb-black', t: '' },
+      { x: cx + 30, y: cy + 55, r: 9, c: 'rb-black', t: '' },
+      { x: cx + 85, y: cy + 55, r: 9, c: 'rb-black', t: '' }
     ];
     s += `<line x1="${cx}" y1="${cy - 16}" x2="${cx - 55}" y2="${cy + 4}" stroke="${col('muted')}"/>`;
     s += `<line x1="${cx}" y1="${cy - 16}" x2="${cx + 55}" y2="${cy + 4}" stroke="${col('muted')}"/>`;
@@ -731,24 +746,28 @@
     s += `<line x1="${cx + 55}" y1="${cy + 26}" x2="${cx + 30}" y2="${cy + 46}" stroke="${col('muted')}"/>`;
     s += `<line x1="${cx + 55}" y1="${cy + 26}" x2="${cx + 85}" y2="${cy + 46}" stroke="${col('muted')}"/>`;
     nodes.forEach(n => {
-      s += `<circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${col(n.c)}"/>`;
+      const stroke = n.c === 'red' ? col('red') : col('muted');
+      s += `<circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${col(n.c)}" stroke="${stroke}" stroke-width="1.5"/>`;
       if (n.t) s += `<text x="${n.x}" y="${n.y + 4}" text-anchor="middle" fill="${surf('node-text')}" font-size="${fs(8)}">${n.t}</text>`;
     });
-    s += `<text x="${cx}" y="${cy + 85}" text-anchor="middle" fill="${col('lpurple')}" font-size="${fs(10)}">红黑树 O(log n)</text>`;
+    s += `<text x="${cx}" y="${cy + 85}" text-anchor="middle" fill="${col('lgreen')}" font-size="${fs(10)}">红黑树 O(log n)·静态示意</text>`;
     return s;
   }
 
   function renderTimeline(c, f, col) {
-    const x0 = 70, step = Math.min(180, 600 / Math.max(c.slots.length, 1));
-    const y = c.y;
+    const y = c.y != null ? c.y : 120;
+    const step = Math.min(180, 600 / Math.max(c.slots.length, 1));
+    const span = (c.slots.length - 1) * step;
+    const x0 = c.x0 != null ? c.x0
+      : (c.layout === 'recipe' ? Math.round((CANVAS_W - span) / 2) : 70);
     let s = '';
     c.slots.forEach((slot, i) => {
       const x = x0 + i * step;
       const active = i <= f;
       const cur = i === f;
       s += `<rect x="${x - 50}" y="${y - 20}" width="100" height="40" rx="6" fill="${active ? surf('box-hi') : surf('box')}" stroke="${cur ? col('green') : active ? col('blue') : surf('border')}" stroke-width="${cur ? 2.5 : 1}"/>`;
-      s += `<text x="${x}" y="${y - 2}" text-anchor="middle" fill="${active ? col('lblue') : col('muted')}" font-size="${fs(9)}">${esc(slot.actor)}</text>`;
-      s += `<text x="${x}" y="${y + 12}" text-anchor="middle" fill="${cur ? col('green') : col('muted')}" font-size="${fs(8)}">${esc(slot.label)}</text>`;
+      s += `<text x="${x}" y="${y - 2}" text-anchor="middle" fill="${active ? col('lblue') : col('muted')}" font-size="${fs(10)}">${esc(slot.actor)}</text>`;
+      s += `<text x="${x}" y="${y + 13}" text-anchor="middle" fill="${cur ? col('green') : col('muted')}" font-size="${fs(9)}">${esc(slot.label)}</text>`;
       if (i < c.slots.length - 1) {
         const ax = x + 52, ax2 = x + step - 52;
         s += `<line x1="${ax}" y1="${y}" x2="${ax2}" y2="${y}" stroke="${i < f ? col('green') : surf('border-dim')}" stroke-width="${i < f ? 2 : 1}" class="${i === f - 1 ? 'draw-line' : ''}"/>`;
@@ -759,23 +778,29 @@
   }
 
   function renderCompare(c, col) {
-    const { w } = c;
-    const h = 130;
-    const gap = 20;
+    const gap = 16;
+    const maxLines = Math.max(c.left?.lines?.length || 0, c.right?.lines?.length || 0, 1);
+    const w = c.w || Math.min(480, 160 + maxLines * 40);
+    const h = c.h || Math.min(120, 52 + maxLines * 22);
     const half = (w - gap) / 2;
-    const x = Math.round((CANVAS_W - w) / 2);
-    const y = Math.round((CANVAS_H - h) / 2);
+    // legacy 的 compare x/y 写在 DSL 里但历史上被渲染器忽略，仍居中
+    const legacyCoords = c.x != null && c.y != null && c.layout !== 'recipe';
+    const x = legacyCoords || c.x == null ? Math.round((CANVAS_W - w) / 2) : c.x;
+    const y = legacyCoords || c.y == null ? Math.round((CANVAS_H - h) / 2) : c.y;
     const sides = [{ data: c.left, stroke: 'blue', x }, { data: c.right, stroke: 'purple', x: x + half + gap }];
-    let s = `<text x="${x + w / 2}" y="${y - 10}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(10)}">对比</text>`;
+    let s = `<text x="${x + w / 2}" y="${y - 8}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(10)}">对比</text>`;
     sides.forEach(side => {
       const d = side.data;
-      s += `<rect x="${side.x}" y="${y}" width="${half}" height="${h}" rx="8" fill="${surf('box')}" stroke="${col(side.stroke)}" stroke-width="1.5"/>`;
-      s += `<text x="${side.x + half / 2}" y="${y + 22}" text-anchor="middle" fill="${col(side.stroke)}" font-size="${fs(11)}" font-weight="600">${esc(d.title)}</text>`;
+      const lineCount = Math.max(d.lines.length, 1);
+      const innerH = 28 + lineCount * 22;
+      const boxY = y + Math.max(0, (h - innerH) / 2);
+      s += `<rect x="${side.x}" y="${boxY}" width="${half}" height="${innerH}" rx="8" fill="${surf('box')}" stroke="${col(side.stroke)}" stroke-width="1.5"/>`;
+      s += `<text x="${side.x + half / 2}" y="${boxY + 20}" text-anchor="middle" fill="${col(side.stroke)}" font-size="${fs(12)}" font-weight="600">${esc(d.title)}</text>`;
       d.lines.forEach((ln, i) => {
-        s += `<text x="${side.x + half / 2}" y="${y + 48 + i * 22}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(9)}">${esc(ln)}</text>`;
+        s += `<text x="${side.x + half / 2}" y="${boxY + 42 + i * 22}" text-anchor="middle" fill="${col('muted')}" font-size="${fs(10)}">${esc(ln)}</text>`;
       });
     });
-    s += `<text x="${x + w / 2}" y="${y + h / 2 + 4}" text-anchor="middle" fill="${surf('muted')}" font-size="${fs(16)}">vs</text>`;
+    s += `<text x="${x + w / 2}" y="${y + h / 2 + 4}" text-anchor="middle" fill="${surf('muted')}" font-size="${fs(14)}">vs</text>`;
     return s;
   }
 

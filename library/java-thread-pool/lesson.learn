@@ -1,79 +1,83 @@
-# Java 线程池 — 动画强化版
+# Java 线程池 — VML Strict v2
+mode strict
 lesson Java 线程池
 tags Java, 并发, 线程池
 
 step 裸线程爆炸
+  layout three-tier
   frames 3
   cap 每请求new线程 | 线程数失控暴涨 | 线程池统一接管
-  @all
-    cols 请求:30 系统:310 监控:600
+  zones 请求:30 | 系统:310 | 监控:600
   @0
-    threads 1 zone=请求
-    circle 50 80 9 fill=orange
-    arrow 请求 系统 new
-    box 310 55 110 44 label=Thread stroke=orange
+    threads 1 in 请求
+    link 请求→系统 new
+    caption 每请求new fill=orange slot=top
   @1
-    threads 14 zone=请求 grow
-    badge ×800 600 75 pulse
-    meter 310 130 280 负载 grow max=100 pulse
+    threads 14 in 请求 grow
+    badge ×800 slot=right pulse
+    stress 负载 grow max=100 pulse
   @2
-    queue 310 95 8 filled=3 label=任务队列
-    threads 4 zone=请求
-    arrow 请求 系统 投递
-    box 310 175 150 52 label=线程池 stroke=green
+    queue 任务队列 slots=8 filled=3 in 系统
+    item pool in 系统 label=线程池 stroke=green
+    caption 池化复用 fill=green fade
   @2 L2
-    note 100 300 560 30 创建线程≈ms级·池化复用降开销
+    note 创建线程≈ms级·池化降开销 layer=L2
 
 step 四级扩容
+  layout flow-focus
   frames 4
-  cap 任务提交进池 | core未满扩线程 | 满了先入队 | 队列满扩max
-  @all
-    flow 620 50 提交|core?|新建|入队|满?|扩max|拒绝
-    state 300 提交,core扩,入队,扩max,拒绝
-    cols 提交:30 工作:310
+  cap 提交进池 | core未满扩线程 | 满了入队 | 队列满扩max
+  zones 工作:310
   @0
-    queue 200 145 6 filled=1 label=队列
-    threads 2 zone=工作
+    flow 提交|core?|新建|入队|满?|扩max|拒绝
+    caption 四级策略 fill=muted slot=top
   @1
-    threads 4 zone=工作 grow
-    arrow 提交 工作 新建
+    queue 队列 slots=6 filled=1 in 工作
+    threads 2 in 工作
+    caption 初始2worker fill=muted
   @2
-    queue 200 145 6 filled=5 label=队列
-    threads 4 zone=工作
+    threads 4 in 工作 grow
+    caption core扩线程 fill=green fade
   @3
-    threads 8 zone=工作 grow
-    queue 200 145 6 filled=6 label=满!
-    meter 120 270 400 压力 grow max=100 pulse
+    queue 队列 slots=6 filled=6 in 工作
+    threads 8 in 工作 grow
+    caption 队列满扩max fill=red pulse
+  @3 L1
+    note core<max<队列容量·四步策略 layer=L1
 
 step 队列削峰
+  layout three-tier
   frames 3
   cap 洪峰涌入 | 队列缓冲等待 | worker逐个消化
-  @all
-    cols 洪峰:30 队列:310 worker:600
+  zones 洪峰:30 | 队列:310 | worker:600
   @0
-    badge ×200 40 95 pulse
-    arrow 洪峰 队列 涌入
+    badge ×200 slot=right pulse
+    link 洪峰→队列 涌入
+    caption 洪峰涌入 fill=red slot=top
   @1
-    queue 310 95 10 filled=8 label=缓冲队列
-    arrow 队列 worker 取出
+    queue 缓冲队列 slots=10 filled=8 in 队列
+    link 队列→worker 取出
+    caption 队列削峰 fill=warn fade
   @2
-    threads 6 zone=worker grow
-    meter 600 185 120 消化 grow max=100
-    box 600 95 100 44 label=稳定 stroke=green
+    threads 6 in worker grow
+    stress 消化 grow max=100
+    caption 稳定消化 fill=green slot=top
+  @1 L1
+    note 有界队列·背压缓冲 layer=L1
 
 step 拒绝反压
+  layout three-tier
   frames 3
-  cap 满负荷触发拒绝 | Abort直接抛错 | CallerRuns回压上游
-  @all
-    cols 调用方:30 池:310 策略:600
+  cap 满负荷触发拒绝 | Abort抛错 | CallerRuns回压
+  zones 调用方:30 | 池:310 | 策略:600
   @0
-    queue 310 95 6 filled=6 label=已满
-    threads 8 zone=池
-    lock 310 50
-    state 300 正常,队列满,达max,拒绝
+    queue 已满 slots=6 filled=6 in 池
+    threads 8 in 池
+    caption 池已满 fill=red slot=top
   @1
-    compare 80 150 280 Abort|✗异常|快速失败 vs CallerRuns|↩回退|反压上游
+    compare Abort|✗异常|快速失败 vs CallerRuns|↩回退|反压上游
   @2
-    arrow 池 调用方 回退
-    circle 50 195 9 fill=orange
-    box 40 215 120 40 label=自己执行 stroke=orange
+    link 池→调用方 回退
+    caption 调用方自己执行 fill=orange fade
+  @2 L2
+    note AbortPolicy·Discard·自定义 layer=L2

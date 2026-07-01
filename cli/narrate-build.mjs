@@ -8,7 +8,10 @@ import { loadNarrateParse } from './lib/load-narrate.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-const DEFAULT_VOICE = 'zh-CN-XiaoxiaoNeural';
+/** 讲解向男声，比新闻腔 Xiaoxiao 更口语 */
+const DEFAULT_VOICE = 'zh-CN-YunxiNeural';
+/** 略慢于 1.0，听感更接近真人讲课 */
+const DEFAULT_RATE = 0.95;
 const MP3_BITRATE = 48000; // edge-tts output 48kbit/s mono
 
 function mp3DurationSec(buffer) {
@@ -21,14 +24,24 @@ function speedToRate(speed) {
   return `${sign}${pct}%`;
 }
 
+/** @param {number|string} rate 倍数如 0.95，或 edge-tts 百分比如 -5% */
+function normalizeRate(rate) {
+  if (typeof rate === 'string' && rate.trim().endsWith('%')) return rate.trim();
+  const n = Number(rate);
+  if (!Number.isFinite(n) || n <= 0) {
+    throw new Error(`无效语速: ${rate}（示例: 0.95 或 -5%）`);
+  }
+  return speedToRate(n);
+}
+
 async function synthesizeClip(text, outPath, { voice, rate }) {
-  await synthesizeToFile(text, outPath, { voice, rate: speedToRate(rate) });
+  await synthesizeToFile(text, outPath, { voice, rate: normalizeRate(rate) });
   return fs.readFileSync(outPath);
 }
 
 export async function buildLessonNarrate(lessonDir, options = {}) {
   const voice = options.voice || DEFAULT_VOICE;
-  const rate = options.rate ?? 1;
+  const rate = options.rate ?? DEFAULT_RATE;
   const force = !!options.force;
 
   const learnPath = path.join(lessonDir, 'lesson.learn');
@@ -56,6 +69,7 @@ export async function buildLessonNarrate(lessonDir, options = {}) {
   const manifest = {
     version: 1,
     voice,
+    rate,
     generatedAt: new Date().toISOString().slice(0, 10),
     clips: {}
   };
@@ -109,10 +123,15 @@ function lessonDirsFromTarget(target) {
 
 export async function runNarrateBuild(args) {
   let voice = DEFAULT_VOICE;
+  let rate = DEFAULT_RATE;
   let force = false;
   const explicit = [];
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--voice' && args[i + 1]) voice = args[++i];
+    else if (args[i] === '--rate' && args[i + 1]) {
+      const raw = args[++i];
+      rate = raw.endsWith('%') ? raw : Number(raw);
+    }
     else if (args[i] === '--force') force = true;
     else if (!args[i].startsWith('--')) explicit.push(path.resolve(process.cwd(), args[i]));
   }
@@ -132,7 +151,7 @@ export async function runNarrateBuild(args) {
 
   for (const dir of dirs) {
     const id = path.basename(dir);
-    console.log(`\n[${id}]`);
-    await buildLessonNarrate(dir, { voice, force });
+    console.log(`\n[${id}] voice=${voice} rate=${rate}`);
+    await buildLessonNarrate(dir, { voice, rate, force });
   }
 }

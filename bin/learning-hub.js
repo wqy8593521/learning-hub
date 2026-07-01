@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { runMigrateVml } from '../cli/migrate-vml.mjs';
 import { runValidate } from '../cli/validate.mjs';
 import { runSync } from '../cli/sync.mjs';
 import { runInit } from '../cli/init.mjs';
@@ -14,9 +15,11 @@ const HELP = `Learning Hub CLI
   learning-hub sync              从 manifest 生成 index.json 与各课 index.html
   learning-hub init <id> --title "标题"   脚手架新课
   learning-hub serve [-p 3456]   本地预览
-  learning-hub narrate [path...]  预生成旁白 MP3（需 lesson.narrate + Python3）
+  learning-hub migrate-vml [path] [--dry-run]  legacy → strict 批量迁移
     可传多个课程目录；无参数则处理 library/ 下全部
-    --voice zh-CN-XiaoxiaoNeural  音色
+  learning-hub narrate [path]    预生成旁白 MP3（需 lesson.narrate + Python 3）
+    --voice zh-CN-YunxiNeural     音色（默认讲解男声）
+    --rate 0.95                   语速倍数，或 -5%（默认 0.95 略慢）
     --force                       覆盖已有音频
     首次运行自动创建 .venv 并安装 edge-tts
 
@@ -46,7 +49,10 @@ async function main() {
     case 'narr':
       await runNarrateBuild(args);
       break;
-    case 'help':
+    case 'migrate-vml':
+    case 'migrate':
+      await runMigrateVml(args);
+      break;
     case '-h':
     case '--help':
     case undefined:

@@ -48,7 +48,7 @@ export async function synthesizeToFile(text, outPath, { voice, rate, retries = 4
   fs.writeFileSync(tmpText, text, 'utf8');
   try {
     const args = ['--file', tmpText, '--write-media', outPath, '--voice', voice];
-    if (rate) args.push('--rate', rate);
+    if (rate) args.push(`--rate=${rate}`);
     let lastErr;
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {

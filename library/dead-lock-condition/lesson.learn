@@ -1,62 +1,67 @@
-# 死锁四条件 — VML
+# 死锁四条件 — VML Strict v2
+mode strict
 lesson 死锁四条件
 tags Java, 并发, 死锁
 
 step 经典死锁
+  layout three-tier
   frames 4
-  cap T1拿锁A等B | T2拿锁B等A | 互相等待永不动
-  @all
-    cols 线程T1:200 锁A:350 锁B:500
+  cap T1拿A等B | T2拿B等A | 互相等待永不动
+  zones 线程T1:200 | 锁A:350 | 锁B:500
   @0
-    circle 200 80 9 fill=green
-    lock 350 70
-    text T1持A 220 86 fill=green
+    link 线程T1→锁A 持A
+    caption T1持A fill=green slot=top
   @1
-    circle 500 80 9 fill=orange
-    lock 500 70
-    text T2持B 520 86 fill=orange
+    link 线程T2→锁B 持B
+    caption T2持B fill=orange fade
   @2
-    path M220 120 Q350 160 500 120 stroke=red draw
-    path M520 120 Q450 160 350 120 stroke=red draw
-    text 互等! 380 160 fill=red pulse
+    link 线程T1→锁B 等B
+    link 线程T2→锁A 等A
+    caption 互等! fill=red pulse
   @3
-    state 300 运行,等锁,死锁,僵死
-    queue 380 220 4 filled=4 label=永久等待
+    state 运行,等锁,死锁,僵死 slot=bottom
+    queue 永久等待 slots=4 filled=4
+    caption 永久僵死 fill=red slot=top
+  @3 L2
+    note 四条件齐备→死锁 layer=L2
 
 step 四条件
+  layout flow-focus
   frames 4
-  cap 互斥资源独占 | 持有且等待 | 不可剥夺 | 循环等待
+  cap 互斥独占 | 占有且等待 | 不可剥夺 | 循环等待
   @all
-    flow 620 50 互斥|占有等待|不可剥夺|循环等待|→死锁
+    flow 互斥|占有等待|不可剥夺|循环等待|→死锁
   @0
-    lock 380 80
-    text ①互斥 380 130 fill=red
+    caption ①互斥 fill=red slot=top
   @1
-    circle 200 180 9 fill=green
-    lock 380 180
-    text ②占有等 380 230 fill=orange
+    caption ②占有且等待 fill=orange fade
   @2
-    lock 380 230
-    text ③不可剥夺 380 280 fill=purple
+    caption ③不可剥夺 fill=purple slot=top
   @3
-    path M200 300 Q380 340 560 300 stroke=red draw
-    text ④循环等 380 330 fill=red pulse
+    caption ④循环等待 fill=red pulse
+  @3 L1
+    note 破坏任一条件可防死锁 layer=L1
 
 step 检测与预防
+  layout flow-focus
   frames 3
-  cap 破坏任一条件即可 | 固定加锁顺序 | 超时tryLock
+  cap 破坏任一条件 | 固定加锁顺序 | 超时tryLock
   @0
-    compare 80 55 300 无序加锁|A→B和B→A|死锁 vs 固定顺序|都先A后B|安全
+    compare 无序加锁|A→B和B→A|死锁 vs 固定顺序|都先A后B|安全
   @1
-    timeline 100 T1锁A|T1锁B|T2等A|顺序通过
-    circle 200 200 9 fill=green
+    timeline T1锁A|T1锁B|T2等A|顺序通过
+    caption 固定顺序安全 fill=green fade
   @2
-    codeblock 36 260 1 w=420 tryLock(timeout)|超时释放|重试
+    codeblock tryLock(timeout)|超时释放|重试 highlight=1 layer=L1
+  @2 L2
+    note 银行家算法·检测环路 layer=L2
 
 step 排查工具
+  layout flow-focus
   frames 2
-  cap jstack看线程栈 | 找BLOCKED互相等 | 图形化看循环链
+  cap jstack看线程栈 | 找BLOCKED互等 | 图形化循环链
   @1
-    stack 100 70 main,service,lockA,waitB
-    stack 400 70 main,dao,lockB,waitA
-    callout 250 180 500 50 循环等待链
+    stack main,service,lockA,waitB
+    callout 循环等待链
+  @1 L1
+    note jstack·jcmd·VisualVM layer=L1

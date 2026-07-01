@@ -1,57 +1,61 @@
-# JMM happens-before — VML
+# JMM happens-before — VML Strict v2
+mode strict
 lesson JMM 与 happens-before
 tags JVM, JMM, 并发, 后端八股
 
 step 可见性问题
+  layout three-tier
   frames 3
   cap 多线程共享变量 | 工作内存缓存 | 可能读到旧值
-  @all
-    cols 线程A:30 主内存:310 线程B:600
+  zones 线程A:30 | 主内存:310 | 线程B:600
   @0
-    box 310 70 160 50 label=主内存 x=0 stroke=blue
-    circle 30 80 9 fill=green
-    circle 600 80 9 fill=orange
+    item x in 主内存 label=x=0 stroke=blue
+    caption 主内存共享变量 fill=muted slot=top
   @1
-    box 30 130 100 44 label=x=1本地 stroke=green
-    text 未刷回 30 190 fill=warn
+    item xa in 线程A label=x=1本地 stroke=green
+    caption 未刷回主内存 fill=warn fade
   @2
-    box 600 130 100 44 label=x=0旧值 stroke=red blink
+    item xb in 线程B label=x=0旧值 stroke=red blink
+    caption 线程B读到过期值 fill=red
 
 step happens-before
+  layout flow-focus
   frames 3
   cap JMM定义的偏序 | 保证可见性 | 不等于时间先后
+  zones 线程A:30 | 主内存:310 | 线程B:600
   @all
-    flow 620 50 规则1|规则2|规则3|可见性保证
+    flow 规则1|规则2|规则3|可见性保证
   @0
-    table 60 65 规则,说明/程序次序,同线程内/监视器锁,unlock先于lock/volatile写,写先于读
+    table 规则,说明/程序次序,同线程内/volatile写,写先于读
   @1
-    arrow 线程A 主内存 写volatile
-    arrow 主内存 线程B 读可见
+    link 线程A→主内存 写volatile
+    link 主内存→线程B 读可见
   @2
-    text hb≠物理时间先后 200 250 fill=warn
+    caption hb≠物理时间先后 fill=warn
 
 step volatile语义
+  layout three-tier
   frames 3
   cap 写立即刷主内存 | 读从主内存取 | 禁止指令重排
-  @all
-    cols 线程A:30 主内存:310 线程B:600
+  zones 线程A:30 | 主内存:310 | 线程B:600
   @0
-    text volatile写 30 130 fill=green
-    arrow 线程A 主内存 flush
+    link 线程A→主内存 flush
+    caption volatile写 fill=green slot=top
   @1
-    arrow 主内存 线程B 读最新
-    text volatile读 600 130 fill=green
+    link 主内存→线程B 读最新
+    caption volatile读 fill=green fade
   @2
-    compare 80 200 300 volatile|可见+有序 vs synchronized|互斥+可见
+    compare volatile|可见+有序 vs synchronized|互斥+可见
 
 step 双重检查锁
+  layout flow-focus
   frames 3
   cap 懒加载单例 | 需volatile防重排 | 经典面试题
   @all
-    code 30 200 500 80 "if(instance==null){\n  synchronized(lock){\n    instance=new T();\n  }\n}" java
+    codeblock if(instance==null){|  synchronized(lock){|    instance=new T();} highlight=2 layer=L1
   @0
-    text 未初始化完就被读 200 130 fill=red
+    caption 未初始化完就被读 fill=red slot=top
   @1
-    text volatile修饰instance 200 180 fill=green
+    caption volatile修饰instance fill=green fade
   @2
-    callout 30 290 520 50 禁止对象引用先于构造完成可见
+    note 禁止引用先于构造完成可见 layer=L2

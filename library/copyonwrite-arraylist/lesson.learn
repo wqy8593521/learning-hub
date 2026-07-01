@@ -1,59 +1,61 @@
-# CopyOnWrite — VML
+# CopyOnWrite — VML Strict v2
+mode strict
 lesson CopyOnWrite 读写
 tags Java, 并发, 集合
 
 step 读无锁
+  layout three-tier
   frames 3
-  cap 读线程直接读数组 | 不加任何锁 | 适合读多写少
-  @all
-    cols 读:30 数组:310 写:600
+  cap 读线程直接读 | 不加任何锁 | 读多写少
+  zones 读:30 | 数组:310 | 写:600
   @0
-    threads 6 zone=读 grow
-    arrow 读 数组 直接读
-    box 310 70 180 50 label=array[] stroke=green
+    threads 6 in 读 grow
+    link 读→数组 直接读
+    caption 无锁并发读 fill=green slot=top
   @1
-    circle 50 80 9 fill=green blink
-    circle 90 80 9 fill=green blink
-    threads 10 zone=读 grow
+    threads 10 in 读 grow
+    caption 多读并行 fill=green fade
   @2
-    meter 120 200 400 读吞吐 grow max=100
+    stress 读吞吐 grow max=100
+    caption 读吞吐高 fill=green slot=top
 
 step 写时复制
+  layout three-tier
   frames 4
-  cap 写操作加锁 | 复制一份新数组 | 改完切换引用
+  cap 写操作加锁 | 复制新数组 | 改完切换引用
+  zones 读:30 | 数组:310 | 写:600 | 新数组:500
   @all
-    cols 读:30 数组:310 写:600 新数组:500
-    state 300 读旧,加锁,复制,写入,切换
+    state 读旧,加锁,复制,写入,切换 slot=bottom
   @0
-    box 310 70 180 50 label=旧数组 stroke=blue
-    threads 4 zone=读
+    item old in 数组 label=旧数组 stroke=blue
+    threads 4 in 读
+    caption 读旧数组 fill=muted slot=top
   @1
-    lock 600 60
-    circle 620 80 9 fill=orange
-    box 500 130 180 50 label=新数组 stroke=orange opacity=0.5
+    link 写→新数组 复制
+    caption 加锁复制 fill=orange fade
   @2
-    arrow 写 新数组 写入
-    box 500 130 180 50 label=新数组 stroke=orange
+    link 写→新数组 写入
+    caption 写入新数组 fill=orange slot=top
   @3
-    box 500 70 180 50 label=新数组 stroke=green blink
-    path M310 100 Q400 50 500 70 stroke=green draw
+    item newarr in 新数组 label=新数组 stroke=green blink
+    caption 切换引用 fill=green fade
 
 step 弱一致迭代
+  layout three-tier
   frames 2
-  cap 迭代器快照旧数组 | 看不到写后新元素 | 不会抛CME
-  @all
-    cols 迭代:30 快照:310
+  cap 迭代器快照旧数组 | 看不到新元素 | 不抛CME
+  zones 迭代:30 | 快照:310
   @0
-    box 310 70 180 50 label=快照 stroke=blue
-    arrow 迭代 快照 遍历
-    circle 50 80 9 fill=green
+    link 迭代→快照 遍历
+    item snap in 快照 label=快照 stroke=blue
+    caption 遍历快照 fill=muted slot=top
   @1
-    box 500 130 180 50 label=新数据 stroke=green
-    text 迭代器看不到 380 230 fill=muted
+    caption 看不到新数据 fill=muted fade
 
 step 适用场景
+  layout flow-focus
   frames 2
-  cap 读多写极少 | 如监听器列表 | 写开销大慎用
+  cap 读多写极少 | 监听器列表 | 写开销大慎用
   @1
-    compare 80 55 300 COW|读无锁|写复制 vs ArrayList|读写都锁|通用
-    flow 620 50 监听器|配置|黑白名单|读>>写
+    compare COW|读无锁|写复制 vs ArrayList|读写都锁|通用
+    flow 监听器|配置|黑白名单|读>>写 slot=bottom
