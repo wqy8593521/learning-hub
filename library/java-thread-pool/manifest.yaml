@@ -1,0 +1,21 @@
+id: java-thread-pool
+title: Java 线程池
+subject: Java 并发
+chapter: 线程与锁
+subjectOrder: 1
+chapterOrder: 2
+order: 2
+tags:
+  - Java
+  - 并发
+  - 线程池
+  - 后端八股
+prerequisites:
+  - Java 基础
+  - 多线程入门
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

@@ -1,0 +1,49 @@
+# concurrent-hashmap.quiz
+bank ConcurrentHashMap
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 分段锁
+    style pick_one
+    ask JDK7 ConcurrentHashMap 提高并发的方式是？
+    opt 分段锁，不同段可并行
+    opt 全表 synchronized
+    opt 只用 volatile
+    opt 单线程写
+    answer 0
+    explain JDK7 分段数组，每段独立 ReentrantLock。
+
+  q CAS无锁读
+    style true_false
+    ask ConcurrentHashMap 的 get 操作通常不加锁
+    true
+    explain get 利用 volatile 读和 CAS，与 put 可并行。
+
+  q JDK8桶锁
+    style pick_one
+    ask JDK8 链表转红黑树时如何保线程安全？
+    opt synchronized 锁住桶头
+    opt 全局锁
+    opt 不加锁
+    opt 只读不写
+    answer 0
+    explain 链表头 CAS，树化时对桶 synchronized。
+
+  q 扩容协助
+    style pick_one
+    ask 多线程扩容时其他线程会？
+    opt 协助迁移桶数据
+    opt 全部阻塞等待
+    opt 抛异常
+    opt 丢弃数据
+    answer 0
+    explain 扩容分段迁移，协助线程帮助转移，减少阻塞。
+
+trigger
+  after_step 0 分段锁
+  after_step 1 CAS无锁读
+  after_step 2 JDK8桶锁
+  after_step 3 扩容协助
+  end pick 2

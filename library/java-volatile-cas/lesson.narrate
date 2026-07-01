@@ -1,0 +1,36 @@
+# volatile 与 CAS — 口语旁白
+lesson volatile 与 CAS
+
+step 可见性裂缝
+  @0: 多线程各自有 CPU 缓存，线程 A 改了 flag，线程 B 可能还读到旧值 0。
+  @0 L1: 这就是可见性问题，每个线程各看各的本地缓存，互不通知。
+  @1: 没有同步机制时，编译器和 CPU 还可能重排指令，导致更诡异的结果。
+  @1 L1: 可见性和有序性是并发 bug 的两大根源。
+  @2: 普通变量无法保证跨线程可见，需要 volatile 或 synchronized 打通缓存。
+  @2 L1: 面试先讲可见性裂缝，再引出 volatile 的解决方案。
+
+step volatile打通
+  @0: volatile 写操作会立刻刷到主内存，读操作强制从主内存拉最新值。
+  @0 L1: 相当于在读写之间插了内存屏障，挡掉有害的重排序。
+  @1: 一个线程写 volatile 变量，其他线程能立刻看到，解决可见性问题。
+  @1 L1: 但 volatile 不保证原子性，i++ 这种复合操作仍需要 synchronized 或 Atomic。
+  @2: 典型用法：状态标志位、双重检查锁里的 instance 变量。
+  @2 L1: 记住 volatile 保证可见性和有序性，不保证复合操作的原子性。
+
+step CAS抢改
+  @0: CAS 是 Compare And Swap，先读内存旧值 expect，相等才改成新值。
+  @0 L1: 底层由 CPU 一条指令完成，保证检查和修改的原子性。
+  @1: 如果期间被别的线程改了，CAS 失败，当前线程重试或放弃。
+  @1 L1: AtomicInteger 的 incrementAndGet 就是自旋 CAS 直到成功。
+  @2: CAS 无锁，避免了 synchronized 的阻塞开销，适合低竞争场景。
+  @2 L1: 高竞争下 CAS 自旋会浪费 CPU，这时锁反而更合适。
+  @3: ABA 问题是 CAS 的经典陷阱：值从 A 变 B 又变回 A，CAS 以为没变。
+  @3 L1: AtomicStampedReference 用版本号戳破 ABA 幻觉。
+
+step ABA陷阱
+  @0: 栈顶节点被弹出又压回相同值，CAS 比较值相同就误以为没人动过。
+  @0 L1: 在链表栈等数据结构中，ABA 可能导致结构损坏。
+  @1: 解决方案是给每次修改加一个版本戳，比较时同时比对值和版本。
+  @1 L1: AtomicStampedReference 和 AtomicMarkableReference 就是干这个的。
+  @2: 实际业务中 ABA 不常见，但面试必须能讲清楚原理和应对。
+  @2 L1: 理解 ABA 说明你真的懂了 CAS 的局限性。

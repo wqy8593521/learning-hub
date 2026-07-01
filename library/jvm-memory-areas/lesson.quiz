@@ -1,0 +1,53 @@
+# jvm-memory-areas.quiz
+bank JVM 内存结构
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 线程私有
+    style pick_one
+    ask 哪些区域是线程私有的？
+    opt 虚拟机栈和程序计数器
+    opt 堆
+    opt 元空间
+    opt 方法区全局共享对象
+    answer 0
+    explain 每个线程有自己的 PC 和栈；堆和元空间共享。
+
+  q 堆与元空间
+    style pick_one
+    ask JDK8 后类元数据存在？
+    opt 元空间 Metaspace
+    opt 永久代 PermGen
+    opt 虚拟机栈
+    opt 程序计数器
+    answer 0
+    explain JDK8 移除永久代，类元数据放本地内存元空间。
+
+  q 对象创建
+    style pick_one
+    ask new 对象时「零值初始化」指？
+    opt 字段设为默认值 0/null
+    opt 调用构造器
+    opt GC 回收
+    opt 类加载
+    answer 0
+    explain 分配后先零值初始化，再执行构造方法。
+
+  q 引用类型
+    style pick_one
+    ask 软引用在什么时候被回收？
+    opt 内存不足时
+    opt 立即
+    opt 永不
+    opt 下次 GC 必回收
+    answer 0
+    explain 软引用适合缓存；弱引用下次 GC 即回收。
+
+trigger
+  after_step 0 线程私有
+  after_step 1 堆与元空间
+  after_step 2 对象创建
+  after_step 3 引用类型
+  end pick 2

@@ -1,0 +1,21 @@
+id: java-aqs-reentrant
+title: AQS 与 ReentrantLock
+subject: Java 并发
+chapter: 线程与锁
+subjectOrder: 1
+chapterOrder: 2
+order: 7
+tags:
+  - Java
+  - AQS
+  - ReentrantLock
+  - JavaGuide
+prerequisites:
+  - java-lock-upgrade
+  - java-volatile-cas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

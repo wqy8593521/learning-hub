@@ -1,0 +1,65 @@
+# CAP — 动画强化版
+lesson CAP 与一致性
+tags 分布式, CAP, 一致性
+
+step 分区来临
+  frames 3
+  cap 网络突然断开 | P不可避免 | C和A只能二选一
+  @all
+    cols 节点A:200 节点B:500
+  @0
+    line 350 100 500 100 stroke=green draw
+    box 200 70 120 44 label=NodeA stroke=green
+    box 500 70 120 44 label=NodeB stroke=green
+  @1
+    line 350 100 500 100 stroke=red draw
+    badge 分区! 380 55 pulse fill=red
+  @2
+    compare 80 180 300 CP|停写|保一致 vs AP|继续写|最终一致
+
+step CP停服
+  frames 3
+  cap ZK选主期间 | 拒绝写入请求 | 一致性优先
+  @all
+    cols 客户端:30 ZK:310 从节点:600
+    state 300 正常,分区,选主,停写,恢复
+  @0
+    arrow 客户端 ZK 写
+    box 310 70 140 44 label=Leader stroke=green
+  @1
+    lock 310 60
+    queue 30 150 6 filled=5 label=写请求排队
+    arrow 客户端 ZK 被拒
+  @2
+    box 310 70 140 44 label=新Leader stroke=green blink
+    arrow 客户端 ZK 恢复
+
+step AP继续
+  frames 3
+  cap Eureka各自注册 | 可能读到旧列表 | 可用性优先
+  @all
+    cols 服务A:200 注册中心:380 服务B:560
+  @0
+    arrow 服务A 注册中心 注册
+    box 380 70 140 44 label=v1 stroke=green
+  @1
+    line 350 100 500 100 stroke=red draw
+    arrow 服务B 注册中心 注册
+    box 560 130 100 40 label=v2? stroke=orange
+  @2
+    box 380 70 140 44 label=v1旧 stroke=orange expired
+    box 560 130 100 40 label=v2新 stroke=green
+    timeline 100 分区|各自写|合并|最终一致
+
+step 一致性光谱
+  frames 3
+  cap 强一致读最新 | 最终一致最常见 | 业务决定选型
+  @0
+    timeline 100 写|读|必最新|强一致
+    meter 120 200 400 成本 grow max=100
+  @1
+    timeline 100 写|读旧|延迟|最终一致
+    meter 120 200 400 成本 grow max=30
+  @2
+    flow 620 50 场景|容忍延迟?|选模型|兜底方案
+    stack 100 260 背景,取舍,业务,方案

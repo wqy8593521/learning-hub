@@ -1,0 +1,49 @@
+# mysql-btree-index.quiz
+bank MySQL B+树索引
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 树高决定IO
+    style pick_one
+    ask MySQL InnoDB 选 B+树而非二叉树的核心原因是？
+    opt 扇出大、树矮、减少磁盘 IO
+    opt 实现更简单
+    opt 支持事务
+    opt 自动分片
+    answer 0
+    explain 磁盘按页读，树越矮 IO 越少；B+ 非叶只存键，扇出大。
+
+  q 聚簇一行
+    style true_false
+    ask InnoDB 聚簇索引的叶子节点存储完整行数据
+    true
+    explain 主键索引叶子即数据页，一张表只有一个聚簇索引。
+
+  q 二级回表
+    style pick_one
+    ask 通过二级索引查数据需要几次树查找（最坏）？
+    opt 2 次
+    opt 1 次
+    opt 3 次
+    opt 0 次
+    answer 0
+    explain 先查二级索引得主键，再回表查聚簇索引。
+
+  q 最左前缀
+    style pick_one
+    ask 联合索引 (a,b,c) 中 WHERE b=1 能用索引吗？
+    opt 不能
+    opt 能
+    opt 部分能用
+    opt 取决于数据量
+    answer 0
+    explain 最左前缀原则：必须从最左列连续匹配，跳过 a 则无法用。
+
+trigger
+  after_step 0 树高决定IO
+  after_step 1 聚簇一行
+  after_step 2 二级回表
+  after_step 3 最左前缀
+  end pick 2

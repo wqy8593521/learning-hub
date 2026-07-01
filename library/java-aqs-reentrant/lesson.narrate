@@ -1,0 +1,34 @@
+# AQS 与 ReentrantLock — 口语旁白
+lesson AQS 与 ReentrantLock
+
+step AQS核心
+  @0: AQS 是 AbstractQueuedSynchronizer，JUC 锁和同步器的公共底座。
+  @0 L1: 核心就是一个 volatile 的 state 变量，加 CLH 双向等待队列。
+  @1: 抢锁用 CAS 改 state，失败就封装成 Node 入队挂起。
+  @1 L1: ReentrantLock、Semaphore、CountDownLatch 底层都靠 AQS 实现。
+  @2: 理解 AQS 就理解了 Java 大部分显式锁的实现套路。
+  @2 L1: state 为 0 表示无锁，为 1 表示被一个线程持有。
+
+step 可重入
+  @0: 同一线程已经持有锁，再次 lock 时 state 加 1，不会把自己阻塞。
+  @0 L1: 这就是可重入，避免了自己等自己造成的死锁。
+  @1: unlock 一次 state 减 1，减到 0 才真正释放锁，唤醒等待队列。
+  @1 L1: 必须 unlock 和 lock 次数配对，否则锁泄漏其他线程永远进不来。
+  @2: synchronized 也是可重入的，可重入是 Java 锁的基本特性。
+  @2 L1: 递归调用或嵌套同步块都依赖可重入才能正常工作。
+
+step 公平与非公平
+  @0: 非公平锁：新来的线程可以直接 CAS 抢锁，不用排队，吞吐更高。
+  @0 L1: 默认 ReentrantLock 是非公平的，也是推荐的生产配置。
+  @1: 公平锁：严格按照 FIFO 队列顺序，先等先得，不会插队。
+  @1 L1: 公平锁避免饥饿，但上下文切换多，性能通常差一截。
+  @2: 选型原则：除非业务明确要求公平，否则用非公平锁。
+  @2 L1: 构造时传 new ReentrantLock(true) 开启公平模式。
+
+step 对比synchronized
+  @0: ReentrantLock 支持 lockInterruptibly，等待锁时可响应中断。
+  @0 L1: synchronized 不可中断，一直等到拿到锁或抛异常。
+  @1: tryLock 带超时，等不到就放弃，适合避免死锁。
+  @1 L1: synchronized 没有超时机制，只能一直等。
+  @2: 一个锁可以绑定多个 Condition，实现精确唤醒不同等待队列。
+  @2 L1: synchronized 只有 wait 和 notify 一套，Condition 更灵活。

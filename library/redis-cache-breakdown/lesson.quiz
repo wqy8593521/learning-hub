@@ -1,0 +1,49 @@
+# redis-cache-breakdown.quiz
+bank 缓存击穿
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 击穿定义
+    style pick_one
+    ask 缓存击穿的触发条件是？
+    opt 热点 key 过期
+    opt Redis 宕机
+    opt 查询不存在的数据
+    opt 缓存内存满了
+    answer 0
+    explain 击穿=热点过期+并发miss。穿透是不存在的数据，雪崩是批量过期。
+
+  q 击穿并发
+    style pick_one
+    ask 无防护时 1000 并发 miss 会打 DB 几次？
+    opt 1 次
+    opt 10 次
+    opt 1000 次
+    opt 0 次
+    answer 2
+    explain check-then-act 竞态：每个线程独立查库，无互斥则每人一次。
+
+  q 互斥锁
+    style true_false
+    ask SET NX 可以保证只有一个线程查库
+    true
+    explain Redis 单线程执行命令，SET NX 只有一个 client 成功。
+
+  q 逻辑过期
+    style pick_one
+    ask 逻辑过期解决的核心问题是？
+    opt 消灭 miss 本身
+    opt 加快 Redis
+    opt 防止雪崩
+    opt 减少内存
+    answer 0
+    explain 互斥锁解决 miss 瞬间竞态；逻辑过期让用户永远能读到值。
+
+trigger
+  after_step 0 击穿定义
+  after_step 1 击穿并发
+  after_step 2 互斥锁
+  after_step 3 逻辑过期
+  end pick 2

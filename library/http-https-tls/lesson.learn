@@ -1,0 +1,56 @@
+# HTTP/HTTPS — VML
+lesson HTTP 与 HTTPS
+tags 计网, HTTP, HTTPS, 后端八股
+
+step HTTP请求响应
+  frames 3
+  cap 浏览器发HTTP请求 | 服务端处理 | 返回状态码+Body
+  @all
+    cols 客户端:30 服务端:400
+    flow 620 50 DNS|TCP|HTTP请求|响应
+  @0
+    arrow 客户端 服务端 GET /api
+    box 400 70 180 50 label=Tomcat stroke=blue
+  @1
+    stack 400 130 Controller,Service,DAO
+  @2
+    box 30 130 160 44 label=200 OK stroke=green
+    text JSON Body 50 190 fill=green
+
+step HTTPS加密
+  frames 3
+  cap HTTP明文易被窃听 | TLS握手协商密钥 | 对称加密传数据
+  @all
+    cols 客户端:30 服务端:400
+  @0
+    text HTTP明文 200 130 fill=red
+    lock 200 80
+  @1
+    flow 620 50 证书验证|密钥交换|会话密钥
+    box 400 70 180 50 label=TLS握手 stroke=purple
+  @2
+    line 30 100 400 100 stroke=green draw
+    text 对称加密通道 200 180 fill=green
+
+step TLS握手
+  frames 4
+  cap ClientHello | ServerHello+证书 | 密钥交换 | Finished
+  @all
+    timeline 80 客户端|Hello|服务端|证书|客户端|密钥|双方|加密
+  @0
+    arrow 客户端 服务端 ClientHello
+  @1
+    arrow 服务端 客户端 证书+Hello
+  @2
+    arrow 客户端 服务端 密钥交换
+  @3
+    circle 30 80 9 fill=green blink
+    circle 400 80 9 fill=green blink
+
+step 常见状态码
+  frames 2
+  cap 2xx成功 | 4xx客户端错 | 5xx服务端错
+  @0
+    table 60 65 状态码,含义/200,成功/301,重定向/404,未找到/500,服务错误
+  @1
+    compare 80 200 300 GET|幂等|可缓存 vs POST|非幂等|常改资源

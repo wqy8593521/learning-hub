@@ -1,0 +1,49 @@
+# tcp-three-handshake.quiz
+bank TCP 三次握手
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 第一次SYN
+    style pick_one
+    ask 第一次握手客户端发送？
+    opt SYN
+    opt ACK
+    opt FIN
+    opt RST
+    answer 0
+    explain 客户端 SYN，seq=x，状态 SYN_SENT。
+
+  q 第二次SYN-ACK
+    style pick_one
+    ask 第二次握手服务端回复？
+    opt SYN+ACK
+    opt 仅 ACK
+    opt 仅 SYN
+    opt FIN
+    answer 0
+    explain SYN+ACK，ack=x+1，服务端 SYN_RCVD。
+
+  q 第三次ACK
+    style true_false
+    ask 第三次握手后双方进入 ESTABLISHED
+    true
+    explain 客户端发 ACK ack=y+1，双方可传输数据。
+
+  q 为何三次
+    style pick_one
+    ask 为什么 TCP 需要三次握手？
+    opt 确认双方收发能力并同步序号
+    opt 加密数据
+    opt 压缩数据
+    opt 分配端口
+    answer 0
+    explain 两次无法确认客户端收到 SYN-ACK，三次双方都确认。
+
+trigger
+  after_step 0 第一次SYN
+  after_step 1 第二次SYN-ACK
+  after_step 2 第三次ACK
+  after_step 3 为何三次
+  end pick 2

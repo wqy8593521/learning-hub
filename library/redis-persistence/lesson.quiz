@@ -1,0 +1,49 @@
+# redis-persistence.quiz
+bank RDB 与 AOF
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q RDB快照
+    style pick_one
+    ask RDB 持久化方式是？
+    opt 定时 fork 写快照
+    opt 每条命令追加日志
+    opt 同步写 MySQL
+    opt 不持久化
+    answer 0
+    explain bgsave fork 子进程写 dump.rdb。
+
+  q AOF日志
+    style pick_one
+    ask AOF appendfsync always 表示？
+    opt 每条命令 fsync
+    opt 从不 fsync
+    opt 每秒 fsync
+    opt 随机 fsync
+    answer 0
+    explain always 最安全最慢；everysec 折中默认推荐。
+
+  q 混合持久化
+    style true_false
+    ask Redis 4.0+ 支持 RDB 格式嵌入 AOF 做混合持久化
+    true
+    explain 重启先加载 RDB 部分再重放 AOF 增量，兼顾速度与丢失。
+
+  q 选型
+    style pick_one
+    ask 生产环境推荐？
+    opt 混合持久化 + 主从
+    opt 关闭持久化
+    opt 仅 RDB 无副本
+    opt 仅内存
+    answer 0
+    explain 混合 + 副本是高可用常见组合。
+
+trigger
+  after_step 0 RDB快照
+  after_step 1 AOF日志
+  after_step 2 混合持久化
+  after_step 3 选型
+  end pick 2

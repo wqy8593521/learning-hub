@@ -1,0 +1,49 @@
+# threadlocal-principle.quiz
+bank ThreadLocal 原理
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 线程隔离
+    style pick_one
+    ask ThreadLocal 数据存在哪里？
+    opt 每个线程的 ThreadLocalMap
+    opt 堆上的静态变量
+    opt 方法栈
+    opt 元空间
+    answer 0
+    explain 每个 Thread 持有 ThreadLocalMap，以 ThreadLocal 为 key。
+
+  q get/set路径
+    style true_false
+    ask ThreadLocal.get() 先获取当前线程再查 Map
+    true
+    explain Thread.currentThread().threadLocals.getEntry(this)。
+
+  q 内存泄漏
+    style pick_one
+    ask 线程池场景 ThreadLocal 泄漏的原因是？
+    opt 线程复用，value 强引用不释放
+    opt key 太强
+    opt GC 太快
+    opt Map 太小
+    answer 0
+    explain key 弱引用可被回收，value 仍被 Entry 强引用，线程复用导致泄漏。
+
+  q 正确使用
+    style pick_one
+    ask 线程池中使用 ThreadLocal 必须？
+    opt finally 中 remove
+    opt 加大堆内存
+    opt 用 static
+    opt 不用 ThreadLocal
+    answer 0
+    explain 用完 remove，避免线程复用携带旧 value。
+
+trigger
+  after_step 0 线程隔离
+  after_step 1 get/set路径
+  after_step 2 内存泄漏
+  after_step 3 正确使用
+  end pick 2

@@ -1,0 +1,21 @@
+id: mq-message-reliability
+title: MQ 消息可靠性
+subject: 分布式
+chapter: 消息队列
+subjectOrder: 4
+chapterOrder: 2
+order: 1
+tags:
+  - 消息队列
+  - 分布式
+  - 可靠性
+  - 后端八股
+prerequisites:
+  - 分布式基础
+  - distributed-cap
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

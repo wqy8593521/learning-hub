@@ -1,0 +1,59 @@
+# redo 与 undo 日志 — VML
+lesson redo 与 undo 日志
+tags MySQL, InnoDB, 日志
+
+step 崩溃恢复
+  frames 3
+  cap 事务提交先写redo | 脏页异步刷盘 | 崩溃用redo重做
+  @all
+    cols 事务:30 BufferPool:310 磁盘:600
+  @0
+    arrow 事务 BufferPool 改页
+    box 310 70 160 50 label=脏页 stroke=orange
+    arrow 事务 磁盘 redo写
+    box 600 130 140 44 label=redo log stroke=red
+  @1
+    box 310 70 160 50 label=脏页 stroke=orange
+    badge 崩溃! 380 50 pulse fill=red
+  @2
+    arrow 磁盘 BufferPool redo重做
+    box 310 70 160 50 label=恢复✓ stroke=green blink
+
+step redo两阶段
+  frames 4
+  cap Prepare写redo | 提交写binlog | Commit标记提交
+  @all
+    timeline 100 Prepare|写binlog|Commit|完成
+    state 300 Prepare,写binlog,Commit,完成
+  @0
+    box 200 70 120 44 label=redo prepare stroke=orange
+  @1
+    box 380 70 120 44 label=binlog stroke=purple
+  @2
+    box 200 70 120 44 label=redo commit stroke=green
+  @3
+    circle 50 80 9 fill=green blink
+
+step undo回滚
+  frames 3
+  cap 修改前写undo | 回滚用undo撤销 | MVCC读旧版本
+  @all
+    cols 事务:30 行:310 undo链:600
+  @0
+    box 310 70 160 50 label=余额100 stroke=blue
+    arrow 事务 行 UPDATE
+  @1
+    path M600 100 Q500 130 400 160 stroke=purple draw
+    box 600 70 140 44 label=undo:100 stroke=purple
+    box 310 70 160 50 label=余额80 stroke=orange
+  @2
+    arrow 事务 行 ROLLBACK
+    box 310 70 160 50 label=余额100 stroke=green blink
+    arrow undo链 行 读旧版
+
+step 职责对比
+  frames 2
+  cap redo保持久性 | undo保原子性+MVCC | binlog主从归档
+  @1
+    compare 80 55 300 redo|崩溃恢复|物理日志 vs undo|回滚+MVCC|逻辑逆操作
+    table 60 200 日志,作用/redo,持久性/undo,原子+MVCC/binlog,主从+归档

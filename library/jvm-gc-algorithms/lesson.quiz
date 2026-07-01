@@ -1,0 +1,49 @@
+# jvm-gc-algorithms.quiz
+bank GC 算法对比
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 标记清除
+    style pick_one
+    ask 标记-清除算法的主要缺点是？
+    opt 产生内存碎片
+    opt 需要双倍空间
+    opt 不能并发
+    opt 只用于老年代
+    answer 0
+    explain 清除后留下不连续空闲块，可能分配大对象失败。
+
+  q 复制算法
+    style pick_one
+    ask 复制算法最适合哪个区域？
+    opt 新生代（对象朝生夕死）
+    opt 老年代
+    opt 元空间
+    opt 栈
+    answer 0
+    explain 存活少时复制代价低，Eden/Survivor 典型用法。
+
+  q CMS与G1
+    style pick_one
+    ask G1 相比 CMS 的核心改进？
+    opt Region 化+可预测停顿
+    opt 完全不停顿
+    opt 不用标记
+    opt 只收新生代
+    answer 0
+    explain G1 按 Region 回收，可设 MaxGCPauseMillis 目标。
+
+  q 选型建议
+    style true_false
+    ask JDK9 起默认垃圾收集器是 G1
+    true
+    explain JDK9+ 默认 G1；极低延迟可考 ZGC/Shenandoah。
+
+trigger
+  after_step 0 标记清除
+  after_step 1 复制算法
+  after_step 2 CMS与G1
+  after_step 3 选型建议
+  end pick 2

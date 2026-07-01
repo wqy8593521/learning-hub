@@ -1,0 +1,65 @@
+# 行锁与间隙锁 — VML
+lesson 行锁与间隙锁
+tags MySQL, 锁, InnoDB
+
+step 行锁Record
+  frames 3
+  cap 锁定索引记录 | 精确匹配命中行 | 当前读加锁
+  @all
+    cols 事务A:30 行:380 事务B:600
+    tree btree 380 70 levels=2
+  @0
+    box 480 150 60 36 label=id=10 stroke=blue
+    text SELECT FOR UPDATE 380 50 fill=warn
+  @1
+    lock 480 145
+    box 480 150 60 36 label=行锁 stroke=red
+    circle 50 80 9 fill=green
+    arrow 事务A 行 锁定
+  @2
+    circle 620 80 9 fill=red
+    arrow 事务B 行 阻塞
+
+step 间隙锁Gap
+  frames 3
+  cap 锁定索引间隙 | 阻止范围内插入 | RR级别防幻读
+  @all
+    tree btree 380 70 levels=2
+  @0
+    box 400 150 120 32 label=(10,20) stroke=orange
+    callout 400 130 520 50 间隙
+  @1
+    lock 400 130
+    circle 620 80 9 fill=red
+    text INSERT 15被挡 640 130 fill=red pulse
+  @2
+    text 防幻读 380 220 fill=orange
+
+step Next-Key
+  frames 3
+  cap 行锁+间隙锁合体 | 左开右闭区间 | InnoDB默认加锁单位
+  @0
+    box 400 140 140 40 label=(10,20] stroke=purple
+    text 记录20+间隙 380 50 fill=purple
+  @1
+    lock 400 130
+    lock 480 145
+  @2
+    compare 80 200 300 行锁|锁记录|精确 vs 间隙|锁空隙|防插入 vs Next-Key|合体|默认
+
+step 死锁检测
+  frames 3
+  cap 互相等锁形成环 | InnoDB自动检测 | 回滚代价小事务
+  @all
+    cols TxA:200 TxB:500
+  @0
+    lock 350 70
+    circle 200 80 9 fill=green
+    circle 500 80 9 fill=orange
+  @1
+    path M220 120 Q380 160 500 120 stroke=red draw
+    path M500 120 Q380 60 220 120 stroke=red draw
+    text 死锁! 380 160 fill=red pulse
+  @2
+    circle 500 80 9 fill=red expired
+    text 回滚一方 520 130 fill=orange

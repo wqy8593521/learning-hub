@@ -1,0 +1,49 @@
+# mq-message-reliability.quiz
+bank MQ 消息可靠性
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 三处会丢
+    style pick_one
+    ask 消息丢失可能发生在哪些环节？
+    opt 生产、Broker、消费三处
+    opt 仅 Broker
+    opt 仅消费端
+    opt 仅网络
+    answer 0
+    explain 可靠投递需要三阶段都有保障：确认、持久、ACK。
+
+  q 生产确认
+    style pick_one
+    ask 本地消息表方案的核心思路是？
+    opt 先写 DB 再发 MQ，失败定时重试
+    opt 先发 MQ 再写 DB
+    opt 只发 MQ 不写 DB
+    opt 用 Redis 代替 MQ
+    answer 0
+    explain 本地表保证消息不丢，定时任务扫表重发，最终一致。
+
+  q Broker刷盘
+    style true_false
+    ask 主从同步复制比异步复制更不容易丢消息
+    true
+    explain 同步复制等 Slave 确认才返回，Master 宕机可从 Slave 恢复。
+
+  q 消费幂等
+    style pick_one
+    ask 消费端正确的 ACK 时机是？
+    opt 业务处理成功后再 ACK
+    opt 收到消息立刻 ACK
+    opt 不需要 ACK
+    opt 随机 ACK
+    answer 0
+    explain 先 ACK 后处理，处理失败消息已确认会丢失；先处理后 ACK。
+
+trigger
+  after_step 0 三处会丢
+  after_step 1 生产确认
+  after_step 2 Broker刷盘
+  after_step 3 消费幂等
+  end pick 2

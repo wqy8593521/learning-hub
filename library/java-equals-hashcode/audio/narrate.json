@@ -1,0 +1,583 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "equals 首先要满足自反性，任何对象和自己比较必须返回 true。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.705341935483871,
+          "text": "equals 首先要满足自反性"
+        },
+        {
+          "start": 2.705341935483871,
+          "end": 5.990399999999999,
+          "text": "任何对象和自己比较必须返回 true"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "还要注意对称性，a 等于 b 那么 b 也必须等于 a。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6611839999999998,
+          "text": "还要注意对称性"
+        },
+        {
+          "start": 1.6611839999999998,
+          "end": 4.746239999999999,
+          "text": "a 等于 b 那么 b 也必须等于 a"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "还要注意对称性，a 等于 b 那么 b 也必须等于 a。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6611839999999998,
+          "text": "还要注意对称性"
+        },
+        {
+          "start": 1.6611839999999998,
+          "end": 4.746239999999999,
+          "text": "a 等于 b 那么 b 也必须等于 a"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "传递性要求，如果 a 等于 b、b 等于 c，那么 a 也必须等于 c。",
+      "duration": 6.288,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.2072960000000001,
+          "text": "传递性要求"
+        },
+        {
+          "start": 1.2072960000000001,
+          "end": 3.8633471999999998,
+          "text": "如果 a 等于 b、b 等于 c"
+        },
+        {
+          "start": 3.8633471999999998,
+          "end": 6.036479999999999,
+          "text": "那么 a 也必须等于 c"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "一致性是指多次调用 equals 结果要稳定，对象没变就不能忽 true 忽 false。",
+      "duration": 7.104,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5893894736842102,
+          "text": "一致性是指多次调用 equals 结果要稳定"
+        },
+        {
+          "start": 3.5893894736842102,
+          "end": 6.819839999999999,
+          "text": "对象没变就不能忽 true 忽 false"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "一致性是指多次调用 equals 结果要稳定，对象没变就不能忽 true 忽 false。",
+      "duration": 7.104,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5893894736842102,
+          "text": "一致性是指多次调用 equals 结果要稳定"
+        },
+        {
+          "start": 3.5893894736842102,
+          "end": 6.819839999999999,
+          "text": "对象没变就不能忽 true 忽 false"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "最后一条，与 null 比较必须返回 false，不能抛空指针。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.7691815384615385,
+          "text": "最后一条"
+        },
+        {
+          "start": 0.7691815384615385,
+          "end": 3.8459076923076925,
+          "text": "与 null 比较必须返回 false"
+        },
+        {
+          "start": 3.8459076923076925,
+          "end": 4.99968,
+          "text": "不能抛空指针"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "面试写 equals 时这五条契约缺一不可，建议背成口诀。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8873088000000005,
+          "text": "面试写 equals 时这五条契约缺一不可"
+        },
+        {
+          "start": 3.8873088000000005,
+          "end": 5.11488,
+          "text": "建议背成口诀"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "面试写 equals 时这五条契约缺一不可，建议背成口诀。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8873088000000005,
+          "text": "面试写 equals 时这五条契约缺一不可"
+        },
+        {
+          "start": 3.8873088000000005,
+          "end": 5.11488,
+          "text": "建议背成口诀"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "两个对象 equals 为 true，它们的 hashCode 必须相同，这是硬性规定。",
+      "duration": 6.384,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.5536,
+          "text": "两个对象 equals 为 true"
+        },
+        {
+          "start": 2.5536,
+          "end": 5.1072,
+          "text": "它们的 hashCode 必须相同"
+        },
+        {
+          "start": 5.1072,
+          "end": 6.12864,
+          "text": "这是硬性规定"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "反过来不成立，hashCode 相同并不意味着 equals 一定为 true。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9839435294117647,
+          "text": "反过来不成立"
+        },
+        {
+          "start": 0.9839435294117647,
+          "end": 5.575679999999998,
+          "text": "hashCode 相同并不意味着 equals 一定为 true"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "反过来不成立，hashCode 相同并不意味着 equals 一定为 true。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9839435294117647,
+          "text": "反过来不成立"
+        },
+        {
+          "start": 0.9839435294117647,
+          "end": 5.575679999999998,
+          "text": "hashCode 相同并不意味着 equals 一定为 true"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "这三个对象 hash 都是 42，但 equals 可能是 false。",
+      "duration": 5.232,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3319771428571427,
+          "text": "这三个对象 hash 都是 42"
+        },
+        {
+          "start": 2.3319771428571427,
+          "end": 5.02272,
+          "text": "但 equals 可能是 false"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "这叫哈希碰撞，HashMap 里要靠 equals 再比一次才能真正区分。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.1232,
+          "text": "这叫哈希碰撞"
+        },
+        {
+          "start": 1.1232,
+          "end": 5.9904,
+          "text": "HashMap 里要靠 equals 再比一次才能真正区分"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "这叫哈希碰撞，HashMap 里要靠 equals 再比一次才能真正区分。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.1232,
+          "text": "这叫哈希碰撞"
+        },
+        {
+          "start": 1.1232,
+          "end": 5.9904,
+          "text": "HashMap 里要靠 equals 再比一次才能真正区分"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "规范很明确，只要重写了 equals，就必须同时重写 hashCode。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9067354838709677,
+          "text": "规范很明确"
+        },
+        {
+          "start": 0.9067354838709677,
+          "end": 2.901553548387097,
+          "text": "只要重写了 equals"
+        },
+        {
+          "start": 2.901553548387097,
+          "end": 5.62176,
+          "text": "就必须同时重写 hashCode"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "只写 equals 不写 hashCode，是 Java 面试的高频扣分点。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.9431741935483875,
+          "text": "只写 equals 不写 hashCode"
+        },
+        {
+          "start": 2.9431741935483875,
+          "end": 5.068800000000001,
+          "text": "是 Java 面试的高频扣分点"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "只写 equals 不写 hashCode，是 Java 面试的高频扣分点。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.9431741935483875,
+          "text": "只写 equals 不写 hashCode"
+        },
+        {
+          "start": 2.9431741935483875,
+          "end": 5.068800000000001,
+          "text": "是 Java 面试的高频扣分点"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "HashMap 先根据 key 的 hashCode 算出落在哪个桶里。",
+      "duration": 4.416,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.2393600000000005,
+          "text": "HashMap 先根据 key 的 hashCode 算出落在哪个桶里"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "定位桶只是第一步，同桶里可能挂着一串节点。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9305094736842103,
+          "text": "定位桶只是第一步"
+        },
+        {
+          "start": 1.9305094736842103,
+          "end": 4.58496,
+          "text": "同桶里可能挂着一串节点"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "定位桶只是第一步，同桶里可能挂着一串节点。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9305094736842103,
+          "text": "定位桶只是第一步"
+        },
+        {
+          "start": 1.9305094736842103,
+          "end": 4.58496,
+          "text": "同桶里可能挂着一串节点"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "发生哈希碰撞时，用 equals 逐个比对是不是同一个 key。",
+      "duration": 5.376,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.3380266666666667,
+          "text": "发生哈希碰撞时"
+        },
+        {
+          "start": 1.3380266666666667,
+          "end": 5.16096,
+          "text": "用 equals 逐个比对是不是同一个 key"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "key1 和 key2 hash 一样但 equals 不同，就会链在同一个桶里。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.937745454545454,
+          "text": "key1 和 key2 hash 一样但 equals 不同"
+        },
+        {
+          "start": 3.937745454545454,
+          "end": 5.4144,
+          "text": "就会链在同一个桶里"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "key1 和 key2 hash 一样但 equals 不同，就会链在同一个桶里。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.937745454545454,
+          "text": "key1 和 key2 hash 一样但 equals 不同"
+        },
+        {
+          "start": 3.937745454545454,
+          "end": 5.4144,
+          "text": "就会链在同一个桶里"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "如果你只重写了 equals 却沿用 Object 的 hashCode，所有对象可能挤进同一个桶。",
+      "duration": 7.392,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.115951627906977,
+          "text": "如果你只重写了 equals 却沿用 Object 的 hashCode"
+        },
+        {
+          "start": 5.115951627906977,
+          "end": 7.09632,
+          "text": "所有对象可能挤进同一个桶"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "查询退化成链表遍历，冲突指标拉满，性能直接崩盘。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.340205714285714,
+          "text": "查询退化成链表遍历"
+        },
+        {
+          "start": 2.340205714285714,
+          "end": 3.9003428571428564,
+          "text": "冲突指标拉满"
+        },
+        {
+          "start": 3.9003428571428564,
+          "end": 5.460479999999999,
+          "text": "性能直接崩盘"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "查询退化成链表遍历，冲突指标拉满，性能直接崩盘。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.340205714285714,
+          "text": "查询退化成链表遍历"
+        },
+        {
+          "start": 2.340205714285714,
+          "end": 3.9003428571428564,
+          "text": "冲突指标拉满"
+        },
+        {
+          "start": 3.9003428571428564,
+          "end": 5.460479999999999,
+          "text": "性能直接崩盘"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "重写 equals 时，要用相同的字段参与比较，通常用 Objects.equals 做空安全判断。",
+      "duration": 8.064,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6203013953488372,
+          "text": "重写 equals 时"
+        },
+        {
+          "start": 1.6203013953488372,
+          "end": 3.6006697674418606,
+          "text": "要用相同的字段参与比较"
+        },
+        {
+          "start": 3.6006697674418606,
+          "end": 7.741439999999999,
+          "text": "通常用 Objects.equals 做空安全判断"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "IDE 一键生成 equals 和 hashCode 模板是最稳妥的做法。",
+      "duration": 5.376,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.16096,
+          "text": "IDE 一键生成 equals 和 hashCode 模板是最稳妥的做法"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "IDE 一键生成 equals 和 hashCode 模板是最稳妥的做法。",
+      "duration": 5.376,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.16096,
+          "text": "IDE 一键生成 equals 和 hashCode 模板是最稳妥的做法"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "hashCode 用 Objects.hash 把相同字段打包计算即可。",
+      "duration": 5.016,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.81536,
+          "text": "hashCode 用 Objects.hash 把相同字段打包计算即可"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "字段不变时 hashCode 不变，这样才能和 HashMap、HashSet 配合使用。",
+      "duration": 6.336,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.339446153846154,
+          "text": "字段不变时 hashCode 不变"
+        },
+        {
+          "start": 2.339446153846154,
+          "end": 6.082560000000001,
+          "text": "这样才能和 HashMap、HashSet 配合使用"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "字段不变时 hashCode 不变，这样才能和 HashMap、HashSet 配合使用。",
+      "duration": 6.336,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.339446153846154,
+          "text": "字段不变时 hashCode 不变"
+        },
+        {
+          "start": 2.339446153846154,
+          "end": 6.082560000000001,
+          "text": "这样才能和 HashMap、HashSet 配合使用"
+        }
+      ]
+    }
+  }
+}

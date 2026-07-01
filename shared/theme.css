@@ -1,0 +1,166 @@
+/* ── 字体档位（html rem 基准 + VML SVG 缩放）── */
+html[data-font="sm"] { font-size: 14px; --viz-font-scale: 0.88; }
+html[data-font="md"] { font-size: 16px; --viz-font-scale: 1; }
+html[data-font="lg"] { font-size: 18px; --viz-font-scale: 1.15; }
+
+/* ── Dark（默认）── */
+:root,
+html[data-theme="dark"] {
+  --bg: #050508;
+  --bg-grad: radial-gradient(ellipse 80% 50% at 50% -10%, #1a2740, #0b0f14 60%);
+  --panel: #0e0e14;
+  --card: #141b24;
+  --control: #0a0a10;
+  --border: #252530;
+  --border-focus: #3d5270;
+  --text: #f0f0f5;
+  --text-soft: #d4d4d8;
+  --muted: #6b7280;
+  --ok: #22c55e;
+  --ok-bg: #0a2a1a;
+  --ok-border: #1a4a2a;
+  --ok-btn-text: #041a0a;
+  --warn: #fbbf24;
+  --accent: #5eead4;
+  --link: #818cf8;
+  --chip-bg: #1a1a22;
+  --chip-on: #1a1a22;
+  --slider-bg: #1a1a22;
+  --overlay: rgba(5, 5, 8, 0.92);
+  --quiz-card: #0e0e14;
+  --quiz-opt: #0a0a10;
+  --quiz-ok-bg: #0a1f12;
+  --quiz-no-bg: #1f0a0a;
+  --wrong-border: #1e293b;
+  --hint-border: #334155;
+  --hint-code: #0f172a;
+  --tag-bg: #1e293b;
+  --viz-grad: radial-gradient(ellipse at 50% 0%, #12121a, #08080c 70%);
+  --l0: #3b82f6;
+  --l0-bg: #0f1a30;
+  --l1: #f59e0b;
+  --l1-bg: #1a1408;
+  --l2: #a855f7;
+  --l2-bg: #1a0f28;
+  --depth-l0-bg: #0f1a30;
+  --depth-l1-bg: #1a1408;
+  --depth-l2-bg: #1a0f28;
+  /* VML 结构色 */
+  --viz-box: #0a0a10;
+  --viz-box-alt: #0a0a12;
+  --viz-box-hi: #0f1a30;
+  --viz-box-on: #1a2a10;
+  --viz-box-queue: #1a1508;
+  --viz-box-head: #151520;
+  --viz-panel: #0a1020;
+  --viz-border: #252530;
+  --viz-border-dim: #333333;
+  --viz-muted: #4b5563;
+  --viz-lock-bg: #2a1a3a;
+  --viz-lock-text: #e9d5ff;
+  --viz-meter: #1a1a22;
+  --viz-node-text: #ffffff;
+  --viz-box-fill: #1a0a0a;
+  --viz-state-idle: #1a1a22;
+}
+
+/* ── Light ── */
+html[data-theme="light"] {
+  --bg: #f4f6f9;
+  --bg-grad: radial-gradient(ellipse 80% 50% at 50% -10%, #e8eef5, #f4f6f9 60%);
+  --panel: #ffffff;
+  --card: #ffffff;
+  --control: #f8fafc;
+  --border: #d8dee9;
+  --border-focus: #94a3b8;
+  --text: #1e293b;
+  --text-soft: #334155;
+  --muted: #64748b;
+  --ok: #16a34a;
+  --ok-bg: #dcfce7;
+  --ok-border: #86efac;
+  --ok-btn-text: #ffffff;
+  --warn: #d97706;
+  --accent: #0d9488;
+  --link: #4f46e5;
+  --chip-bg: #f1f5f9;
+  --chip-on: #e2e8f0;
+  --slider-bg: #e2e8f0;
+  --overlay: rgba(248, 250, 252, 0.94);
+  --quiz-card: #ffffff;
+  --quiz-opt: #f8fafc;
+  --quiz-ok-bg: #ecfdf5;
+  --quiz-no-bg: #fef2f2;
+  --wrong-border: #e2e8f0;
+  --hint-border: #cbd5e1;
+  --hint-code: #f1f5f9;
+  --tag-bg: #e0f2fe;
+  --viz-grad: radial-gradient(ellipse at 50% 0%, #eef2ff, #f8fafc 70%);
+  --l0: #2563eb;
+  --l0-bg: #dbeafe;
+  --l1: #d97706;
+  --l1-bg: #fef3c7;
+  --l2: #9333ea;
+  --l2-bg: #f3e8ff;
+  --depth-l0-bg: #dbeafe;
+  --depth-l1-bg: #fef3c7;
+  --depth-l2-bg: #f3e8ff;
+  --viz-box: #f8fafc;
+  --viz-box-alt: #f1f5f9;
+  --viz-box-hi: #dbeafe;
+  --viz-box-on: #ecfdf5;
+  --viz-box-queue: #fff7ed;
+  --viz-box-head: #f1f5f9;
+  --viz-panel: #ffffff;
+  --viz-border: #cbd5e1;
+  --viz-border-dim: #94a3b8;
+  --viz-muted: #64748b;
+  --viz-lock-bg: #f3e8ff;
+  --viz-lock-text: #6b21a8;
+  --viz-meter: #e2e8f0;
+  --viz-node-text: #ffffff;
+  --viz-box-fill: #fee2e2;
+  --viz-state-idle: #e2e8f0;
+}
+
+/* ── 设置栏 ── */
+.pref-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.pref-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--control);
+}
+.pref-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  padding: 0 0.25rem 0 0.4rem;
+  user-select: none;
+}
+.pref-btn {
+  font-family: inherit;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1.2;
+}
+.pref-btn:hover { color: var(--text); background: var(--chip-bg); }
+.pref-btn.on {
+  color: var(--text);
+  background: var(--chip-on);
+  font-weight: 600;
+}
+.pref-btn.icon { min-width: 1.75rem; text-align: center; }

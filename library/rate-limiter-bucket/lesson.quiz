@@ -1,0 +1,49 @@
+# rate-limiter-bucket.quiz
+bank 令牌桶限流
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 令牌积累
+    style pick_one
+    ask 令牌桶以什么方式产生令牌？
+    opt 固定速率
+    opt 随机
+    opt 按请求数
+    opt 不产令牌
+    answer 0
+    explain 每秒 r 个令牌，桶满丢弃多余。
+
+  q 请求通过
+    style pick_one
+    ask 没有令牌时请求会？
+    opt 被拒绝或排队
+    opt 自动通过
+    opt 加速处理
+    opt 重启服务
+    answer 0
+    explain 取不到令牌则限流，返回 429 或排队。
+
+  q 突发流量
+    style true_false
+    ask 令牌桶比漏桶更能应对短时突发
+    true
+    explain 桶内预存令牌，突发时可一次性消耗。
+
+  q 集群限流
+    style pick_one
+    ask 分布式限流常用？
+    opt Redis + Lua 原子扣减
+    opt 各实例独立计数
+    opt 不用限流
+    opt 只限数据库
+    answer 0
+    explain 多实例共享 Redis 中的令牌计数，Lua 保证原子。
+
+trigger
+  after_step 0 令牌积累
+  after_step 1 请求通过
+  after_step 2 突发流量
+  after_step 3 集群限流
+  end pick 2

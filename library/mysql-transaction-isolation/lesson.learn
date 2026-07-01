@@ -1,0 +1,70 @@
+# 事务隔离 — 动画强化版
+lesson 事务隔离级别
+tags MySQL, 事务, 隔离级别
+
+step 三种异常
+  frames 3
+  cap T2读到未提交脏数据 | 同事务两次读不同 | 范围行数突然变多
+  @all
+    cols 事务T1:200 数据:380 事务T2:560
+  @0
+    box 380 70 140 44 label=余额100 stroke=blue
+    arrow 事务T1 数据 写50
+    box 380 70 140 44 label=余额50 sub=未提交 stroke=orange
+    arrow 数据 事务T2 脏读!
+    circle 560 80 9 fill=red
+  @1
+    box 380 70 140 44 label=余额100 stroke=blue
+    arrow 事务T1 数据 读→100
+    arrow 事务T2 数据 改→80
+    arrow 事务T1 数据 再读→80?
+    circle 200 80 9 fill=orange blink
+  @2
+    box 360 150 60 36 label=10行 stroke=blue
+    arrow 事务T2 数据 插入
+    box 440 150 60 36 label=+5行 stroke=purple pulse
+
+step 四级对照
+  frames 2
+  cap 级别越严问题越少 | MySQL默认RR | Oracle默认RC
+  @0
+    table 60 65 级别,脏读,幻读/读未提交,✓,✓/读已提交,✗,✓/可重复读,✗,✗/串行化,✗,✗
+  @1
+    compare 80 230 300 RC|Oracle默认|语句快照 vs RR|MySQL默认|事务快照
+
+step MVCC快照读
+  frames 4
+  cap 生成ReadView | 比对trx_id | 读不加锁
+  @all
+    cols 读线程:30 行记录:310 undo:600
+  @0
+    box 310 70 180 56 label=行 sub=trx_id=100 stroke=blue
+    circle 50 80 9 fill=green
+  @1
+    flow 620 50 快照读|ReadView|可见?|返回版本
+  @2
+    path M600 120 Q500 160 400 200 stroke=purple draw
+    box 600 100 120 44 label=旧版本 stroke=purple
+    arrow undo 行记录 回溯
+  @3
+    circle 50 80 9 fill=green blink
+    text 无锁读 80 130 fill=green
+  @3 L1
+    text 当前读加锁 80 200 fill=warn
+
+step 间隙锁
+  frames 3
+  cap RR锁索引间隙 | 挡插入防幻读 | 牺牲部分并发
+  @all
+    cols 插入:30 间隙:380
+    tree btree 380 70 levels=2
+  @0
+    callout 340 130 500 50 间隙(10,20)
+    box 360 175 80 32 label=锁间隙 stroke=orange
+  @1
+    circle 50 80 9 fill=red
+    arrow 插入 间隙 被挡!
+    lock 380 130
+  @2
+    queue 380 220 4 filled=3 label=等待插入
+    meter 120 280 400 并发 grow max=100

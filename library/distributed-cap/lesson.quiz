@@ -1,0 +1,49 @@
+# distributed-cap.quiz
+bank CAP 与一致性
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 分区来临
+    style pick_one
+    ask 网络分区发生时，分布式系统必须在哪两者间取舍？
+    opt 一致性和可用性
+    opt 一致性和分区容忍
+    opt 可用性和分区容忍
+    opt 不需要取舍
+    answer 0
+    explain P 必然存在，分区时只能在 C（停服保一致）和 A（继续服务）间选。
+
+  q CP停服
+    style pick_one
+    ask ZooKeeper 属于哪种 CAP 取向？
+    opt CP
+    opt AP
+    opt CA
+    opt 三者兼得
+    answer 0
+    explain ZK 选举/选主期间可能不可用，优先保证一致性。
+
+  q 一致性光谱
+    style pick_one
+    ask 点赞数延迟几秒更新，属于哪种一致性？
+    opt 最终一致性
+    opt 强一致性
+    opt 线性一致性
+    opt 无一致性
+    answer 0
+    explain 允许短暂不一致，延迟后收敛，是典型最终一致场景。
+
+  q AP继续
+    style true_false
+    ask 回答分布式问题时应该先讲业务场景再讲技术选型
+    true
+    explain 场景→约束→选型→兜底，比背概念更能体现工程思维。
+
+trigger
+  after_step 0 分区来临
+  after_step 1 CP停服
+  after_step 2 AP继续
+  after_step 3 一致性光谱
+  end pick 2

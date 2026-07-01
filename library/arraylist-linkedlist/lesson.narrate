@@ -1,0 +1,32 @@
+# ArrayList vs LinkedList — 口语旁白
+lesson ArrayList vs LinkedList
+
+step 底层结构
+  @0: ArrayList 底层是一段连续数组，元素紧挨着存放，对 CPU 缓存更友好。
+  @0 L1: 从实现上看，ArrayList 内部是 Object 数组，按下标访问可以一次算地址直达。
+  @1: LinkedList 则是双向链表，每个节点单独分配，通过 prev 和 next 指针串联。
+  @1 L1: 节点在堆上分散存储，内存不连续，但插入删除时不必搬移整块数组。
+  @2: 左边是数组连续布局，右边是链表节点分散布局，这就是两者最本质的差别。
+  @2 L1: 面试时可以先画这两张图，再谈 get 和 add 的复杂度差异。
+
+step 随机访问
+  @0: 数组按下标访问是 O(1)，因为起始地址加上偏移就能定位元素。
+  @0 L1: ArrayList 的 get 方法就是直接返回 elementData[index]，非常快。
+  @1: 链表没有随机访问能力，要找到第 n 个元素必须从头遍历。
+  @1 L1: LinkedList 的 get 最坏要走过整条链，时间复杂度是 O(n)。
+  @2: 所以读多写少的场景，ArrayList 在随机访问上碾压 LinkedList。
+  @2 L1: 这也是为什么实际业务里 ArrayList 远比 LinkedList 常见。
+
+step 头尾插入
+  @0: 在数组尾部追加元素通常是摊还 O(1)，直接写到 size 位置即可。
+  @0 L1: 只有容量不够时才需要扩容，扩容时要复制整个数组。
+  @1: 但在数组头部插入就麻烦了，所有元素都要往后挪一位。
+  @1 L1: 头部插入 ArrayList 是 O(n)，元素越多越慢。
+  @2: LinkedList 在头部插入只需改几个指针，是 O(1)。
+  @2 L1: 如果业务真的是频繁头插，才值得考虑 LinkedList。
+
+step 选型结论
+  @0: 查多用 ArrayList，头尾插入频繁才考虑 LinkedList。
+  @0 L1: 大多数业务是读多写少，默认选 ArrayList 就对了。
+  @1: 对照这张表：get 是 O(1) 对 O(n)，头插是 O(n) 对 O(1)。
+  @1 L1: 面试结论可以记成：除非明确需要头插，否则用 ArrayList。

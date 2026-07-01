@@ -1,0 +1,36 @@
+# binlog 与两阶段提交 — 口语旁白
+lesson binlog 与两阶段提交
+
+step binlog作用
+  @0: binlog 是 MySQL Server 层的逻辑日志，记录所有修改数据的语句或行变更。
+  @0 L1: 主从复制靠 Slave 重放 Master 的 binlog 保持数据一致。
+  @1: 数据归档和点对点恢复也靠 binlog，可以恢复到任意时间点。
+  @1 L1: binlog 和 redo 不同层：redo 是 InnoDB 物理页日志，binlog 是逻辑 SQL 或行。
+  @2: 开启 binlog 是主从和高可用的前提，格式选 ROW 更安全。
+  @2 L1: STATEMENT 可能主从不一致，ROW 记录每行变更更可靠。
+
+step 写入时机
+  @0: binlog 在事务提交时写入，不是每条语句执行完就写。
+  @0 L1: 三种格式：STATEMENT 记 SQL，ROW 记行变更，MIXED 自动选。
+  @1: ROW 格式日志量大但准确，主从数据一致性好，生产推荐 ROW。
+  @1 L1: MIXED 在简单 SQL 用 STATEMENT，复杂用 ROW。
+  @2: sync_binlog=1 表示每次提交都刷盘，最安全但性能有影响。
+  @2 L1: 和 innodb_flush_log_at_trx_commit 一起调，平衡安全和性能。
+
+step 两阶段协调
+  @0: 一个事务既要写 InnoDB redo，又要写 Server binlog，必须保证一致。
+  @0 L1: 流程：InnoDB redo prepare → 写 binlog 落盘 → InnoDB redo commit。
+  @1: 如果 redo prepare 后写 binlog 前崩溃，重启后事务回滚，主从没有这条。
+  @1 L1: 如果 binlog 写完 redo commit 前崩溃，重启后根据 binlog 补提交。
+  @2: 两阶段提交保证：要么 redo 和 binlog 都有，要么都没有。
+  @2 L1: 不会出现主库有数据从库没有的情况。
+  @3: 这是 MySQL 高可用的基石，面试必须能讲清楚三步。
+  @3 L1: XA 事务协调 redo 和 binlog 的语义。
+
+step 崩溃恢复
+  @0: 重启时 InnoDB 扫描 redo，发现 prepare 状态的事务。
+  @0 L1: 去 binlog 里查有没有对应的事务，有则 commit，无则 rollback。
+  @1: redo 有 binlog 无：说明 binlog 没写完，事务无效，回滚。
+  @1 L1: 都有：说明已完整提交，前滚恢复。
+  @2: 这个判断逻辑保证了主从数据最终一致。
+  @2 L1: 配合上一课 redo 和 undo，三日志体系就完整了。

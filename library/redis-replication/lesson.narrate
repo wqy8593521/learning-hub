@@ -1,0 +1,34 @@
+# Redis 主从复制 — 口语旁白
+lesson Redis 主从复制
+
+step 建立连接
+  @0: Slave 启动后向 Master 发送 PSYNC 命令，请求同步数据。
+  @0 L1: 首次连接走全量同步，之后尽量走增量同步。
+  @1: Master 和 Slave 建立长连接，Master 持续把写命令推给 Slave。
+  @1 L1: 复制是异步的，Slave 数据可能略滞后于 Master。
+  @2: 一主多从架构：Master 写，Slave 读，实现读写分离和故障备份。
+  @2 L1: 从节点也可以再接从节点，形成链式复制减轻 Master 压力。
+
+step 全量同步
+  @0: 首次同步或偏移量对不上时，Master 执行 BGSAVE 生成 RDB 快照。
+  @0 L1: 生成期间新的写命令会缓存在 replication buffer 里。
+  @1: RDB 文件发给 Slave，Slave 清空自己数据加载 RDB。
+  @1 L1: 加载完再回放 buffer 里积累的命令，追上 Master。
+  @2: 全量同步开销大，网络传输 rdb 期间 Master 内存和 IO 压力大。
+  @2 L1: 所以要尽量避免频繁全量，靠增量同步和合理的 backlog。
+
+step 增量同步
+  @0: 断线重连后，Slave 带上自己的复制偏移量请求 PSYNC。
+  @0 L1: 如果偏移量还在 Master 的 replication backlog 缓冲区内，只传增量命令。
+  @1: 增量同步快得多，不用重新传整个 RDB。
+  @1 L1: backlog 大小要配够，太小会导致频繁全量同步。
+  @2: 偏移量对不上说明落后太多，只能退化为全量同步。
+  @2 L1: 理解全量和增量的切换条件是复制原理的核心。
+
+step 哨兵故障转移
+  @0: Sentinel 集群监控 Master 和 Slave 的健康，Master 宕机时自动故障转移。
+  @0 L1: 多个 Sentinel 投票选举，避免脑裂误判。
+  @1: 选一个 Slave 提升为新 Master，其他 Slave 改复制新 Master。
+  @1 L1: 客户端通过 Sentinel 获取当前 Master 地址，实现自动切换。
+  @2: 主从复制加哨兵是高可用标配，但复制是异步的，切换可能丢最后几条写。
+  @2 L1: 要更强一致性需要集群或半同步机制。

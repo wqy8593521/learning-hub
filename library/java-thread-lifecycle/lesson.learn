@@ -1,0 +1,65 @@
+# 线程状态转换 — VML
+lesson 线程状态转换
+tags Java, 并发, 线程
+
+step 六种状态
+  frames 2
+  cap NEW未启动 | RUNNABLE可运行 | BLOCKED等锁
+  @0
+    state 100 新建,可运行,阻塞,等待,超时等待,终止
+  @1
+    table 60 180 状态,含义/NEW,未start/RUNNABLE,运行或就绪/BLOCKED,等synchronized/WAITING,wait()
+
+step 运行与阻塞
+  frames 4
+  cap start进入RUNNABLE | 竞争锁失败BLOCKED | 获锁恢复运行
+  @all
+    cols 线程:30 锁:310 CPU:600
+  @0
+    box 30 70 100 40 label=NEW stroke=muted
+    arrow 线程 CPU start
+  @1
+    circle 50 80 9 fill=green
+    arrow 线程 CPU 运行
+    box 600 70 100 40 label=RUNNING stroke=green
+  @2
+    lock 310 60
+    circle 50 80 9 fill=red
+    box 30 130 100 40 label=BLOCKED stroke=red
+  @3
+    lock 310 60
+    circle 50 80 9 fill=green blink
+    arrow 线程 CPU 恢复
+
+step wait与notify
+  frames 4
+  cap wait释放锁并WAITING | notify唤醒一个 | 被唤醒需重新抢锁
+  @all
+    cols 线程A:200 线程B:500 锁:350
+  @0
+    circle 200 80 9 fill=green
+    lock 350 60
+  @1
+    arrow 线程A 锁 wait
+    lock 350 60 opacity=0.2
+    box 200 130 100 40 label=WAITING stroke=orange
+  @2
+    circle 500 80 9 fill=green
+    arrow 线程B 锁 notify
+  @3
+    circle 200 80 9 fill=warn blink
+    queue 350 180 4 filled=2 label=等锁
+    text 醒后抢锁 220 200 fill=warn
+
+step sleep与yield
+  frames 3
+  cap sleep不释放锁 | 进入TIMED_WAITING | yield让出CPU
+  @0
+    lock 310 60
+    circle 50 80 9 fill=green
+    text sleep持锁 80 130 fill=green
+  @1
+    box 50 160 120 40 label=TIMED_WAIT stroke=orange
+    meter 120 220 400 计时 grow max=100
+  @2
+    compare 80 260 300 sleep|持锁|定时醒 vs wait|释放锁|需notify

@@ -1,0 +1,49 @@
+# api-idempotent.quiz
+bank 接口幂等设计
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 重复请求
+    style pick_one
+    ask 幂等性要解决的问题是？
+    opt 同一操作执行多次结果一致
+    opt 加快接口速度
+    opt 加密传输
+    opt 负载均衡
+    answer 0
+    explain 重复提交、超时重试不应产生重复副作用。
+
+  q 幂等Token
+    style pick_one
+    ask 一次性 Token 方案的关键是？
+    opt 提交后 Token 作废
+    opt Token 永久有效
+    opt 不用 Token
+    opt 只校验密码
+    answer 0
+    explain 先领 Token，提交消费 Token，重复提交 Token 已失效。
+
+  q 唯一键去重
+    style true_false
+    ask 数据库唯一索引可以在 DB 层防止重复插入
+    true
+    explain 业务单号 UK，重复 INSERT 失败，兜底幂等。
+
+  q 状态机
+    style pick_one
+    ask 已支付订单再次支付应？
+    opt 拒绝或返回成功（不重复扣款）
+    opt 再扣一次
+    opt 删除订单
+    opt 回滚到待支付
+    answer 0
+    explain 状态机单向流转，已支付不可再付。
+
+trigger
+  after_step 0 重复请求
+  after_step 1 幂等Token
+  after_step 2 唯一键去重
+  after_step 3 状态机
+  end pick 2

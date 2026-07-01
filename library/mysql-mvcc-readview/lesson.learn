@@ -1,0 +1,60 @@
+# MVCC ReadView — VML
+lesson MVCC 与 ReadView
+tags MySQL, MVCC, 事务, 后端八股
+
+step 行多版本
+  frames 3
+  cap 每行有隐藏列 | trx_id记录修改者 | roll_ptr指undo
+  @all
+    cols 当前行:30 undo链:400
+  @0
+    box 30 70 200 56 label=行 sub=trx_id=200 stroke=blue
+  @1
+    path M230 120 Q350 160 400 200 stroke=purple draw
+    box 400 100 160 50 label=旧版本 stroke=purple
+  @2
+    flow 620 50 修改|写undo|更新trx_id|链式回溯
+
+step ReadView生成
+  frames 3
+  cap 快照读时创建 | 记录活跃事务列表 | m_ids+min/max_trx_id
+  @all
+    box 200 70 300 80 label=ReadView stroke=green
+  @0
+    text m_ids=[100,150] 220 90 fill=blue
+    text min_trx_id=100 220 120 fill=blue
+  @1
+    text max_trx_id=200 220 150 fill=blue
+    text creator_trx_id=180 220 180 fill=orange
+  @2
+    callout 180 220 520 50 活跃=未提交事务集合
+
+step 可见性判断
+  frames 4
+  cap trx_id<min→可见 | trx_id在m_ids→不可见 | trx_id≥max→不可见 | 否则看undo
+  @all
+    table 60 65 条件,结果/trx<min,可见/in m_ids,不可见/≥max,不可见/其他,看undo
+  @0
+    circle 80 150 9 fill=green
+    text trx=50 可见 200 150 fill=green
+  @1
+    circle 80 150 9 fill=red
+    text trx=120在m_ids 200 150 fill=red
+  @2
+    arrow 当前行 undo 回溯
+    text 找可见版本 200 200 fill=purple
+  @3
+    compare 80 250 300 RC|每次读新快照 vs RR|事务内同一快照
+
+step 当前读
+  frames 2
+  cap SELECT FOR UPDATE | 读最新已提交 | 加锁非快照
+  @all
+    cols 快照读:30 当前读:400
+  @0
+    text 普通SELECT 30 130 fill=green
+    text 无锁MVCC 30 170 fill=green
+  @1
+    text FOR UPDATE 400 130 fill=orange
+    lock 400 80
+    text 读最新+加锁 400 170 fill=warn

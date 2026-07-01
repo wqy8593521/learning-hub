@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "事务提交时先写 redo log，脏页异步刷盘，崩溃后靠 redo 重做已提交事务。",
+      "duration": 7.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.985984,
+          "text": "事务提交时先写 redo log"
+        },
+        {
+          "start": 2.985984,
+          "end": 4.2656914285714285,
+          "text": "脏页异步刷盘"
+        },
+        {
+          "start": 4.2656914285714285,
+          "end": 7.46496,
+          "text": "崩溃后靠 redo 重做已提交事务"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "这叫 WAL 先写日志后写数据，保证持久性。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3113599999999996,
+          "text": "这叫 WAL 先写日志后写数据"
+        },
+        {
+          "start": 3.3113599999999996,
+          "end": 4.58496,
+          "text": "保证持久性"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "这叫 WAL 先写日志后写数据，保证持久性。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3113599999999996,
+          "text": "这叫 WAL 先写日志后写数据"
+        },
+        {
+          "start": 3.3113599999999996,
+          "end": 4.58496,
+          "text": "保证持久性"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "如果写完 redo 还没刷脏页就宕机，重启时用 redo 把数据页恢复到提交状态。",
+      "duration": 7.608,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3388251428571425,
+          "text": "如果写完 redo 还没刷脏页就宕机"
+        },
+        {
+          "start": 3.3388251428571425,
+          "end": 7.303679999999998,
+          "text": "重启时用 redo 把数据页恢复到提交状态"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "redo 是物理日志，记录的是数据页的修改，不是 SQL 语句。",
+      "duration": 6.216,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0656246153846154,
+          "text": "redo 是物理日志"
+        },
+        {
+          "start": 2.0656246153846154,
+          "end": 4.360763076923077,
+          "text": "记录的是数据页的修改"
+        },
+        {
+          "start": 4.360763076923077,
+          "end": 5.96736,
+          "text": "不是 SQL 语句"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "redo 是物理日志，记录的是数据页的修改，不是 SQL 语句。",
+      "duration": 6.216,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0656246153846154,
+          "text": "redo 是物理日志"
+        },
+        {
+          "start": 2.0656246153846154,
+          "end": 4.360763076923077,
+          "text": "记录的是数据页的修改"
+        },
+        {
+          "start": 4.360763076923077,
+          "end": 5.96736,
+          "text": "不是 SQL 语句"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "undo 负责回滚和 MVCC，redo 负责持久性，职责完全不同。",
+      "duration": 6.384,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.84544,
+          "text": "undo 负责回滚和 MVCC"
+        },
+        {
+          "start": 2.84544,
+          "end": 4.81536,
+          "text": "redo 负责持久性"
+        },
+        {
+          "start": 4.81536,
+          "end": 6.12864,
+          "text": "职责完全不同"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "崩溃恢复时 redo 前滚，undo 回滚未提交事务。",
+      "duration": 4.8,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.304,
+          "text": "崩溃恢复时 redo 前滚"
+        },
+        {
+          "start": 2.304,
+          "end": 4.608,
+          "text": "undo 回滚未提交事务"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "崩溃恢复时 redo 前滚，undo 回滚未提交事务。",
+      "duration": 4.8,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.304,
+          "text": "崩溃恢复时 redo 前滚"
+        },
+        {
+          "start": 2.304,
+          "end": 4.608,
+          "text": "undo 回滚未提交事务"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "事务提交和 binlog 协调用两阶段：先 redo prepare，再写 binlog，最后 redo commit。",
+      "duration": 7.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.478975999999999,
+          "text": "事务提交和 binlog 协调用两阶段：先 redo prepare"
+        },
+        {
+          "start": 4.478975999999999,
+          "end": 5.673369599999999,
+          "text": "再写 binlog"
+        },
+        {
+          "start": 5.673369599999999,
+          "end": 7.464959999999999,
+          "text": "最后 redo commit"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "prepare 表示事务已准备好提交，commit 标记最终提交。",
+      "duration": 5.304,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.984871724137931,
+          "text": "prepare 表示事务已准备好提交"
+        },
+        {
+          "start": 2.984871724137931,
+          "end": 5.0918399999999995,
+          "text": "commit 标记最终提交"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "prepare 表示事务已准备好提交，commit 标记最终提交。",
+      "duration": 5.304,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.984871724137931,
+          "text": "prepare 表示事务已准备好提交"
+        },
+        {
+          "start": 2.984871724137931,
+          "end": 5.0918399999999995,
+          "text": "commit 标记最终提交"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "这样保证 redo 和 binlog 一致，主从复制不会丢数据。",
+      "duration": 5.448,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.4196676923076925,
+          "text": "这样保证 redo 和 binlog 一致"
+        },
+        {
+          "start": 3.4196676923076925,
+          "end": 5.23008,
+          "text": "主从复制不会丢数据"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "崩溃恢复时根据 redo 状态和 binlog 判断提交还是回滚。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.575679999999999,
+          "text": "崩溃恢复时根据 redo 状态和 binlog 判断提交还是回滚"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "崩溃恢复时根据 redo 状态和 binlog 判断提交还是回滚。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.575679999999999,
+          "text": "崩溃恢复时根据 redo 状态和 binlog 判断提交还是回滚"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "理解 redo 两阶段是理解 binlog 和 InnoDB 协调的基础。",
+      "duration": 5.448,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.23008,
+          "text": "理解 redo 两阶段是理解 binlog 和 InnoDB 协调的基础"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "下一课 binlog 与两阶段提交会展开讲。",
+      "duration": 4.2,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.032,
+          "text": "下一课 binlog 与两阶段提交会展开讲"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "下一课 binlog 与两阶段提交会展开讲。",
+      "duration": 4.2,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.032,
+          "text": "下一课 binlog 与两阶段提交会展开讲"
+        }
+      ]
+    },
+    "1-3-0": {
+      "audio": "audio/s1-f3-d0.mp3",
+      "text": "Prepare写redo",
+      "duration": 1.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.86624,
+          "text": "Prepare写redo"
+        }
+      ]
+    },
+    "1-3-1": {
+      "audio": "audio/s1-f3-d1.mp3",
+      "text": "提交写binlog",
+      "duration": 1.896,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.8201599999999998,
+          "text": "提交写binlog"
+        }
+      ]
+    },
+    "1-3-2": {
+      "audio": "audio/s1-f3-d2.mp3",
+      "text": "Commit标记提交",
+      "duration": 2.064,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.98144,
+          "text": "Commit标记提交"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "修改数据前，先把旧值写入 undo log，形成版本链。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.101913043478261,
+          "text": "修改数据前"
+        },
+        {
+          "start": 1.101913043478261,
+          "end": 3.966886956521739,
+          "text": "先把旧值写入 undo log"
+        },
+        {
+          "start": 3.966886956521739,
+          "end": 5.0687999999999995,
+          "text": "形成版本链"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "事务回滚时沿 undo 链把数据改回去，保证原子性。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8633890909090907,
+          "text": "事务回滚时沿 undo 链把数据改回去"
+        },
+        {
+          "start": 3.8633890909090907,
+          "end": 4.99968,
+          "text": "保证原子性"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "事务回滚时沿 undo 链把数据改回去，保证原子性。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8633890909090907,
+          "text": "事务回滚时沿 undo 链把数据改回去"
+        },
+        {
+          "start": 3.8633890909090907,
+          "end": 4.99968,
+          "text": "保证原子性"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "MVCC 快照读也靠 undo 链读历史版本，不需要加锁。",
+      "duration": 5.544,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.213439999999999,
+          "text": "MVCC 快照读也靠 undo 链读历史版本"
+        },
+        {
+          "start": 4.213439999999999,
+          "end": 5.322239999999999,
+          "text": "不需要加锁"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "undo 是逻辑日志，存的是反向操作。",
+      "duration": 3.84,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0736,
+          "text": "undo 是逻辑日志"
+        },
+        {
+          "start": 2.0736,
+          "end": 3.6864,
+          "text": "存的是反向操作"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "undo 是逻辑日志，存的是反向操作。",
+      "duration": 3.84,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0736,
+          "text": "undo 是逻辑日志"
+        },
+        {
+          "start": 2.0736,
+          "end": 3.6864,
+          "text": "存的是反向操作"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "长事务会导致 undo 链很长，占用大量空间，影响 purge 效率。",
+      "duration": 6.072,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.706377142857143,
+          "text": "长事务会导致 undo 链很长"
+        },
+        {
+          "start": 2.706377142857143,
+          "end": 3.9554742857142857,
+          "text": "占用大量空间"
+        },
+        {
+          "start": 3.9554742857142857,
+          "end": 5.82912,
+          "text": "影响 purge 效率"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "所以要及时提交事务，别在事务里干慢活。",
+      "duration": 4.488,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2809600000000003,
+          "text": "所以要及时提交事务"
+        },
+        {
+          "start": 2.2809600000000003,
+          "end": 4.30848,
+          "text": "别在事务里干慢活"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "所以要及时提交事务，别在事务里干慢活。",
+      "duration": 4.488,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2809600000000003,
+          "text": "所以要及时提交事务"
+        },
+        {
+          "start": 2.2809600000000003,
+          "end": 4.30848,
+          "text": "别在事务里干慢活"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "redo 保证持久性，崩溃后已提交的不丢；undo 保证原子性和 MVCC。",
+      "duration": 7.488,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.02176,
+          "text": "redo 保证持久性"
+        },
+        {
+          "start": 2.02176,
+          "end": 4.04352,
+          "text": "崩溃后已提交的不丢"
+        },
+        {
+          "start": 4.04352,
+          "end": 7.18848,
+          "text": "undo 保证原子性和 MVCC"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "binlog 是 Server 层逻辑日志，用于主从复制和数据归档。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3606620689655173,
+          "text": "binlog 是 Server 层逻辑日志"
+        },
+        {
+          "start": 3.3606620689655173,
+          "end": 5.4144,
+          "text": "用于主从复制和数据归档"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "binlog 是 Server 层逻辑日志，用于主从复制和数据归档。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3606620689655173,
+          "text": "binlog 是 Server 层逻辑日志"
+        },
+        {
+          "start": 3.3606620689655173,
+          "end": 5.4144,
+          "text": "用于主从复制和数据归档"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "redo 是 InnoDB 私有的，循环写；binlog 追加写，可归档。",
+      "duration": 6.168,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8585489655172416,
+          "text": "redo 是 InnoDB 私有的"
+        },
+        {
+          "start": 2.8585489655172416,
+          "end": 3.4710951724137935,
+          "text": "循环写"
+        },
+        {
+          "start": 3.4710951724137935,
+          "end": 5.308733793103449,
+          "text": "binlog 追加写"
+        },
+        {
+          "start": 5.308733793103449,
+          "end": 5.92128,
+          "text": "可归档"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "三者配合：undo 回滚未提交，redo 恢复已提交，binlog 同步从库。",
+      "duration": 6.792,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.7661963636363636,
+          "text": "三者配合：undo 回滚未提交"
+        },
+        {
+          "start": 2.7661963636363636,
+          "end": 4.544465454545454,
+          "text": "redo 恢复已提交"
+        },
+        {
+          "start": 4.544465454545454,
+          "end": 6.52032,
+          "text": "binlog 同步从库"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "三者配合：undo 回滚未提交，redo 恢复已提交，binlog 同步从库。",
+      "duration": 6.792,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.7661963636363636,
+          "text": "三者配合：undo 回滚未提交"
+        },
+        {
+          "start": 2.7661963636363636,
+          "end": 4.544465454545454,
+          "text": "redo 恢复已提交"
+        },
+        {
+          "start": 4.544465454545454,
+          "end": 6.52032,
+          "text": "binlog 同步从库"
+        }
+      ]
+    }
+  }
+}

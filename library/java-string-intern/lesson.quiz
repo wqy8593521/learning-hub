@@ -1,0 +1,49 @@
+# java-string-intern.quiz
+bank String 与常量池
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 字面量创建
+    style pick_one
+    ask 字面量 "abc" 创建几个 String 对象？
+    opt 1 个（常量池共享）
+    opt 2 个
+    opt 在堆上每次新建
+    opt 0 个
+    answer 0
+    explain 字面量进入字符串常量池，多引用共享同一对象。
+
+  q new与intern
+    style pick_one
+    ask intern() 的作用是？
+    opt 将引用指向常量池中相等字符串
+    opt 创建新对象
+    opt 删除常量池
+    opt 加密字符串
+    answer 0
+    explain 池中有则返回池中引用，无则将引用对应串放入池。
+
+  q 不可变性
+    style true_false
+    ask String 对象创建后内容不可修改
+    true
+    explain final 类 + 内部数组不可变，"修改"实际是新对象。
+
+  q 拼接原理
+    style pick_one
+    ask 循环中用 + 拼接字符串的问题是？
+    opt 产生大量临时对象触发 GC
+    opt 更快
+    opt 线程不安全
+    opt 常量池溢出
+    answer 0
+    explain 每次 + 可能新建 StringBuilder 和 String，应用 StringBuilder。
+
+trigger
+  after_step 0 字面量创建
+  after_step 1 new与intern
+  after_step 2 不可变性
+  after_step 3 拼接原理
+  end pick 2

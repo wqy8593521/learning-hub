@@ -1,0 +1,19 @@
+id: jvm-oom-types
+title: JVM OOM 类型与排查
+subject: JVM
+chapter: 内存与类加载
+subjectOrder: 8
+chapterOrder: 0
+order: 4
+tags:
+  - JVM
+  - OOM
+  - 后端八股
+prerequisites:
+  - jvm-memory-areas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

@@ -1,0 +1,49 @@
+# mysql-transaction-isolation.quiz
+bank 事务隔离级别
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 三种异常
+    style pick_one
+    ask 同一事务内两次相同查询结果不同，属于？
+    opt 不可重复读
+    opt 脏读
+    opt 幻读
+    opt 死锁
+    answer 0
+    explain 不可重复读=同事务内两次读不一致；幻读是范围行数变化。
+
+  q 四级对照
+    style pick_one
+    ask MySQL InnoDB 默认隔离级别是？
+    opt 可重复读 RR
+    opt 读已提交 RC
+    opt 读未提交
+    opt 串行化
+    answer 0
+    explain InnoDB 默认 RR；Oracle 默认 RC。
+
+  q MVCC快照读
+    style true_false
+    ask MVCC 让普通 SELECT 快照读不需要加锁
+    true
+    explain ReadView + undo log 提供一致性读，读写不互斥。
+
+  q 间隙锁
+    style pick_one
+    ask 间隙锁主要防止什么问题？
+    opt 幻读（范围插入）
+    opt 脏读
+    opt 缓存击穿
+    opt 死锁
+    answer 0
+    explain RR 下对索引间隙加锁，阻止其他事务插入导致幻读。
+
+trigger
+  after_step 0 三种异常
+  after_step 1 四级对照
+  after_step 2 MVCC快照读
+  after_step 3 间隙锁
+  end pick 2

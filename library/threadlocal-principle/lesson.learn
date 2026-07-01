@@ -1,0 +1,60 @@
+# ThreadLocal — VML
+lesson ThreadLocal 原理
+tags Java, 并发, ThreadLocal
+
+step 线程隔离
+  frames 3
+  cap 每个线程有自己的Map | ThreadLocal作key | 互不干扰
+  @all
+    cols 线程T1:200 线程T2:500
+  @0
+    box 200 70 140 60 label=ThreadLocalMap stroke=blue
+    box 500 70 140 60 label=ThreadLocalMap stroke=blue
+    circle 200 80 9 fill=green
+    circle 500 80 9 fill=orange
+  @1
+    box 220 100 100 36 label=user=T1 stroke=green
+    box 520 100 100 36 label=user=T2 stroke=orange
+  @2
+    arrow 线程T1 线程T2 隔离
+    line 350 130 500 130 stroke=muted draw
+
+step get/set路径
+  frames 3
+  cap 先取当前线程 | 从Map用key查 | 没有则初始化
+  @all
+    cols 调用:30 线程:310
+    stack 100 60 get,thread,map,getEntry
+    state 300 调用,get,查Map,命中,返回
+  @0
+    circle 50 80 9 fill=green
+    arrow 调用 线程 取thread
+  @1
+    box 310 130 160 50 label=Map stroke=blue
+    arrow 调用 线程 查Map
+  @2
+    box 220 145 100 36 label=命中✓ stroke=green blink
+
+step 内存泄漏
+  frames 3
+  cap key是弱引用 | value是强引用 | 线程池复用线程不回收
+  @all
+    cols 池:380
+  @0
+    box 280 70 200 60 label=Entry stroke=warn
+    text key弱引用 300 90 fill=muted
+    text value强引用 300 120 fill=red
+  @1
+    queue 380 180 6 filled=4 label=线程池复用
+    threads 4 zone=池 grow
+  @2
+    box 280 70 200 60 label=value残留 stroke=red expired
+    callout 280 70 480 55 大对象泄漏!
+  @2 L2
+    note 100 280 560 30 用完remove()·线程池场景必做
+
+step 正确使用
+  frames 2
+  cap try-finally里remove | 线程池场景必清 | 不要存大对象
+  @1
+    codeblock 36 150 1 w=480 try{|  tl.set(v);|} finally { tl.remove(); }

@@ -1,0 +1,20 @@
+id: redis-cache-breakdown
+title: Redis 缓存击穿
+subject: Redis 缓存
+chapter: 缓存三兄弟
+subjectOrder: 2
+chapterOrder: 1
+order: 1
+tags:
+  - Redis
+  - 缓存
+  - 高并发
+  - 后端八股
+prerequisites:
+  - Redis 基础
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

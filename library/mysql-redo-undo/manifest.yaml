@@ -1,0 +1,21 @@
+id: mysql-redo-undo
+title: redo 与 undo 日志
+subject: MySQL
+chapter: 日志与事务
+subjectOrder: 3
+chapterOrder: 2
+order: 1
+tags:
+  - MySQL
+  - InnoDB
+  - redo
+  - undo
+  - JavaGuide
+prerequisites:
+  - mysql-transaction-isolation
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

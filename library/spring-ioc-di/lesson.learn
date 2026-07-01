@@ -1,0 +1,59 @@
+# Spring IOC — VML
+lesson Spring IOC 注入
+tags Spring, IOC, 后端八股
+
+step 容器启动
+  frames 3
+  cap 扫描@Component | 解析类元数据 | 注册BeanDefinition
+  @all
+    flow 620 50 扫描|解析|注册|实例化|注入
+    state 300 扫描,注册,创建,注入,就绪
+  @0
+    box 200 70 140 44 label=@Service stroke=green
+    box 360 70 140 44 label=@Repository stroke=green
+    box 520 70 140 44 label=@Controller stroke=green
+  @1
+    queue 380 150 6 filled=3 label=BeanDefinition
+  @2
+    box 380 70 280 50 label=ApplicationContext stroke=blue
+
+step 依赖注入
+  frames 3
+  cap 发现@Autowired | 从容器找匹配Bean | 反射设入字段
+  @all
+    cols Controller:30 容器:310 Service:600
+  @0
+    box 40 70 120 50 label=Controller stroke=blue
+    text @Autowired 60 130 fill=warn
+  @1
+    arrow Controller 容器 查找
+    box 310 70 160 50 label=容器 stroke=purple
+  @2
+    arrow 容器 Service 注入
+    box 600 70 120 50 label=Service stroke=green blink
+    path M160 95 Q350 50 600 95 stroke=green draw
+
+step 循环依赖
+  frames 4
+  cap A依赖B,B依赖A | 三级缓存解 | 仅单例setter可解
+  @all
+    cols BeanA:200 BeanB:500
+  @0
+    arrow BeanA BeanB 需要B
+    arrow BeanB BeanA 需要A
+    path M260 120 Q380 180 500 120 stroke=red draw
+    path M500 120 Q380 60 260 120 stroke=red draw
+  @1
+    box 310 150 160 50 label=三级缓存 stroke=purple
+  @2
+    box 200 70 120 50 label=A半成品 stroke=orange
+    arrow BeanA BeanB 提前暴露
+  @3
+    box 200 70 120 50 label=A完成 stroke=green
+    box 500 70 120 50 label=B完成 stroke=green
+
+step 作用域
+  frames 2
+  cap singleton单例 | prototype每次new | request/web作用域
+  @1
+    compare 80 55 300 singleton|容器一个|默认 vs prototype|每次get新建

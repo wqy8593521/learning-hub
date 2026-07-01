@@ -1,0 +1,14 @@
+id: {{id}}
+title: {{title}}
+subject: 待分类
+chapter: 综合
+order: 1
+tags:
+  - 待分类
+prerequisites: []
+vml: 1
+quiz: true
+level: 秋招
+author: you
+createdAt: {{createdAt}}
+steps: 2

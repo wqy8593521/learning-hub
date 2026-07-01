@@ -1,0 +1,58 @@
+# equals 与 hashCode — VML
+lesson equals 与 hashCode
+tags Java, 基础, 集合
+
+step equals契约
+  frames 3
+  cap 自反性对称性 | 传递性一致性 | null比较返回false
+  @all
+    flow 620 50 自反|对称|传递|一致|非null
+  @0
+    box 200 80 100 44 label=a stroke=blue
+    box 360 80 100 44 label=b stroke=blue
+    line 250 102 360 102 stroke=green draw
+    text a.equals(b) 380 140 fill=green
+  @1
+    line 360 102 250 102 stroke=green draw
+    text b.equals(a) 380 170 fill=green
+  @2
+    circle 500 80 9 fill=red
+    text null→false 520 86 fill=red
+
+step hashCode契约
+  frames 3
+  cap equals相等hash必同 | hash相等未必equals | 重写equals必重写hash
+  @0
+    box 200 80 120 44 label=obj1 stroke=green
+    box 360 80 120 44 label=obj2 stroke=green
+    text hash=42 200 140 fill=lyellow
+    text hash=42 360 140 fill=lyellow
+  @1
+    box 500 80 120 44 label=obj3 stroke=orange
+    text hash=42 500 140 fill=lyellow
+    text equals?✗ 520 170 fill=red pulse
+  @2
+    callout 200 200 480 50 equals相同→hashCode必同
+
+step HashMap依赖
+  frames 3
+  cap 先算hashCode定位桶 | 再equals比对key | 只重写equals会坏
+  @all
+    buckets 8 80 130
+  @0
+    box 200 50 100 40 label=key1 stroke=blue
+    text hash→桶3 200 200 fill=blue
+    buckets 8 80 130 hi=3
+  @1
+    box 360 50 100 40 label=key2 stroke=orange
+    text 同hash不同equals 380 200 fill=orange
+    chain "k1" "k2"
+  @2
+    text 只写equals→全落同桶 380 260 fill=red pulse
+    meter 120 290 400 冲突 grow max=100
+
+step 正确重写
+  frames 2
+  cap 相同字段参与计算 | 用Objects.equals | IDE生成模板
+  @1
+    codeblock 36 120 2 w=480 public boolean equals(Object o)|  return Objects.equals(this.id, other.id);|public int hashCode() { return Objects.hash(id); }

@@ -1,0 +1,19 @@
+id: jvm-memory-areas
+title: JVM 内存结构
+subject: JVM
+chapter: 内存与类加载
+subjectOrder: 8
+chapterOrder: 0
+order: 0
+tags:
+  - JVM
+  - 内存
+  - JavaGuide
+prerequisites:
+  - Java 基础
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

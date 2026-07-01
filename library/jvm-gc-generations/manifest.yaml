@@ -1,0 +1,19 @@
+id: jvm-gc-generations
+title: JVM 分代 GC
+subject: JVM
+chapter: 垃圾回收
+subjectOrder: 8
+chapterOrder: 1
+order: 1
+tags:
+  - JVM
+  - GC
+  - 后端八股
+prerequisites:
+  - Java 基础
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

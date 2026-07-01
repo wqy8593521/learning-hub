@@ -1,0 +1,32 @@
+# equals 与 hashCode — 口语旁白
+lesson equals 与 hashCode
+
+step equals契约
+  @0: equals 首先要满足自反性，任何对象和自己比较必须返回 true。
+  @0 L1: 还要注意对称性，a 等于 b 那么 b 也必须等于 a。
+  @1: 传递性要求，如果 a 等于 b、b 等于 c，那么 a 也必须等于 c。
+  @1 L1: 一致性是指多次调用 equals 结果要稳定，对象没变就不能忽 true 忽 false。
+  @2: 最后一条，与 null 比较必须返回 false，不能抛空指针。
+  @2 L1: 面试写 equals 时这五条契约缺一不可，建议背成口诀。
+
+step hashCode契约
+  @0: 两个对象 equals 为 true，它们的 hashCode 必须相同，这是硬性规定。
+  @0 L1: 反过来不成立，hashCode 相同并不意味着 equals 一定为 true。
+  @1: 这三个对象 hash 都是 42，但 equals 可能是 false。
+  @1 L1: 这叫哈希碰撞，HashMap 里要靠 equals 再比一次才能真正区分。
+  @2: 规范很明确，只要重写了 equals，就必须同时重写 hashCode。
+  @2 L1: 只写 equals 不写 hashCode，是 Java 面试的高频扣分点。
+
+step HashMap依赖
+  @0: HashMap 先根据 key 的 hashCode 算出落在哪个桶里。
+  @0 L1: 定位桶只是第一步，同桶里可能挂着一串节点。
+  @1: 发生哈希碰撞时，用 equals 逐个比对是不是同一个 key。
+  @1 L1: key1 和 key2 hash 一样但 equals 不同，就会链在同一个桶里。
+  @2: 如果你只重写了 equals 却沿用 Object 的 hashCode，所有对象可能挤进同一个桶。
+  @2 L1: 查询退化成链表遍历，冲突指标拉满，性能直接崩盘。
+
+step 正确重写
+  @0: 重写 equals 时，要用相同的字段参与比较，通常用 Objects.equals 做空安全判断。
+  @0 L1: IDE 一键生成 equals 和 hashCode 模板是最稳妥的做法。
+  @1: hashCode 用 Objects.hash 把相同字段打包计算即可。
+  @1 L1: 字段不变时 hashCode 不变，这样才能和 HashMap、HashSet 配合使用。

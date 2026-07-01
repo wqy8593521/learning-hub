@@ -1,0 +1,49 @@
+# java-thread-lifecycle.quiz
+bank 线程状态转换
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 六种状态
+    style pick_one
+    ask 等待 synchronized 锁的状态是？
+    opt BLOCKED
+    opt WAITING
+    opt NEW
+    opt TERMINATED
+    answer 0
+    explain 竞争 synchronized 失败进入 BLOCKED；wait() 是 WAITING。
+
+  q 运行与阻塞
+    style pick_one
+    ask 线程 start() 后进入？
+    opt RUNNABLE
+    opt RUNNING
+    opt BLOCKED
+    opt NEW
+    answer 0
+    explain Java 只有 RUNNABLE，包含就绪和运行中。
+
+  q wait与notify
+    style pick_one
+    ask wait() 会？
+    opt 释放锁并进入 WAITING
+    opt 不释放锁
+    opt 终止线程
+    opt 直接 notify
+    answer 0
+    explain wait 释放锁等待，notify 唤醒后需重新竞争锁。
+
+  q sleep与yield
+    style true_false
+    ask sleep 不会释放 synchronized 持有的锁
+    true
+    explain sleep 持锁睡眠；wait 才释放锁。
+
+trigger
+  after_step 0 六种状态
+  after_step 1 运行与阻塞
+  after_step 2 wait与notify
+  after_step 3 sleep与yield
+  end pick 2

@@ -1,0 +1,49 @@
+# dead-lock-condition.quiz
+bank 死锁四条件
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 经典死锁
+    style pick_one
+    ask 经典死锁的场景是？
+    opt T1 持 A 等 B，T2 持 B 等 A
+    opt 两个线程同时读
+    opt 单线程递归
+    opt 队列满了
+    answer 0
+    explain 循环等待：各自持有对方需要的锁。
+
+  q 四条件
+    style pick_one
+    ask 破坏哪个条件可以预防死锁？
+    opt 循环等待（固定加锁顺序）
+    opt 互斥（无法破坏）
+    opt 以上任一可尝试
+    opt 死锁无法预防
+    answer 2
+    explain 四条件同时满足才死锁，破坏任一即可，实际常用固定顺序或 tryLock。
+
+  q 检测与预防
+    style true_false
+    ask 所有线程按相同顺序获取锁可以避免死锁
+    true
+    explain 破坏循环等待：都先锁 A 再锁 B，不会形成环。
+
+  q 排查工具
+    style pick_one
+    ask 线上排查死锁常用？
+    opt jstack 看 BLOCKED
+    opt jmap 看堆
+    opt gc 日志
+    opt tcpdump
+    answer 0
+    explain jstack 可看到线程互相等待锁的栈。
+
+trigger
+  after_step 0 经典死锁
+  after_step 1 四条件
+  after_step 2 检测与预防
+  after_step 3 排查工具
+  end pick 2

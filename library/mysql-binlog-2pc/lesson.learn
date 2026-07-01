@@ -1,0 +1,60 @@
+# binlog 与两阶段提交 — VML
+lesson binlog 与两阶段提交
+tags MySQL, binlog, 事务
+
+step binlog作用
+  frames 3
+  cap Server层逻辑日志 | 主从复制靠binlog | 数据归档恢复
+  @all
+    cols 主库:200 从库:500
+  @0
+    box 200 70 160 50 label=UPDATE stroke=purple
+    arrow 主库 从库 binlog传
+  @1
+    box 500 70 160 50 label=重放 stroke=green
+    line 360 95 500 95 stroke=green draw
+  @2
+    flow 620 50 写binlog|传从库|重放|一致
+
+step 写入时机
+  frames 3
+  cap STATEMENT/ROW/MIXED | ROW记录行变更 | 事务提交时写
+  @0
+    compare 80 55 300 STATEMENT|记SQL|可能不一致 vs ROW|记行变更|安全
+  @1
+    box 300 150 200 50 label=row格式 stroke=green
+    text 记录前后行 380 220 fill=green
+  @2
+    cols 事务:30 binlog:400
+    arrow 事务 binlog 提交时写
+    lock 400 130
+
+step 两阶段协调
+  frames 4
+  cap InnoDB先redo prepare | 写binlog落盘 | redo commit标记
+  @all
+    cols InnoDB:200 binlog:400
+    timeline 100 prepare|binlog|commit|返回
+  @0
+    box 200 70 140 44 label=redo prepare stroke=orange
+  @1
+    arrow InnoDB binlog 写
+    box 400 70 140 44 label=binlog stroke=purple
+  @2
+    box 200 70 140 44 label=redo commit stroke=green
+  @3
+    circle 50 80 9 fill=green blink
+
+step 崩溃恢复
+  frames 3
+  cap redo有binlog无→回滚 | 都有→提交 | 保证主从一致
+  @0
+    box 200 70 100 40 label=redo✓ stroke=green
+    box 400 70 100 40 label=bin✗ stroke=red
+    text 回滚 380 140 fill=red
+  @1
+    box 200 70 100 40 label=redo✓ stroke=green
+    box 400 70 100 40 label=bin✓ stroke=green
+    text 提交 380 140 fill=green blink
+  @2
+    compare 80 200 300 无2PC|redo/bin不一致|主从裂 vs 2PC|协调|一致

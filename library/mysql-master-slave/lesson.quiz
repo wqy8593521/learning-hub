@@ -1,0 +1,49 @@
+# mysql-master-slave.quiz
+bank MySQL 主从复制
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 复制架构
+    style pick_one
+    ask MySQL 主从复制基于什么日志？
+    opt binlog
+    opt redo log
+    opt undo log
+    opt slow log
+    answer 0
+    explain 主库 binlog 经 dump 线程推到从库。
+
+  q binlog同步
+    style pick_one
+    ask 从库哪个线程负责接收 binlog 写 relay log？
+    opt IO 线程
+    opt SQL 线程
+    opt dump 线程
+    opt GC 线程
+    answer 0
+    explain IO 线程收 binlog→relay log；SQL 线程回放。
+
+  q SQL线程回放
+    style true_false
+    ask 默认主从复制是异步的，从库可能落后主库
+    true
+    explain 异步复制性能好，但存在复制延迟。
+
+  q 读写分离
+    style pick_one
+    ask 读写分离后「写完立刻读」的风险？
+    opt 读到从库旧数据
+    opt 死锁
+    opt OOM
+    opt 索引失效
+    answer 0
+    explain 主从延迟导致刚写入的数据从库还未同步。
+
+trigger
+  after_step 0 复制架构
+  after_step 1 binlog同步
+  after_step 2 SQL线程回放
+  after_step 3 读写分离
+  end pick 2

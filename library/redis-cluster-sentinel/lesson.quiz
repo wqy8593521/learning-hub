@@ -1,0 +1,49 @@
+# redis-cluster-sentinel.quiz
+bank Redis 哨兵与集群
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 主从故障
+    style pick_one
+    ask 纯主从复制不能自动解决什么问题？
+    opt 主库宕机后的自动故障转移
+    opt 数据持久化
+    opt 单线程模型
+    opt 过期策略
+    answer 0
+    explain 主从只复制数据，主挂了需 Sentinel 或人工切主。
+
+  q 哨兵Sentinel
+    style pick_one
+    ask Redis Sentinel 的核心职责？
+    opt 监控+自动故障转移+通知
+    opt 数据分片
+    opt 持久化 RDB
+    opt Lua 脚本
+    answer 0
+    explain 多个哨兵投票选举新主，实现高可用。
+
+  q Cluster分片
+    style pick_one
+    ask Redis Cluster 用什么算法分配 key？
+    opt 槽位 slot（CRC16 mod 16384）
+    opt 一致性哈希环
+    opt 随机
+    opt 按 key 长度
+    answer 0
+    explain 16384 槽位映射到节点，MOVED/ASK 重定向。
+
+  q 选型对比
+    style true_false
+    ask 数据量小只需高可用时，哨兵方案通常够用
+    true
+    explain 哨兵解决故障转移；Cluster 额外提供水平分片。
+
+trigger
+  after_step 0 主从故障
+  after_step 1 哨兵Sentinel
+  after_step 2 Cluster分片
+  after_step 3 选型对比
+  end pick 2

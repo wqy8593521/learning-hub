@@ -1,0 +1,49 @@
+# java-thread-pool.quiz
+bank Java 线程池
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 裸线程爆炸
+    style pick_one
+    ask 线程池相比每次 new Thread 的核心优势？
+    opt 复用线程降低创建开销
+    opt 让代码更短
+    opt 自动修复死锁
+    opt 替代 synchronized
+    answer 0
+    explain 线程创建销毁成本高，池化复用 + 限流是核心价值。
+
+  q 四级扩容
+    style pick_one
+    ask 任务数超过 core 且队列未满时？
+    opt 任务进入队列等待
+    opt 立刻拒绝
+    opt 直接扩到 max
+    opt 丢弃最旧任务
+    answer 0
+    explain core 未满才新建线程；满了先入队，队列满才扩到 max。
+
+  q 队列削峰
+    style true_false
+    ask 队列满且线程数已达 max 会触发拒绝策略
+    true
+    explain 四级：core 扩线程 → 入队 → 扩到 max → 拒绝。
+
+  q 拒绝反压
+    style pick_one
+    ask CallerRunsPolicy 的特点是？
+    opt 调用者线程自己执行任务
+    opt 直接抛 RejectedExecutionException
+    opt 静默丢弃任务
+    opt 丢弃队列最旧任务
+    answer 0
+    explain CallerRuns 给上游反压，适合不能丢任务的生产场景。
+
+trigger
+  after_step 0 裸线程爆炸
+  after_step 1 四级扩容
+  after_step 2 队列削峰
+  after_step 3 拒绝反压
+  end pick 2

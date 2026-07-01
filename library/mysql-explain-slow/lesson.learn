@@ -1,0 +1,53 @@
+# EXPLAIN 与慢 SQL — VML
+lesson EXPLAIN 与慢 SQL
+tags MySQL, 优化, 索引
+
+step EXPLAIN字段
+  frames 3
+  cap type访问类型 | key用的索引 | rows扫描行数
+  @0
+    table 60 70 字段,含义/type,访问类型/key,索引/rows,扫描行/extra,额外信息
+  @1
+    text type=ALL 380 200 fill=red pulse
+    text 全表扫描! 380 230 fill=red
+  @2
+    text type=ref 380 200 fill=green
+    text key=idx_name 380 230 fill=green
+
+step type等级
+  frames 4
+  cap system>const>eq_ref>ref | range>index>ALL | 越右越慢
+  @all
+    flow 620 50 system|const|eq_ref|ref|range|index|ALL
+  @0
+    box 300 120 100 36 label=ALL stroke=red
+  @1
+    box 300 120 100 36 label=index stroke=orange
+  @2
+    box 300 120 100 36 label=range stroke=lyellow
+  @3
+    box 300 120 100 36 label=ref stroke=green blink
+
+step 索引失效
+  frames 3
+  cap 对列运算函数 | 隐式类型转换 | 不满足最左前缀
+  @0
+    codeblock 36 70 1 w=420 WHERE YEAR(create_time)=2024|→函数包裹·索引失效
+    text ✗失效 380 130 fill=red
+  @1
+    codeblock 36 70 1 w=420 WHERE phone=13800138000|varchar列·数字传参
+    text 隐式转换 380 130 fill=red pulse
+  @2
+    buckets 8 130 80 hi=0
+    text WHERE b=? 跳a 380 200 fill=red
+
+step 优化手段
+  frames 3
+  cap 建合适联合索引 | 避免SELECT* | 分页用延迟关联
+  @0
+    tree btree 380 70 levels=2
+    text 覆盖索引 380 150 fill=green
+  @1
+    compare 80 200 300 SELECT*|回表多|慢 vs 覆盖列|免回表|快
+  @2
+    flow 620 50 慢SQL|EXPLAIN|找type/key|加索引|验证

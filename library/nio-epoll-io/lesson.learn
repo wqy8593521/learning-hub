@@ -1,0 +1,52 @@
+# NIO 与 IO 多路复用 — VML
+lesson NIO 与 IO 多路复用
+tags 操作系统, NIO, epoll, 后端八股
+
+step BIO阻塞
+  frames 3
+  cap 一连接一线程 | accept后read阻塞 | 线程数暴涨
+  @all
+    threads 6 zone=连接 grow
+  @0
+    box 200 70 120 44 label=accept stroke=blue
+    meter 120 200 400 线程数 grow max=100
+  @1
+    circle 200 80 9 fill=orange blink
+    text read阻塞 200 130 fill=warn
+  @2
+    badge ×1000 660 150 pulse
+    text 万连接=万线程 380 250 fill=red
+
+step NIO非阻塞
+  frames 3
+  cap Channel+Buffer | Selector轮询 | 就绪才读写
+  @all
+    cols 连接:30 Selector:310 线程:600
+  @0
+    queue 30 150 8 filled=5 label=Channel
+  @1
+    box 310 70 160 50 label=Selector stroke=purple
+    arrow 连接 Selector 注册
+  @2
+    arrow Selector 线程 就绪事件
+    text 单线程管多连接 600 130 fill=green
+
+step epoll
+  frames 3
+  cap Linux高效多路复用 | 事件驱动 | Redis/Netty底层
+  @all
+    flow 620 50 epoll_create|epoll_ctl|epoll_wait|回调
+  @0
+    box 200 70 200 44 label=epoll_wait stroke=green
+  @1
+    box 200 130 280 50 label=就绪fd列表 stroke=orange blink
+  @2
+    compare 80 200 300 select|O(n)轮询 vs epoll|O(1)事件|高并发
+
+step 三种模型
+  frames 2
+  cap BIO同步阻塞 | NIO同步非阻塞 | AIO异步
+  @0
+    table 60 65 模型,特点/BIO,一连接一线程/NIO,Selector多路复用/AIO,回调异步
+  @1
+    text Netty基于NIO+epoll 200 250 fill=green

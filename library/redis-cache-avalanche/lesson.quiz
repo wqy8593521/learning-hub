@@ -1,0 +1,49 @@
+# redis-cache-avalanche.quiz
+bank 缓存穿透与雪崩
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 穿透打穿
+    style pick_one
+    ask 缓存穿透的典型特征是？
+    opt 查询不存在的数据，缓存永远 miss
+    opt 热点 key 过期
+    opt 大量 key 同时过期
+    opt Redis 内存满了
+    answer 0
+    explain 穿透=数据根本不存在，缓存无法命中，请求直达 DB。
+
+  q 布隆挡刀
+    style true_false
+    ask 布隆过滤器说不存在的 key 一定不存在
+    true
+    explain 布隆无漏判（说不存在则不存在），但可能有误判（说存在需再查）。
+
+  q 雪崩来袭
+    style pick_one
+    ask 缓存雪崩的触发条件是？
+    opt 大量 key 在同一时刻过期
+    opt 单个热点 key 过期
+    opt 查询不存在的 id
+    opt Redis 单线程阻塞
+    answer 0
+    explain 批量过期导致并发全部 miss，DB 瞬时压力暴增。
+
+  q 三板斧
+    style pick_one
+    ask 防止雪崩的常用手段是？
+    opt TTL 加随机抖动
+    opt 缓存空值
+    opt 布隆过滤器
+    opt SET NX 互斥锁
+    answer 0
+    explain 随机 TTL 打散过期时间；互斥锁是防击穿手段。
+
+trigger
+  after_step 0 穿透打穿
+  after_step 1 布隆挡刀
+  after_step 2 雪崩来袭
+  after_step 3 三板斧
+  end pick 2

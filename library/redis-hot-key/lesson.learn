@@ -1,0 +1,54 @@
+# Redis 热点 Key — VML
+lesson Redis 热点 Key
+tags Redis, 热点, 高并发, 后端八股
+
+step 热点形成
+  frames 3
+  cap 少数key访问极高 | 单线程瓶颈 | 打满单节点CPU/带宽
+  @all
+    box 380 70 160 60 label=hotkey stroke=red pulse
+    threads 8 zone=请求 grow
+  @0
+    arrow 请求 hotkey GET
+    meter 120 160 400 QPS grow max=100 pulse
+  @1
+    badge ×10000 660 150 fill=red
+    text 单key QPS 爆表 200 200 fill=red
+  @2
+    compare 80 230 300 普通key|分散 vs 热点key|集中|单点
+
+step 本地缓存
+  frames 3
+  cap 应用层加本地缓存 | Caffeine/Guava | 减少打到Redis
+  @all
+    cols 请求:30 本地:310 Redis:600
+  @0
+    arrow 请求 本地 先查
+  @1
+    box 310 70 140 50 label=Caffeine stroke=green
+    text 命中则不到Redis 310 140 fill=green
+  @2
+    arrow 本地 Redis 未命中才查
+
+step 多副本分散
+  frames 3
+  cap hotkey加随机后缀 | 读时聚合 | 写时同步多份
+  @all
+    box 200 70 100 44 label=key_0 stroke=blue
+    box 320 70 100 44 label=key_1 stroke=blue
+    box 440 70 100 44 label=key_2 stroke=blue
+  @0
+    math 200 130 "key + random(0,N)"
+  @1
+    arrow 请求 key_0 分散
+    arrow 请求 key_1 分散
+  @2
+    text 读聚合N份 200 200 fill=green
+
+step 发现与治理
+  frames 2
+  cap redis-cli --hotkeys | 监控大key | 预热+限流
+  @0
+    flow 620 50 监控发现|本地缓存|多副本|限流降级
+  @1
+    compare 80 200 300 预防|预热打散 vs 治理|限流|保护Redis

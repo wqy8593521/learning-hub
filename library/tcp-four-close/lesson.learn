@@ -1,0 +1,57 @@
+# TCP 四次挥手 — VML
+lesson TCP 四次挥手
+tags 计网, TCP, 后端八股
+
+step 第一次FIN
+  frames 2
+  cap 主动方发FIN | seq=u | 进入FIN_WAIT_1
+  @all
+    cols 客户端:200 服务端:500
+    timeline 100 客户端|FIN|服务端
+  @0
+    circle 200 80 9 fill=green
+    circle 500 80 9 fill=green
+    line 200 100 500 100 stroke=green
+  @1
+    arrow 客户端 服务端 FIN
+    box 240 130 100 36 label=FIN seq=u stroke=orange
+    state 300 FIN_WAIT_1,ESTABLISHED
+
+step 第二次ACK
+  frames 2
+  cap 被动方回ACK | ack=u+1 | 进入CLOSE_WAIT
+  @all
+    cols 客户端:200 服务端:500
+  @0
+    arrow 服务端 客户端 ACK
+    box 460 130 100 36 label=ACK stroke=blue
+    text ack=u+1 480 180 fill=blue
+  @1
+    state 300 FIN_WAIT_2,CLOSE_WAIT
+    box 500 70 120 44 label=CLOSE_WAIT stroke=orange
+
+step 第三次FIN
+  frames 3
+  cap 被动方发FIN | seq=w | 进入LAST_ACK
+  @all
+    cols 客户端:200 服务端:500
+  @0
+    arrow 服务端 客户端 FIN
+    box 460 130 100 36 label=FIN seq=w stroke=orange
+  @1
+    state 300 TIME_WAIT,LAST_ACK
+    box 200 70 120 44 label=TIME_WAIT stroke=purple
+  @2
+    text 等待2MSL 200 180 fill=purple
+
+step 第四次ACK
+  frames 2
+  cap 主动方回ACK | ack=w+1 | 双方CLOSED
+  @all
+    cols 客户端:200 服务端:500
+  @0
+    arrow 客户端 服务端 ACK
+    box 240 130 100 36 label=ACK stroke=green
+  @1
+    compare 80 55 300 四次|双方确认关闭 vs 三次|可能丢FIN|不可靠
+    state 300 CLOSED,CLOSED

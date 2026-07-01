@@ -1,0 +1,49 @@
+# nio-epoll-io.quiz
+bank NIO 与 IO 多路复用
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q BIO阻塞
+    style pick_one
+    ask BIO 高并发的主要瓶颈是？
+    opt 一连接一线程，线程开销大
+    opt CPU 太慢
+    opt 内存不够
+    opt 磁盘 IO
+    answer 0
+    explain C10K 问题：大量阻塞线程浪费资源。
+
+  q NIO非阻塞
+    style pick_one
+    ask NIO 中负责监听多连接就绪的核心组件？
+    opt Selector
+    opt HashMap
+    opt ThreadPool
+    opt GC
+    answer 0
+    explain Selector 轮询 Channel 就绪事件，单线程管多连接。
+
+  q epoll
+    style pick_one
+    ask epoll 相比 select 的优势？
+    opt O(1) 事件通知，无 O(n) 轮询
+    opt 只能单连接
+    opt 必须多线程
+    opt 不支持 Linux
+    answer 0
+    explain epoll 事件驱动，适合 Redis/Netty 高并发。
+
+  q 三种模型
+    style true_false
+    ask Java NIO 属于同步非阻塞 IO 模型
+    true
+    explain NIO 用 Selector 非阻塞轮询，仍由线程主动读数据。
+
+trigger
+  after_step 0 BIO阻塞
+  after_step 1 NIO非阻塞
+  after_step 2 epoll
+  after_step 3 三种模型
+  end pick 2

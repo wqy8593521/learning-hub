@@ -1,0 +1,49 @@
+# java-ref-types.quiz
+bank 四种引用类型
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 强引用
+    style pick_one
+    ask 普通变量引用属于？
+    opt 强引用
+    opt 软引用
+    opt 弱引用
+    opt 虚引用
+    answer 0
+    explain 强引用可达则 GC 不回收，泄漏常因强引用链未断。
+
+  q 软引用
+    style pick_one
+    ask 软引用最适合的场景？
+    opt 内存敏感缓存
+    opt 线程同步
+    opt 类加载
+    opt 网络 IO
+    answer 0
+    explain 内存紧张前回收，兼顾缓存命中与防 OOM。
+
+  q 弱引用
+    style pick_one
+    ask 弱引用何时被回收？
+    opt 下次 GC 时
+    opt 永不
+    opt OOM 时
+    opt 程序退出
+    answer 0
+    explain 弱引用不阻止 GC；ThreadLocal Entry 用弱引用防泄漏。
+
+  q 虚引用
+    style true_false
+    ask 虚引用的 get() 方法总是返回 null
+    true
+    explain 虚引用仅用于跟踪对象被回收的时机，不能取对象。
+
+trigger
+  after_step 0 强引用
+  after_step 1 软引用
+  after_step 2 弱引用
+  after_step 3 虚引用
+  end pick 2

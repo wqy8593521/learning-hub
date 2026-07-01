@@ -1,0 +1,19 @@
+id: spring-aop-proxy
+title: Spring AOP 原理
+subject: Spring
+chapter: 核心原理
+subjectOrder: 5
+chapterOrder: 1
+order: 3
+tags:
+  - Spring
+  - AOP
+  - 后端八股
+prerequisites:
+  - spring-ioc-di
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

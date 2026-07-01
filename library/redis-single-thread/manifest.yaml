@@ -1,0 +1,19 @@
+id: redis-single-thread
+title: Redis 单线程模型
+subject: Redis 缓存
+chapter: 基础原理
+subjectOrder: 2
+chapterOrder: 0
+order: 1
+tags:
+  - Redis
+  - 原理
+  - JavaGuide
+prerequisites:
+  - redis-five-types
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

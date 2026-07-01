@@ -1,0 +1,49 @@
+# spring-aop-proxy.quiz
+bank Spring AOP 原理
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 切面概念
+    style pick_one
+    ask AOP 主要解决什么问题？
+    opt 横切关注点的复用与解耦
+    opt 加快 GC
+    opt 替代 IOC
+    opt 数据库连接
+    answer 0
+    explain 日志、事务、权限等横切逻辑统一织入。
+
+  q JDK动态代理
+    style pick_one
+    ask Spring 默认对有接口的 Bean 用什么代理？
+    opt JDK 动态代理
+    opt CGLIB
+    opt 静态代理
+    opt 不代理
+    answer 0
+    explain 有接口优先 JDK Proxy；无接口用 CGLIB。
+
+  q CGLIB代理
+    style pick_one
+    ask CGLIB 代理的原理是？
+    opt 生成目标类的子类
+    opt 实现接口
+    opt 修改字节码注入字段
+    opt 反射直接调用
+    answer 0
+    explain 子类覆盖方法织入增强；final 类/方法无法代理。
+
+  q 执行顺序
+    style true_false
+    ask @Around 通知可以控制目标方法是否执行
+    true
+    explain @Around 中 proceed() 前后可拦截，事务常用此方式。
+
+trigger
+  after_step 0 切面概念
+  after_step 1 JDK动态代理
+  after_step 2 CGLIB代理
+  after_step 3 执行顺序
+  end pick 2

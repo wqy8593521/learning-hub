@@ -1,0 +1,568 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "AQS 是 AbstractQueuedSynchronizer，JUC 锁和同步器的公共底座。",
+      "duration": 6.384,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.275795348837209,
+          "text": "AQS 是 AbstractQueuedSynchronizer"
+        },
+        {
+          "start": 4.275795348837209,
+          "end": 6.12864,
+          "text": "JUC 锁和同步器的公共底座"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "核心就是一个 volatile 的 state 变量，加 CLH 双向等待队列。",
+      "duration": 6.264,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.13424,
+          "text": "核心就是一个 volatile 的 state 变量"
+        },
+        {
+          "start": 4.13424,
+          "end": 6.01344,
+          "text": "加 CLH 双向等待队列"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "核心就是一个 volatile 的 state 变量，加 CLH 双向等待队列。",
+      "duration": 6.264,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.13424,
+          "text": "核心就是一个 volatile 的 state 变量"
+        },
+        {
+          "start": 4.13424,
+          "end": 6.01344,
+          "text": "加 CLH 双向等待队列"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "抢锁用 CAS 改 state，失败就封装成 Node 入队挂起。",
+      "duration": 5.016,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2224738461538465,
+          "text": "抢锁用 CAS 改 state"
+        },
+        {
+          "start": 2.2224738461538465,
+          "end": 4.81536,
+          "text": "失败就封装成 Node 入队挂起"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "ReentrantLock、Semaphore、CountDownLatch 底层都靠 AQS 实现。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.575679999999999,
+          "text": "ReentrantLock、Semaphore、CountDownLatch 底层都靠 AQS 实现"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "ReentrantLock、Semaphore、CountDownLatch 底层都靠 AQS 实现。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.575679999999999,
+          "text": "ReentrantLock、Semaphore、CountDownLatch 底层都靠 AQS 实现"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "理解 AQS 就理解了 Java 大部分显式锁的实现套路。",
+      "duration": 5.304,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.09184,
+          "text": "理解 AQS 就理解了 Java 大部分显式锁的实现套路"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "state 为 0 表示无锁，为 1 表示被一个线程持有。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3731199999999997,
+          "text": "state 为 0 表示无锁"
+        },
+        {
+          "start": 2.3731199999999997,
+          "end": 4.746239999999999,
+          "text": "为 1 表示被一个线程持有"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "state 为 0 表示无锁，为 1 表示被一个线程持有。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3731199999999997,
+          "text": "state 为 0 表示无锁"
+        },
+        {
+          "start": 2.3731199999999997,
+          "end": 4.746239999999999,
+          "text": "为 1 表示被一个线程持有"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "同一线程已经持有锁，再次 lock 时 state 加 1，不会把自己阻塞。",
+      "duration": 6.048,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7418239999999998,
+          "text": "同一线程已经持有锁"
+        },
+        {
+          "start": 1.7418239999999998,
+          "end": 4.451328,
+          "text": "再次 lock 时 state 加 1"
+        },
+        {
+          "start": 4.451328,
+          "end": 5.80608,
+          "text": "不会把自己阻塞"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "这就是可重入，避免了自己等自己造成的死锁。",
+      "duration": 4.8,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.455157894736842,
+          "text": "这就是可重入"
+        },
+        {
+          "start": 1.455157894736842,
+          "end": 4.608,
+          "text": "避免了自己等自己造成的死锁"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "这就是可重入，避免了自己等自己造成的死锁。",
+      "duration": 4.8,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.455157894736842,
+          "text": "这就是可重入"
+        },
+        {
+          "start": 1.455157894736842,
+          "end": 4.608,
+          "text": "避免了自己等自己造成的死锁"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "unlock 一次 state 减 1，减到 0 才真正释放锁，唤醒等待队列。",
+      "duration": 6.384,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.06432,
+          "text": "unlock 一次 state 减 1"
+        },
+        {
+          "start": 3.06432,
+          "end": 4.902912,
+          "text": "减到 0 才真正释放锁"
+        },
+        {
+          "start": 4.902912,
+          "end": 6.12864,
+          "text": "唤醒等待队列"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "必须 unlock 和 lock 次数配对，否则锁泄漏其他线程永远进不来。",
+      "duration": 6.408,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3735019354838705,
+          "text": "必须 unlock 和 lock 次数配对"
+        },
+        {
+          "start": 3.3735019354838705,
+          "end": 6.151679999999999,
+          "text": "否则锁泄漏其他线程永远进不来"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "必须 unlock 和 lock 次数配对，否则锁泄漏其他线程永远进不来。",
+      "duration": 6.408,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3735019354838705,
+          "text": "必须 unlock 和 lock 次数配对"
+        },
+        {
+          "start": 3.3735019354838705,
+          "end": 6.151679999999999,
+          "text": "否则锁泄漏其他线程永远进不来"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "synchronized 也是可重入的，可重入是 Java 锁的基本特性。",
+      "duration": 5.352,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.89008,
+          "text": "synchronized 也是可重入的"
+        },
+        {
+          "start": 2.89008,
+          "end": 5.13792,
+          "text": "可重入是 Java 锁的基本特性"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "递归调用或嵌套同步块都依赖可重入才能正常工作。",
+      "duration": 5.4,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.184,
+          "text": "递归调用或嵌套同步块都依赖可重入才能正常工作"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "递归调用或嵌套同步块都依赖可重入才能正常工作。",
+      "duration": 5.4,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.184,
+          "text": "递归调用或嵌套同步块都依赖可重入才能正常工作"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "非公平锁：新来的线程可以直接 CAS 抢锁，不用排队，吞吐更高。",
+      "duration": 6.552,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.42624,
+          "text": "非公平锁：新来的线程可以直接 CAS 抢锁"
+        },
+        {
+          "start": 4.42624,
+          "end": 5.35808,
+          "text": "不用排队"
+        },
+        {
+          "start": 5.35808,
+          "end": 6.28992,
+          "text": "吞吐更高"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "默认 ReentrantLock 是非公平的，也是推荐的生产配置。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5275034482758625,
+          "text": "默认 ReentrantLock 是非公平的"
+        },
+        {
+          "start": 3.5275034482758625,
+          "end": 5.11488,
+          "text": "也是推荐的生产配置"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "默认 ReentrantLock 是非公平的，也是推荐的生产配置。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5275034482758625,
+          "text": "默认 ReentrantLock 是非公平的"
+        },
+        {
+          "start": 3.5275034482758625,
+          "end": 5.11488,
+          "text": "也是推荐的生产配置"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "公平锁：严格按照 FIFO 队列顺序，先等先得，不会插队。",
+      "duration": 6.048,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8707199999999995,
+          "text": "公平锁：严格按照 FIFO 队列顺序"
+        },
+        {
+          "start": 3.8707199999999995,
+          "end": 4.838399999999999,
+          "text": "先等先得"
+        },
+        {
+          "start": 4.838399999999999,
+          "end": 5.806079999999999,
+          "text": "不会插队"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "公平锁避免饥饿，但上下文切换多，性能通常差一截。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.8047999999999997,
+          "text": "公平锁避免饥饿"
+        },
+        {
+          "start": 1.8047999999999997,
+          "end": 3.6095999999999995,
+          "text": "但上下文切换多"
+        },
+        {
+          "start": 3.6095999999999995,
+          "end": 5.414399999999999,
+          "text": "性能通常差一截"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "公平锁避免饥饿，但上下文切换多，性能通常差一截。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.8047999999999997,
+          "text": "公平锁避免饥饿"
+        },
+        {
+          "start": 1.8047999999999997,
+          "end": 3.6095999999999995,
+          "text": "但上下文切换多"
+        },
+        {
+          "start": 3.6095999999999995,
+          "end": 5.414399999999999,
+          "text": "性能通常差一截"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "选型原则：除非业务明确要求公平，否则用非公平锁。",
+      "duration": 5.76,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.7701818181818174,
+          "text": "选型原则：除非业务明确要求公平"
+        },
+        {
+          "start": 3.7701818181818174,
+          "end": 5.5295999999999985,
+          "text": "否则用非公平锁"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "构造时传 new ReentrantLock(true) 开启公平模式。",
+      "duration": 4.608,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.423679999999999,
+          "text": "构造时传 new ReentrantLock(true) 开启公平模式"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "构造时传 new ReentrantLock(true) 开启公平模式。",
+      "duration": 4.608,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.423679999999999,
+          "text": "构造时传 new ReentrantLock(true) 开启公平模式"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "ReentrantLock 支持 lockInterruptibly，等待锁时可响应中断。",
+      "duration": 5.736,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.297802926829268,
+          "text": "ReentrantLock 支持 lockInterruptibly"
+        },
+        {
+          "start": 4.297802926829268,
+          "end": 5.50656,
+          "text": "等待锁时可响应中断"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "synchronized 不可中断，一直等到拿到锁或抛异常。",
+      "duration": 4.968,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.82624,
+          "text": "synchronized 不可中断"
+        },
+        {
+          "start": 2.82624,
+          "end": 4.76928,
+          "text": "一直等到拿到锁或抛异常"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "synchronized 不可中断，一直等到拿到锁或抛异常。",
+      "duration": 4.968,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.82624,
+          "text": "synchronized 不可中断"
+        },
+        {
+          "start": 2.82624,
+          "end": 4.76928,
+          "text": "一直等到拿到锁或抛异常"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "tryLock 带超时，等不到就放弃，适合避免死锁。",
+      "duration": 4.824,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.1050181818181817,
+          "text": "tryLock 带超时"
+        },
+        {
+          "start": 2.1050181818181817,
+          "end": 3.368029090909091,
+          "text": "等不到就放弃"
+        },
+        {
+          "start": 3.368029090909091,
+          "end": 4.63104,
+          "text": "适合避免死锁"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "synchronized 没有超时机制，只能一直等。",
+      "duration": 3.96,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.975165217391304,
+          "text": "synchronized 没有超时机制"
+        },
+        {
+          "start": 2.975165217391304,
+          "end": 3.8015999999999996,
+          "text": "只能一直等"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "synchronized 没有超时机制，只能一直等。",
+      "duration": 3.96,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.975165217391304,
+          "text": "synchronized 没有超时机制"
+        },
+        {
+          "start": 2.975165217391304,
+          "end": 3.8015999999999996,
+          "text": "只能一直等"
+        }
+      ]
+    }
+  }
+}

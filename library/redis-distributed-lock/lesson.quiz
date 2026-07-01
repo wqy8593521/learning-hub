@@ -1,0 +1,49 @@
+# redis-distributed-lock.quiz
+bank Redis 分布式锁
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q SET NX抢锁
+    style pick_one
+    ask Redis 分布式锁的基本命令组合是？
+    opt SET key value NX EX
+    opt GET key
+    opt INCR key
+    opt HSET key
+    answer 0
+    explain NX 仅不存在时设置，EX 设过期防死锁。
+
+  q 过期误释放
+    style pick_one
+    ask 锁过期后原持有者 DEL 会导致？
+    opt 误删新持有者的锁
+    opt 自动续期
+    opt 无影响
+    opt Redis 宕机
+    answer 0
+    explain A 阻塞过久锁过期，B 获锁，A 恢复后 DEL 删掉 B 的锁。
+
+  q UUID防误删
+    style true_false
+    ask 应用 Lua 脚本校验 value 再删除可避免误删
+    true
+    explain 只有 value 匹配自己的 uuid 才 del。
+
+  q Redisson续期
+    style pick_one
+    ask Redisson watchdog 的作用是？
+    opt 业务未完成时自动续期
+    opt 加快 Redis
+    opt 替代 MySQL
+    opt 加密数据
+    answer 0
+    explain 看门狗线程定期延长锁 TTL，防止业务未完成锁过期。
+
+trigger
+  after_step 0 SET NX抢锁
+  after_step 1 过期误释放
+  after_step 2 UUID防误删
+  after_step 3 Redisson续期
+  end pick 2

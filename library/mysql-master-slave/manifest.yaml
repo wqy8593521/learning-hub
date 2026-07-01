@@ -1,0 +1,20 @@
+id: mysql-master-slave
+title: MySQL 主从复制
+subject: MySQL
+chapter: 高可用
+subjectOrder: 4
+chapterOrder: 3
+order: 1
+tags:
+  - MySQL
+  - 主从
+  - 高可用
+  - 后端八股
+prerequisites:
+  - mysql-binlog-2pc
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

@@ -1,0 +1,49 @@
+# redis-replication.quiz
+bank Redis 主从复制
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 建立连接
+    style pick_one
+    ask 从节点首次连接主节点发送？
+    opt PSYNC / SYNC
+    opt GET
+    opt PING only
+    opt FLUSHALL
+    answer 0
+    explain 从库 PSYNC 请求同步，建立复制连接。
+
+  q 全量同步
+    style pick_one
+    ask 首次全量同步主节点会？
+    opt bgsave 生成 RDB 并传从库
+    opt 直接传内存
+    opt 不做任何事
+    opt 关闭主库
+    answer 0
+    explain fork 子进程 RDB，期间命令进复制缓冲区。
+
+  q 增量同步
+    style pick_one
+    ask 断线重连后偏移量仍在复制缓冲区则？
+    opt 增量同步
+    opt 必须全量
+    opt 放弃同步
+    opt 删除从库
+    answer 0
+    explain repl_backlog 保存近期写命令，偏移量命中则增量。
+
+  q 哨兵故障转移
+    style true_false
+    ask Sentinel 可以在 Master 宕机时自动提升 Slave
+    true
+    explain 哨兵集群监控、投票、故障转移、通知客户端。
+
+trigger
+  after_step 0 建立连接
+  after_step 1 全量同步
+  after_step 2 增量同步
+  after_step 3 哨兵故障转移
+  end pick 2

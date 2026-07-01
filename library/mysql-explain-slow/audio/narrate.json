@@ -1,0 +1,690 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "EXPLAIN 是分析 SQL 执行计划的第一步，看 MySQL 打算怎么查数据。",
+      "duration": 6.912,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.098409411764706,
+          "text": "EXPLAIN 是分析 SQL 执行计划的第一步"
+        },
+        {
+          "start": 4.098409411764706,
+          "end": 6.63552,
+          "text": "看 MySQL 打算怎么查数据"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "重点关注 type 访问类型、key 用的索引、rows 预估扫描行数。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.62176,
+          "text": "重点关注 type 访问类型、key 用的索引、rows 预估扫描行数"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "重点关注 type 访问类型、key 用的索引、rows 预估扫描行数。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.62176,
+          "text": "重点关注 type 访问类型、key 用的索引、rows 预估扫描行数"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "type 越好越快，key 为 NULL 说明没走索引，rows 越大越可能慢。",
+      "duration": 6.048,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.45152,
+          "text": "type 越好越快"
+        },
+        {
+          "start": 1.45152,
+          "end": 3.9916799999999997,
+          "text": "key 为 NULL 说明没走索引"
+        },
+        {
+          "start": 3.9916799999999997,
+          "end": 5.80608,
+          "text": "rows 越大越可能慢"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "Extra 列提示 Using filesort、Using temporary 等额外开销。",
+      "duration": 5.4,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.184,
+          "text": "Extra 列提示 Using filesort、Using temporary 等额外开销"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "Extra 列提示 Using filesort、Using temporary 等额外开销。",
+      "duration": 5.4,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.184,
+          "text": "Extra 列提示 Using filesort、Using temporary 等额外开销"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "慢 SQL 优化流程：先 EXPLAIN，再找索引问题，最后看是否需要改 SQL。",
+      "duration": 7.368,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5366400000000002,
+          "text": "慢 SQL 优化流程：先 EXPLAIN"
+        },
+        {
+          "start": 3.5366400000000002,
+          "end": 4.784865882352942,
+          "text": "再找索引问题"
+        },
+        {
+          "start": 4.784865882352942,
+          "end": 7.0732800000000005,
+          "text": "最后看是否需要改 SQL"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "不要凭感觉加索引，用 EXPLAIN 验证。",
+      "duration": 3.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6793599999999997,
+          "text": "不要凭感觉加索引"
+        },
+        {
+          "start": 1.6793599999999997,
+          "end": 3.7785599999999997,
+          "text": "用 EXPLAIN 验证"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "不要凭感觉加索引，用 EXPLAIN 验证。",
+      "duration": 3.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6793599999999997,
+          "text": "不要凭感觉加索引"
+        },
+        {
+          "start": 1.6793599999999997,
+          "end": 3.7785599999999997,
+          "text": "用 EXPLAIN 验证"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "type 从好到差大致是：system、const、eq_ref、ref、range、index、ALL。",
+      "duration": 8.544,
+      "cues": [
+        {
+          "start": 0,
+          "end": 8.20224,
+          "text": "type 从好到差大致是：system、const、eq_ref、ref、range、index、ALL"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "const 是主键或唯一索引等值，最快；ALL 是全表扫描，最慢。",
+      "duration": 6.312,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3664,
+          "text": "const 是主键或唯一索引等值"
+        },
+        {
+          "start": 3.3664,
+          "end": 3.8152533333333336,
+          "text": "最快"
+        },
+        {
+          "start": 3.8152533333333336,
+          "end": 5.610666666666667,
+          "text": "ALL 是全表扫描"
+        },
+        {
+          "start": 5.610666666666667,
+          "end": 6.05952,
+          "text": "最慢"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "const 是主键或唯一索引等值，最快；ALL 是全表扫描，最慢。",
+      "duration": 6.312,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3664,
+          "text": "const 是主键或唯一索引等值"
+        },
+        {
+          "start": 3.3664,
+          "end": 3.8152533333333336,
+          "text": "最快"
+        },
+        {
+          "start": 3.8152533333333336,
+          "end": 5.610666666666667,
+          "text": "ALL 是全表扫描"
+        },
+        {
+          "start": 5.610666666666667,
+          "end": 6.05952,
+          "text": "最慢"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "ref 是非唯一索引等值，range 是范围扫描，index 是索引全扫描。",
+      "duration": 6.768,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.23344,
+          "text": "ref 是非唯一索引等值"
+        },
+        {
+          "start": 2.23344,
+          "end": 4.26384,
+          "text": "range 是范围扫描"
+        },
+        {
+          "start": 4.26384,
+          "end": 6.49728,
+          "text": "index 是索引全扫描"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "生产环境至少要 ref 以上，ALL 和 index 在大表上要警惕。",
+      "duration": 5.976,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.4586971428571425,
+          "text": "生产环境至少要 ref 以上"
+        },
+        {
+          "start": 2.4586971428571425,
+          "end": 5.73696,
+          "text": "ALL 和 index 在大表上要警惕"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "生产环境至少要 ref 以上，ALL 和 index 在大表上要警惕。",
+      "duration": 5.976,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.4586971428571425,
+          "text": "生产环境至少要 ref 以上"
+        },
+        {
+          "start": 2.4586971428571425,
+          "end": 5.73696,
+          "text": "ALL 和 index 在大表上要警惕"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "看到 type=ALL 先想能不能加索引或改查询条件。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.90752,
+          "text": "看到 type=ALL 先想能不能加索引或改查询条件"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "eq_ref 常见于 join 时主键关联，每次只匹配一行。",
+      "duration": 6.024,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.1637888,
+          "text": "eq_ref 常见于 join 时主键关联"
+        },
+        {
+          "start": 4.1637888,
+          "end": 5.78304,
+          "text": "每次只匹配一行"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "eq_ref 常见于 join 时主键关联，每次只匹配一行。",
+      "duration": 6.024,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.1637888,
+          "text": "eq_ref 常见于 join 时主键关联"
+        },
+        {
+          "start": 4.1637888,
+          "end": 5.78304,
+          "text": "每次只匹配一行"
+        }
+      ]
+    },
+    "1-3-0": {
+      "audio": "audio/s1-f3-d0.mp3",
+      "text": "背熟 type 等级顺序，面试能快速判断 SQL 好坏。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.230690909090909,
+          "text": "背熟 type 等级顺序"
+        },
+        {
+          "start": 2.230690909090909,
+          "end": 4.90752,
+          "text": "面试能快速判断 SQL 好坏"
+        }
+      ]
+    },
+    "1-3-1": {
+      "audio": "audio/s1-f3-d1.mp3",
+      "text": "rows 和 filtered 配合看，filtered 低说明回表过滤多。",
+      "duration": 4.992,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.39616,
+          "text": "rows 和 filtered 配合看"
+        },
+        {
+          "start": 2.39616,
+          "end": 4.79232,
+          "text": "filtered 低说明回表过滤多"
+        }
+      ]
+    },
+    "1-3-2": {
+      "audio": "audio/s1-f3-d2.mp3",
+      "text": "rows 和 filtered 配合看，filtered 低说明回表过滤多。",
+      "duration": 4.992,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.39616,
+          "text": "rows 和 filtered 配合看"
+        },
+        {
+          "start": 2.39616,
+          "end": 4.79232,
+          "text": "filtered 低说明回表过滤多"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "对索引列做函数或运算，比如 where year(create_time)=2024，索引失效。",
+      "duration": 8.424,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.880706976744186,
+          "text": "对索引列做函数或运算"
+        },
+        {
+          "start": 1.880706976744186,
+          "end": 7.334757209302325,
+          "text": "比如 where year(create_time)=2024"
+        },
+        {
+          "start": 7.334757209302325,
+          "end": 8.08704,
+          "text": "索引失效"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "隐式类型转换，比如字符串列和数字比较，也会导致失效。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.4845773913043478,
+          "text": "隐式类型转换"
+        },
+        {
+          "start": 1.4845773913043478,
+          "end": 4.206302608695652,
+          "text": "比如字符串列和数字比较"
+        },
+        {
+          "start": 4.206302608695652,
+          "end": 5.69088,
+          "text": "也会导致失效"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "隐式类型转换，比如字符串列和数字比较，也会导致失效。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.4845773913043478,
+          "text": "隐式类型转换"
+        },
+        {
+          "start": 1.4845773913043478,
+          "end": 4.206302608695652,
+          "text": "比如字符串列和数字比较"
+        },
+        {
+          "start": 4.206302608695652,
+          "end": 5.69088,
+          "text": "也会导致失效"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "不满足最左前缀，联合索引跳列查询用不上。",
+      "duration": 4.632,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7292799999999997,
+          "text": "不满足最左前缀"
+        },
+        {
+          "start": 1.7292799999999997,
+          "end": 4.446719999999999,
+          "text": "联合索引跳列查询用不上"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "用 OR 连接不同列，可能其中一个走不了索引。",
+      "duration": 4.704,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9014063157894736,
+          "text": "用 OR 连接不同列"
+        },
+        {
+          "start": 1.9014063157894736,
+          "end": 4.51584,
+          "text": "可能其中一个走不了索引"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "用 OR 连接不同列，可能其中一个走不了索引。",
+      "duration": 4.704,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9014063157894736,
+          "text": "用 OR 连接不同列"
+        },
+        {
+          "start": 1.9014063157894736,
+          "end": 4.51584,
+          "text": "可能其中一个走不了索引"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "like 以通配符开头 '%abc' 没法用 B+ 树有序性。",
+      "duration": 5.568,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.34528,
+          "text": "like 以通配符开头 '%abc' 没法用 B+ 树有序性"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "优化时先排查这三大类：函数、类型转换、最左前缀。",
+      "duration": 6.144,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.8982399999999995,
+          "text": "优化时先排查这三大类：函数、类型转换、最左前缀"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "优化时先排查这三大类：函数、类型转换、最左前缀。",
+      "duration": 6.144,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.8982399999999995,
+          "text": "优化时先排查这三大类：函数、类型转换、最左前缀"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "建合适的联合索引，让查询覆盖索引，减少回表。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.1342315789473685,
+          "text": "建合适的联合索引"
+        },
+        {
+          "start": 2.1342315789473685,
+          "end": 4.0016842105263155,
+          "text": "让查询覆盖索引"
+        },
+        {
+          "start": 4.0016842105263155,
+          "end": 5.0687999999999995,
+          "text": "减少回表"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "避免 SELECT *，只查需要的列，更容易覆盖索引。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0453236363636362,
+          "text": "避免 SELECT *"
+        },
+        {
+          "start": 2.0453236363636362,
+          "end": 3.408872727272727,
+          "text": "只查需要的列"
+        },
+        {
+          "start": 3.408872727272727,
+          "end": 4.99968,
+          "text": "更容易覆盖索引"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "避免 SELECT *，只查需要的列，更容易覆盖索引。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.0453236363636362,
+          "text": "避免 SELECT *"
+        },
+        {
+          "start": 2.0453236363636362,
+          "end": 3.408872727272727,
+          "text": "只查需要的列"
+        },
+        {
+          "start": 3.408872727272727,
+          "end": 4.99968,
+          "text": "更容易覆盖索引"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "深分页用延迟关联：先查 id 再 join，避免 offset 太大扫大量行。",
+      "duration": 7.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.84912,
+          "text": "深分页用延迟关联：先查 id 再 join"
+        },
+        {
+          "start": 3.84912,
+          "end": 6.84288,
+          "text": "避免 offset 太大扫大量行"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "大表 count 考虑近似值或冗余计数，别每次全表扫。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.7805634782608695,
+          "text": "大表 count 考虑近似值或冗余计数"
+        },
+        {
+          "start": 3.7805634782608695,
+          "end": 5.114879999999999,
+          "text": "别每次全表扫"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "大表 count 考虑近似值或冗余计数，别每次全表扫。",
+      "duration": 5.328,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.7805634782608695,
+          "text": "大表 count 考虑近似值或冗余计数"
+        },
+        {
+          "start": 3.7805634782608695,
+          "end": 5.114879999999999,
+          "text": "别每次全表扫"
+        }
+      ]
+    },
+    "3-2-0": {
+      "audio": "audio/s3-f2-d0.mp3",
+      "text": "定期分析慢查询日志，用 pt-query-digest 找 TOP 慢 SQL 优先优化。",
+      "duration": 6.816,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.591628108108108,
+          "text": "定期分析慢查询日志"
+        },
+        {
+          "start": 1.591628108108108,
+          "end": 6.543360000000001,
+          "text": "用 pt-query-digest 找 TOP 慢 SQL 优先优化"
+        }
+      ]
+    },
+    "3-2-1": {
+      "audio": "audio/s3-f2-d1.mp3",
+      "text": "加索引是手段不是目的，要看选择性 and 写入代价。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.230690909090909,
+          "text": "加索引是手段不是目的"
+        },
+        {
+          "start": 2.230690909090909,
+          "end": 4.90752,
+          "text": "要看选择性 and 写入代价"
+        }
+      ]
+    },
+    "3-2-2": {
+      "audio": "audio/s3-f2-d2.mp3",
+      "text": "加索引是手段不是目的，要看选择性 and 写入代价。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.230690909090909,
+          "text": "加索引是手段不是目的"
+        },
+        {
+          "start": 2.230690909090909,
+          "end": 4.90752,
+          "text": "要看选择性 and 写入代价"
+        }
+      ]
+    }
+  }
+}

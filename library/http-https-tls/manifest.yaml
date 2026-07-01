@@ -1,0 +1,20 @@
+id: http-https-tls
+title: HTTP 与 HTTPS
+subject: 计网
+chapter: 应用层
+subjectOrder: 7
+chapterOrder: 2
+order: 1
+tags:
+  - 计网
+  - HTTP
+  - HTTPS
+  - 后端八股
+prerequisites:
+  - tcp-three-handshake
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

@@ -1,0 +1,49 @@
+# jvm-class-loading.quiz
+bank 类加载与双亲委派
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 加载三阶段
+    style pick_one
+    ask 类加载的正确顺序是？
+    opt 加载 → 链接 → 初始化
+    opt 初始化 → 加载 → 链接
+    opt 链接 → 加载 → 初始化
+    opt 只有加载
+    answer 0
+    explain 加载读入字节码，链接验证准备，初始化执行静态块。
+
+  q 双亲委派
+    style pick_one
+    ask 双亲委派的核心流程是？
+    opt 先让父加载器尝试加载
+    opt 子加载器优先
+    opt 随机选择
+    opt 只由 Bootstrap 加载
+    answer 0
+    explain 自底向上委派，父能加载则父加载，防止核心类被替换。
+
+  q 类加载器
+    style pick_one
+    ask 我们写的业务类通常由谁加载？
+    opt AppClassLoader
+    opt Bootstrap
+    opt ExtClassLoader
+    opt 系统 GC
+    answer 0
+    explain Application ClassLoader 加载 classpath 下的类。
+
+  q 打破委派
+    style true_false
+    ask SPI 机制需要线程上下文类加载器打破双亲委派
+    true
+    explain 接口在父加载器，实现在子加载器，需 TCCL 加载实现类。
+
+trigger
+  after_step 0 加载三阶段
+  after_step 1 双亲委派
+  after_step 2 类加载器
+  after_step 3 打破委派
+  end pick 2

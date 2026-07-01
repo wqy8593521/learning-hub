@@ -1,0 +1,49 @@
+# jvm-gc-generations.quiz
+bank JVM 分代 GC
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 分代布局
+    style pick_one
+    ask 新创建的对象通常分配在？
+    opt 新生代 Eden
+    opt 老年代
+    opt 元空间
+    opt 栈
+    answer 0
+    explain 新对象优先 Eden，Minor GC 后存活进入 Survivor 或老年代。
+
+  q Minor GC
+    style pick_one
+    ask Survivor 区的作用是？
+    opt 复制存活对象，增加年龄
+    opt 永久存储
+    opt 存类信息
+    opt 存线程栈
+    answer 0
+    explain 复制算法，对象在 S0/S1 间复制，年龄达阈值进老年代。
+
+  q 标记清除
+    style pick_one
+    ask 标记-清除的主要缺点是？
+    opt 产生内存碎片
+    opt 太慢不能用了
+    opt 不能回收
+    opt 只回收新生代
+    answer 0
+    explain 清除后留下碎片，可能触发整理或 CMS 并发失败。
+
+  q G1 Region
+    style true_false
+    ask G1 将堆划分为多个大小相等的 Region
+    true
+    explain G1 按 Region 增量回收，优先垃圾多的区域。
+
+trigger
+  after_step 0 分代布局
+  after_step 1 Minor GC
+  after_step 2 标记清除
+  after_step 3 G1 Region
+  end pick 2

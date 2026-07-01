@@ -1,0 +1,49 @@
+# java-volatile-cas.quiz
+bank volatile 与 CAS
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 可见性裂缝
+    style pick_one
+    ask 多线程下普通变量修改后其他线程可能看不到，原因是？
+    opt 工作内存缓存未同步
+    opt 对象被 GC
+    opt 栈溢出
+    opt 类加载失败
+    answer 0
+    explain JMM 规定每个线程有工作内存，无同步时读写可能不一致。
+
+  q volatile打通
+    style pick_one
+    ask volatile 不能保证的是？
+    opt i++ 的原子性
+    opt 可见性
+    opt 禁止特定重排
+    opt 读从主内存
+    answer 0
+    explain volatile 保证可见性和有序性，i++ 仍是读-改-写三步。
+
+  q CAS抢改
+    style true_false
+    ask CAS 在 CPU 层面是一条原子指令
+    true
+    explain compare-and-swap，期望值匹配才更新，否则失败重试。
+
+  q ABA陷阱
+    style pick_one
+    ask ABA 问题的解决方案是？
+    opt 带版本号的 AtomicStampedReference
+    opt 加 synchronized
+    opt 用 ThreadLocal
+    opt 增大堆内存
+    answer 0
+    explain 值从 A→B→A，普通 CAS 误判；版本号可检测中间变化。
+
+trigger
+  after_step 0 可见性裂缝
+  after_step 1 volatile打通
+  after_step 2 CAS抢改
+  after_step 3 ABA陷阱
+  end pick 2

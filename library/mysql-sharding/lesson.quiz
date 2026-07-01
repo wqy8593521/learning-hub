@@ -1,0 +1,49 @@
+# mysql-sharding.quiz
+bank 分库分表原理
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 为什么要分
+    style pick_one
+    ask 水平分库分表主要解决？
+    opt 单表/单库数据量与性能瓶颈
+    opt SQL 语法错误
+    opt 索引太多
+    opt 字符集问题
+    answer 0
+    explain 数据量过大时拆分，分散 IO 和锁竞争。
+
+  q 路由规则
+    style pick_one
+    ask user_id % 4 属于哪种分片策略？
+    opt 哈希取模
+    opt 范围分片
+    opt 随机
+    opt 复制
+    answer 0
+    explain 取模简单；扩容需迁移，一致性哈希可缓解。
+
+  q 跨分片问题
+    style pick_one
+    ask 分库后跨库 JOIN 通常怎么处理？
+    opt 应用层组装或冗余字段
+    opt 数据库自动 JOIN
+    opt 禁止任何查询
+    opt 用视图
+    answer 0
+    explain 单库内 JOIN；跨片在业务层聚合或宽表冗余。
+
+  q 中间件
+    style true_false
+    ask ShardingSphere 可在中间层自动做 SQL 路由和改写
+    true
+    explain 中间件解析 SQL，计算目标分片并可能聚合结果。
+
+trigger
+  after_step 0 为什么要分
+  after_step 1 路由规则
+  after_step 2 跨分片问题
+  after_step 3 中间件
+  end pick 2

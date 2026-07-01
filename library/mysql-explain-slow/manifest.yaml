@@ -1,0 +1,20 @@
+id: mysql-explain-slow
+title: EXPLAIN 与慢 SQL
+subject: MySQL
+chapter: 索引与事务
+subjectOrder: 3
+chapterOrder: 1
+order: 4
+tags:
+  - MySQL
+  - 优化
+  - EXPLAIN
+  - JavaGuide
+prerequisites:
+  - mysql-btree-index
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

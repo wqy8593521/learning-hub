@@ -1,0 +1,49 @@
+# mysql-explain-slow.quiz
+bank EXPLAIN 与慢 SQL
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q EXPLAIN字段
+    style pick_one
+    ask EXPLAIN 中 rows 表示？
+    opt 预估扫描行数
+    opt 返回行数
+    opt 索引高度
+    opt 连接数
+    answer 0
+    explain rows 是优化器估算的扫描行数，越小越好。
+
+  q type等级
+    style pick_one
+    ask 以下 type 最慢的是？
+    opt ALL
+    opt ref
+    opt range
+    opt const
+    answer 0
+    explain ALL 全表扫描最慢；const 主键/唯一等值最快。
+
+  q 索引失效
+    style pick_one
+    ask 哪种写法容易导致索引失效？
+    opt WHERE YEAR(col)=2024
+    opt WHERE col=2024
+    opt WHERE col IN (1,2)
+    opt 主键等值
+    answer 0
+    explain 对索引列套函数，优化器无法用索引。
+
+  q 优化手段
+    style true_false
+    ask 覆盖索引可以避免回表
+    true
+    explain SELECT 列全在索引中，无需回聚簇索引查行。
+
+trigger
+  after_step 0 EXPLAIN字段
+  after_step 1 type等级
+  after_step 2 索引失效
+  after_step 3 优化手段
+  end pick 2

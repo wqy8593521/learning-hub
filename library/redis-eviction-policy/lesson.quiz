@@ -1,0 +1,49 @@
+# redis-eviction-policy.quiz
+bank Redis 内存淘汰
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q maxmemory
+    style pick_one
+    ask maxmemory 满了且策略为 noeviction 会怎样？
+    opt 拒绝写入，读正常
+    opt 自动扩容
+    opt 删所有 key
+    opt 重启
+    answer 0
+    explain noeviction 不淘汰，写命令返回 OOM 错误。
+
+  q LRU与LFU
+    style pick_one
+    ask volatile-lru 淘汰范围是？
+    opt 只淘汰设置了过期时间的 key
+    opt 所有 key
+    opt 只淘汰 String
+    opt 只淘汰 Hash
+    answer 0
+    explain volatile-* 系列仅在有 TTL 的 key 中选；allkeys-* 从全部选。
+
+  q 淘汰策略
+    style pick_one
+    ask 生产缓存场景常用哪种？
+    opt allkeys-lru
+    opt noeviction
+    opt random
+    opt 不设置 maxmemory
+    answer 0
+    explain 缓存允许丢数据，LRU 保留热点；根据场景也可选 LFU。
+
+  q 过期与淘汰
+    style true_false
+    ask 过期删除策略和内存淘汰策略是两套机制
+    true
+    explain 过期靠惰性+定期删除；内存满是 maxmemory-policy 触发淘汰。
+
+trigger
+  after_step 0 maxmemory
+  after_step 1 LRU与LFU
+  after_step 2 淘汰策略
+  after_step 3 过期与淘汰
+  end pick 2

@@ -1,0 +1,49 @@
+# redis-hot-key.quiz
+bank Redis 热点 Key
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 热点形成
+    style pick_one
+    ask 热点 Key 的主要危害？
+    opt 单 key 打满单节点资源
+    opt 数据丢失
+    opt 持久化失败
+    opt 主从切换
+    answer 0
+    explain 访问集中到一个 key/节点，CPU 和带宽成为瓶颈。
+
+  q 本地缓存
+    style pick_one
+    ask 应对热点读最有效的一级防护？
+    opt 应用本地缓存
+    opt 删 key
+    opt 换数据库
+    opt 加锁整个 Redis
+    answer 0
+    explain 本地缓存拦截大部分读，显著降低 Redis QPS。
+
+  q 多副本分散
+    style pick_one
+    ask 热点 key 多副本方案的核心思路？
+    opt 随机后缀分散读写再聚合
+    opt 复制整个 Redis
+    opt 只用主库
+    opt 禁用缓存
+    answer 0
+    explain key_0..key_N 分散压力，读取时合并结果。
+
+  q 发现与治理
+    style true_false
+    ask redis-cli 可用 --hotkeys 辅助发现热点
+    true
+    explain 结合监控、大 key 扫描，配合预热和限流综合治理。
+
+trigger
+  after_step 0 热点形成
+  after_step 1 本地缓存
+  after_step 2 多副本分散
+  after_step 3 发现与治理
+  end pick 2

@@ -1,0 +1,66 @@
+# 接口幂等 — VML
+lesson 接口幂等设计
+tags 后端, 幂等, 设计
+
+step 重复请求
+  frames 3
+  cap 用户连点提交 | 网络超时重试 | 同一订单扣两次
+  @all
+    cols 客户端:30 服务端:310 数据库:600
+  @0
+    badge ×3 40 75 pulse
+    arrow 客户端 服务端 提交
+  @1
+    threads 3 zone=客户端 grow
+    arrow 服务端 数据库 扣款
+  @2
+    box 600 70 140 44 label=-200×2 stroke=red pulse
+    meter 120 200 400 损失 grow max=100
+
+step 幂等Token
+  frames 3
+  cap 先领一次性Token | 提交带Token | 用完即作废
+  @all
+    cols 客户端:30 服务端:310 数据库:600
+    flow 620 50 领Token|提交+Token|校验|消费Token|完成
+  @0
+    arrow 客户端 服务端 领Token
+    box 310 70 140 44 label=token-abc stroke=green
+  @1
+    arrow 客户端 服务端 提交
+    box 310 70 140 44 label=token-abc stroke=green
+  @2
+    box 310 70 140 44 label=已使用 stroke=red expired
+    arrow 客户端 服务端 拒绝
+    circle 40 130 9 fill=red
+
+step 唯一键去重
+  frames 3
+  cap 业务单号作唯一索引 | 重复插入失败 | DB层兜底
+  @all
+    cols 请求:30 数据库:600
+  @0
+    box 310 70 180 50 label=order_no=UK stroke=blue
+  @1
+    arrow 请求 数据库 INSERT
+    box 600 70 120 44 label=成功 stroke=green
+  @2
+    arrow 请求 数据库 INSERT
+    box 600 70 120 44 label=冲突! stroke=red blink
+    text 唯一键挡重复 640 130 fill=red
+
+step 状态机
+  frames 3
+  cap 订单状态单向流转 | 已支付不可再付 | CAS更新状态
+  @all
+    cols 支付:30 订单:310
+    state 300 待支付,支付中,已支付,完成
+  @0
+    box 310 70 120 44 label=待支付 stroke=blue
+  @1
+    arrow 支付 订单 更新
+    box 310 70 120 44 label=已支付 stroke=green
+  @2
+    arrow 支付 订单 拒绝
+    lock 310 60
+    text 不可回退 380 140 fill=red

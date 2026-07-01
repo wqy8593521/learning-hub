@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D · 概念交叉图 · 缓存击穿</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --panel: #18181f;
+      --border: #2e2e3a;
+      --text: #f4f4f5;
+      --muted: #9ca3af;
+      --accent: #c084fc;
+      --link: #67e8f9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .top { max-width: 900px; margin: 0 auto 1rem; display: flex; justify-content: space-between; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: #1e1030; color: var(--accent); border: 1px solid #3b2060; }
+    .layout { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 1rem; }
+    @media (max-width: 750px) { .layout { grid-template-columns: 1fr; } }
+    h1 { font-size: 1.3rem; grid-column: 1 / -1; }
+    .hint { color: var(--muted); font-size: 0.85rem; grid-column: 1 / -1; margin-bottom: 0.25rem; }
+    .canvas-wrap {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+    }
+    svg { width: 100%; height: 100%; }
+    .node {
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+    .node:hover { filter: brightness(1.2); }
+    .node rect { rx: 10; stroke-width: 2; }
+    .node.active rect { stroke: #fff; stroke-width: 3; }
+    .node text { font-size: 12px; font-weight: 600; fill: #fff; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+    .edge { stroke: #4b5563; stroke-width: 1.5; fill: none; }
+    .edge.cross { stroke: var(--link); stroke-dasharray: 6 4; }
+    .edge.highlight { stroke: var(--accent); stroke-width: 2.5; }
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    .sidebar h2 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent); }
+    .sidebar p { font-size: 0.85rem; line-height: 1.65; color: var(--muted); margin-bottom: 1rem; }
+    .links { font-size: 0.8rem; }
+    .links span {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      margin: 0.2rem 0.2rem 0 0;
+      background: #0f0f12;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--link);
+    }
+    .links span:hover { border-color: var(--link); }
+    .task {
+      grid-column: 1 / -1;
+      padding: 1rem;
+      border: 1px dashed #3f3f46;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .task.done { border-color: #4ade80; color: #4ade80; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a href="../index.html">← 返回对比页</a>
+    <span class="badge">Prototype D · 概念交叉图</span>
+  </div>
+  <div class="layout">
+    <h1>从「击穿」看知识怎么串</h1>
+    <p class="hint">点击节点看详情；虚线 = 跨域关联（cross-links）。面试爱问「和 XX 的区别」。</p>
+
+    <div class="canvas-wrap">
+      <svg id="svg" viewBox="0 0 600 400"></svg>
+    </div>
+
+    <div class="sidebar">
+      <h2 id="nodeTitle">缓存击穿</h2>
+      <p id="nodeDesc">点击图中任意节点。当前选中：热点 key 过期 + 并发 miss 同时打 DB。</p>
+      <div class="links" id="crossLinks"></div>
+    </div>
+
+    <div class="task" id="task">
+      🎯 任务：依次点击「击穿 → 穿透 → 雪崩」，说清三者的<strong>触发条件差异</strong>。
+    </div>
+  </div>
+
+  <script>
+    const nodes = [
+      { id: 'breakdown', label: '缓存击穿', x: 300, y: 80, color: '#7c3aed', desc: '热点 key 过期 → 大量并发 miss → 同时打 DB。单点高压。' },
+      { id: 'penetration', label: '缓存穿透', x: 120, y: 200, color: '#dc2626', desc: '查不存在的数据 → 缓存永远没有 → 每次都打 DB。' },
+      { id: 'avalanche', label: '缓存雪崩', x: 480, y: 200, color: '#ea580c', desc: '大量 key 同时过期 / Redis 宕机 → DB 整体压力暴增。' },
+      { id: 'mutex', label: '互斥锁', x: 180, y: 320, color: '#0891b2', desc: 'SETNX 抢锁，只有一个查库。解决击穿。' },
+      { id: 'bloom', label: '布隆过滤器', x: 60, y: 320, color: '#0d9488', desc: '拦截不存在的 key。解决穿透。' },
+      { id: 'ttl', label: '过期随机化', x: 500, y: 320, color: '#ca8a04', desc: 'TTL 加随机值，避免同时过期。缓解雪崩。' },
+      { id: 'index', label: 'MySQL 索引', x: 300, y: 200, color: '#2563eb', desc: '即使打 DB，索引能让查询快。击穿/穿透的兜底。' },
+    ];
+
+    const edges = [
+      { from: 'breakdown', to: 'penetration', cross: true },
+      { from: 'breakdown', to: 'avalanche', cross: true },
+      { from: 'breakdown', to: 'mutex' },
+      { from: 'penetration', to: 'bloom' },
+      { from: 'avalanche', to: 'ttl' },
+      { from: 'breakdown', to: 'index', cross: true },
+      { from: 'penetration', to: 'index', cross: true },
+    ];
+
+    const crossMap = {
+      breakdown: ['穿透：不存在的数据', '雪崩：批量过期', '索引：DB 兜底'],
+      penetration: ['击穿：热点过期', '布隆：前置拦截'],
+      avalanche: ['击穿：单点热点', '随机 TTL：分散过期'],
+      mutex: ['分布式锁 Redisson', '击穿专属方案'],
+      bloom: ['穿透专属', '有误判率'],
+      ttl: ['雪崩专属', '不能防击穿'],
+      index: ['慢查询优化', '和缓存互补'],
+    };
+
+    const svg = document.getElementById('svg');
+    let active = 'breakdown';
+    const visited = new Set(['breakdown']);
+
+    function render() {
+      let html = '';
+      edges.forEach(e => {
+        const a = nodes.find(n => n.id === e.from);
+        const b = nodes.find(n => n.id === e.to);
+        const hl = active === e.from || active === e.to;
+        html += `<line class="edge ${e.cross ? 'cross' : ''} ${hl ? 'highlight' : ''}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" />`;
+      });
+      nodes.forEach(n => {
+        const w = n.label.length * 14 + 24;
+        html += `<g class="node ${active === n.id ? 'active' : ''}" data-id="${n.id}" transform="translate(${n.x - w/2}, ${n.y - 18})">
+          <rect width="${w}" height="36" fill="${n.color}" stroke="${n.color}" opacity="0.9"/>
+          <text x="${w/2}" y="18">${n.label}</text>
+        </g>`;
+      });
+      svg.innerHTML = html;
+      svg.querySelectorAll('.node').forEach(g => {
+        g.onclick = () => select(g.dataset.id);
+      });
+    }
+
+    function select(id) {
+      active = id;
+      visited.add(id);
+      const n = nodes.find(x => x.id === id);
+      document.getElementById('nodeTitle').textContent = n.label;
+      document.getElementById('nodeDesc').textContent = n.desc;
+      const links = document.getElementById('crossLinks');
+      links.innerHTML = (crossMap[id] || []).map(t =>
+        `<span>${t}</span>`
+      ).join('');
+      render();
+      if (visited.has('breakdown') && visited.has('penetration') && visited.has('avalanche')) {
+        const t = document.getElementById('task');
+        t.classList.add('done');
+        t.innerHTML = '✓ 你走过了三个经典缓存问题。宏观图适合建立「区别感」。';
+      }
+    }
+
+    render();
+    select('breakdown');
+  </script>
+</body>
+</html>

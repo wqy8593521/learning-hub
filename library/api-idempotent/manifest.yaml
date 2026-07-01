@@ -1,0 +1,19 @@
+id: api-idempotent
+title: 接口幂等设计
+subject: 工程实践
+chapter: 系统设计
+subjectOrder: 6
+chapterOrder: 1
+order: 1
+tags:
+  - 幂等
+  - 系统设计
+  - 后端八股
+prerequisites:
+  - mysql-transaction-isolation
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

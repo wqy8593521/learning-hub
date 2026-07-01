@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A · 因果链推演 · 缓存击穿</title>
+  <style>
+    :root {
+      --bg: #0a0e13;
+      --panel: #121820;
+      --border: #2a3544;
+      --text: #edf2f7;
+      --muted: #8da0b3;
+      --accent: #34d399;
+      --danger: #f87171;
+      --cache: #60a5fa;
+      --db: #fbbf24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .top {
+      max-width: 720px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .top a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: #1a2e28;
+      color: var(--accent);
+      border: 1px solid #2d5a4a;
+    }
+    .main { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .stage {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .viz {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      min-height: 180px;
+      margin-bottom: 1.5rem;
+    }
+    .node {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 90px;
+      transition: all 0.4s ease;
+      opacity: 0.25;
+      transform: scale(0.9);
+    }
+    .node.on { opacity: 1; transform: scale(1); }
+    .node.client { background: #1e3a5f; border: 2px solid var(--cache); color: var(--cache); }
+    .node.cache { background: #1a2e1a; border: 2px solid var(--accent); color: var(--accent); }
+    .node.cache.expired { border-color: var(--danger); color: var(--danger); background: #2e1a1a; }
+    .node.db { background: #2e2a1a; border: 2px solid var(--db); color: var(--db); }
+    .arrow { color: var(--muted); font-size: 1.2rem; opacity: 0.25; transition: opacity 0.4s; }
+    .arrow.on { opacity: 1; color: var(--accent); }
+    .arrow.danger.on { color: var(--danger); }
+    .step-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      min-height: 3.5rem;
+      padding: 1rem;
+      background: #0d1117;
+      border-radius: 10px;
+      border-left: 3px solid var(--accent);
+    }
+    .step-text strong { color: var(--accent); }
+    .progress {
+      display: flex;
+      gap: 6px;
+      margin: 1.25rem 0;
+    }
+    .dot {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: #1e293b;
+      transition: background 0.3s;
+    }
+    .dot.done { background: var(--accent); }
+    .dot.current { background: #6ee7b7; }
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+    button {
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-next { background: var(--accent); color: #052e1a; font-weight: 600; }
+    .btn-prev { background: #1e293b; color: var(--text); }
+    .quiz {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: none;
+    }
+    .quiz.show { display: block; }
+    .quiz h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    .opts { display: flex; flex-direction: column; gap: 0.5rem; }
+    .opt {
+      padding: 0.65rem 0.9rem;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    .opt:hover { border-color: #4a5568; }
+    .opt.correct { border-color: var(--accent); background: #0d2818; }
+    .opt.wrong { border-color: var(--danger); background: #2a1515; }
+    .feedback { margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted); }
+    .requests {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.75rem;
+      color: var(--danger);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .requests.on { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a href="../index.html">← 返回对比页</a>
+    <span class="badge">Prototype A · 因果链</span>
+  </div>
+  <div class="main">
+    <h1>Redis 缓存击穿</h1>
+    <p class="hint">禁止长文。每次只显示一步，点「下一步」推演因果。</p>
+
+    <div class="stage">
+      <div class="requests" id="reqBadge">⚡ 1000 并发请求</div>
+      <div class="viz" id="viz"></div>
+      <div class="step-text" id="stepText"></div>
+      <div class="progress" id="progress"></div>
+      <div class="controls">
+        <button class="btn-prev" id="prevBtn" disabled>上一步</button>
+        <button class="btn-next" id="nextBtn">下一步 →</button>
+      </div>
+    </div>
+
+    <div class="quiz" id="quiz">
+      <h3>走完逻辑链，闭卷选一题：</h3>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        text: '有一个<strong>热点 key</strong>（比如秒杀商品），QPS 极高，缓存在扛流量。',
+        viz: { clients: 3, cache: 'ok', db: false, arrows: ['c-cache'] }
+      },
+      {
+        text: '热点 key <strong>过期了</strong>（TTL 到了）。缓存里这条数据没了。',
+        viz: { clients: 3, cache: 'expired', db: false, arrows: [] }
+      },
+      {
+        text: '大量请求同时发现 cache miss → <strong>同时穿透</strong>到 DB 查同一条数据。',
+        viz: { clients: 8, cache: 'expired', db: true, arrows: ['c-cache', 'cache-db'], danger: true, requests: true }
+      },
+      {
+        text: '<strong>因为</strong>没有互斥，每个请求都独立查库 → DB 瞬时压力暴增，可能被打挂。',
+        viz: { clients: 12, cache: 'expired', db: true, arrows: ['c-cache', 'cache-db'], danger: true, requests: true }
+      },
+      {
+        text: '<strong>方案 1：互斥锁</strong> — 只有一个线程查库回填，其余等待或短暂重试。',
+        viz: { clients: 5, cache: 'ok', db: false, arrows: ['c-cache'], lock: true }
+      },
+      {
+        text: '<strong>方案 2：逻辑过期</strong> — 不真删 key，异步更新，用户永远读到旧值直到新值就绪。',
+        viz: { clients: 5, cache: 'ok', db: false, arrows: ['c-cache'], async: true }
+      }
+    ];
+
+    let cur = 0;
+    const vizEl = document.getElementById('viz');
+    const stepText = document.getElementById('stepText');
+    const progress = document.getElementById('progress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const reqBadge = document.getElementById('reqBadge');
+
+    function renderViz(v) {
+      const n = v.clients || 3;
+      let html = '';
+      for (let i = 0; i < Math.min(n, 6); i++) {
+        html += `<div class="node client ${v.arrows?.includes('c-cache') ? 'on' : ''}">请求${i+1}</div>`;
+        if (i < Math.min(n, 6) - 1) html += `<span class="arrow ${v.arrows?.includes('c-cache') ? 'on' : ''}">→</span>`;
+      }
+      html += `<span class="arrow on">→</span>`;
+      html += `<div class="node cache ${v.cache === 'expired' ? 'expired on' : 'on'}">${v.cache === 'expired' ? '缓存∅' : '缓存✓'}</div>`;
+      if (v.db) {
+        html += `<span class="arrow ${v.danger ? 'danger on' : 'on'}">→</span>`;
+        html += `<div class="node db on">MySQL</div>`;
+      }
+      vizEl.innerHTML = html;
+      reqBadge.classList.toggle('on', !!v.requests);
+    }
+
+    function render() {
+      const s = steps[cur];
+      stepText.innerHTML = s.text;
+      renderViz(s.viz);
+      progress.innerHTML = steps.map((_, i) =>
+        `<div class="dot ${i < cur ? 'done' : ''} ${i === cur ? 'current' : ''}"></div>`
+      ).join('');
+      prevBtn.disabled = cur === 0;
+      nextBtn.textContent = cur === steps.length - 1 ? '完成 · 做题' : '下一步 →';
+    }
+
+    prevBtn.onclick = () => { if (cur > 0) { cur--; render(); } };
+    nextBtn.onclick = () => {
+      if (cur < steps.length - 1) { cur++; render(); }
+      else showQuiz();
+    };
+
+    function showQuiz() {
+      document.getElementById('quiz').classList.add('show');
+      const opts = [
+        { t: '大量 key 同时过期导致 DB 压力', ok: false },
+        { t: '热点 key 过期 + 并发 miss 同时打 DB', ok: true },
+        { t: '查询不存在的数据穿透缓存', ok: false },
+        { t: 'Redis 宕机导致全部打 DB', ok: false }
+      ];
+      const optsEl = document.getElementById('opts');
+      optsEl.innerHTML = opts.map((o, i) =>
+        `<button class="opt" data-i="${i}" data-ok="${o.ok}">${o.t}</button>`
+      ).join('');
+      optsEl.querySelectorAll('.opt').forEach(btn => {
+        btn.onclick = () => {
+          const ok = btn.dataset.ok === 'true';
+          btn.classList.add(ok ? 'correct' : 'wrong');
+          document.getElementById('feedback').textContent = ok
+            ? '✓ 你能复述因果链了。这种形式适合你吗？'
+            : '✗ 回去点「上一步」重走一遍链路。';
+          optsEl.querySelectorAll('.opt').forEach(b => b.disabled = true);
+        };
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>

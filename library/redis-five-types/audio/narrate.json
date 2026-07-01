@@ -1,0 +1,604 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "String 是 Redis 最基础的结构，二进制安全，可以存文本、数字甚至图片。",
+      "duration": 7.248,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.5784411428571423,
+          "text": "String 是 Redis 最基础的结构"
+        },
+        {
+          "start": 3.5784411428571423,
+          "end": 4.57245257142857,
+          "text": "二进制安全"
+        },
+        {
+          "start": 4.57245257142857,
+          "end": 6.958079999999999,
+          "text": "可以存文本、数字甚至图片"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "SET 和 GET 都是 O(1)，常用来做缓存、计数器、分布式锁。",
+      "duration": 6.072,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.706377142857143,
+          "text": "SET 和 GET 都是 O(1)"
+        },
+        {
+          "start": 2.706377142857143,
+          "end": 5.82912,
+          "text": "常用来做缓存、计数器、分布式锁"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "SET 和 GET 都是 O(1)，常用来做缓存、计数器、分布式锁。",
+      "duration": 6.072,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.706377142857143,
+          "text": "SET 和 GET 都是 O(1)"
+        },
+        {
+          "start": 2.706377142857143,
+          "end": 5.82912,
+          "text": "常用来做缓存、计数器、分布式锁"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "INCR 原子自增适合做点赞数、库存扣减，不用应用层加锁。",
+      "duration": 6.264,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.394436923076923,
+          "text": "INCR 原子自增适合做点赞数、库存扣减"
+        },
+        {
+          "start": 4.394436923076923,
+          "end": 6.01344,
+          "text": "不用应用层加锁"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "SET NX EX 组合是分布式锁的经典写法。",
+      "duration": 4.464,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.28544,
+          "text": "SET NX EX 组合是分布式锁的经典写法"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "SET NX EX 组合是分布式锁的经典写法。",
+      "duration": 4.464,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.28544,
+          "text": "SET NX EX 组合是分布式锁的经典写法"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "单个 value 最大 512MB，但实际业务别存太大的 value，会阻塞单线程。",
+      "duration": 7.488,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.875392,
+          "text": "单个 value 最大 512MB"
+        },
+        {
+          "start": 2.875392,
+          "end": 5.956169142857143,
+          "text": "但实际业务别存太大的 value"
+        },
+        {
+          "start": 5.956169142857143,
+          "end": 7.18848,
+          "text": "会阻塞单线程"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "String 看似简单，面试能展开到缓存、锁、计数三个场景。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.107733333333333,
+          "text": "String 看似简单"
+        },
+        {
+          "start": 2.107733333333333,
+          "end": 5.69088,
+          "text": "面试能展开到缓存、锁、计数三个场景"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "String 看似简单，面试能展开到缓存、锁、计数三个场景。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.107733333333333,
+          "text": "String 看似简单"
+        },
+        {
+          "start": 2.107733333333333,
+          "end": 5.69088,
+          "text": "面试能展开到缓存、锁、计数三个场景"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "Hash 存字段和值的映射，适合把一个对象的多个属性放在一起。",
+      "duration": 5.832,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.399451428571428,
+          "text": "Hash 存字段和值的映射"
+        },
+        {
+          "start": 2.399451428571428,
+          "end": 5.598719999999998,
+          "text": "适合把一个对象的多个属性放在一起"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "HSET user:1 name Tom age 20，改单个字段不用序列化整个对象。",
+      "duration": 6.696,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.92832,
+          "text": "HSET user:1 name Tom age 20"
+        },
+        {
+          "start": 3.92832,
+          "end": 6.42816,
+          "text": "改单个字段不用序列化整个对象"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "HSET user:1 name Tom age 20，改单个字段不用序列化整个对象。",
+      "duration": 6.696,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.92832,
+          "text": "HSET user:1 name Tom age 20"
+        },
+        {
+          "start": 3.92832,
+          "end": 6.42816,
+          "text": "改单个字段不用序列化整个对象"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "每个字段的读写都是 O(1)，比存 JSON 字符串更省内存也更灵活。",
+      "duration": 7.056,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.935296,
+          "text": "每个字段的读写都是 O(1)"
+        },
+        {
+          "start": 2.935296,
+          "end": 6.77376,
+          "text": "比存 JSON 字符串更省内存也更灵活"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "字段数不多时 Hash 比多个 String key 更紧凑。",
+      "duration": 4.2,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.032,
+          "text": "字段数不多时 Hash 比多个 String key 更紧凑"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "字段数不多时 Hash 比多个 String key 更紧凑。",
+      "duration": 4.2,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.032,
+          "text": "字段数不多时 Hash 比多个 String key 更紧凑"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "典型场景：用户信息、商品属性，需要部分更新时用 Hash。",
+      "duration": 6,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1015384615384614,
+          "text": "典型场景：用户信息、商品属性"
+        },
+        {
+          "start": 3.1015384615384614,
+          "end": 5.76,
+          "text": "需要部分更新时用 Hash"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "字段特别多时要注意大 Hash 的渐进式 rehash 开销。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.90752,
+          "text": "字段特别多时要注意大 Hash 的渐进式 rehash 开销"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "字段特别多时要注意大 Hash 的渐进式 rehash 开销。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.90752,
+          "text": "字段特别多时要注意大 Hash 的渐进式 rehash 开销"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "List 是双向链表，两端插入弹出都是 O(1)。",
+      "duration": 4.704,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9353599999999997,
+          "text": "List 是双向链表"
+        },
+        {
+          "start": 1.9353599999999997,
+          "end": 4.515839999999999,
+          "text": "两端插入弹出都是 O(1)"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "LPUSH 加 RPOP 就是 FIFO 队列，RPUSH 加 LPOP 也成立。",
+      "duration": 6.216,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.46491870967742,
+          "text": "LPUSH 加 RPOP 就是 FIFO 队列"
+        },
+        {
+          "start": 3.46491870967742,
+          "end": 5.967360000000001,
+          "text": "RPUSH 加 LPOP 也成立"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "LPUSH 加 RPOP 就是 FIFO 队列，RPUSH 加 LPOP 也成立。",
+      "duration": 6.216,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.46491870967742,
+          "text": "LPUSH 加 RPOP 就是 FIFO 队列"
+        },
+        {
+          "start": 3.46491870967742,
+          "end": 5.967360000000001,
+          "text": "RPUSH 加 LPOP 也成立"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "可以做简单消息队列、最新动态时间线、任务列表。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.99968,
+          "text": "可以做简单消息队列、最新动态时间线、任务列表"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "BRPOP 阻塞弹出，适合消费者等待新消息。",
+      "duration": 4.392,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.997204210526316,
+          "text": "BRPOP 阻塞弹出"
+        },
+        {
+          "start": 1.997204210526316,
+          "end": 4.21632,
+          "text": "适合消费者等待新消息"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "BRPOP 阻塞弹出，适合消费者等待新消息。",
+      "duration": 4.392,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.997204210526316,
+          "text": "BRPOP 阻塞弹出"
+        },
+        {
+          "start": 1.997204210526316,
+          "end": 4.21632,
+          "text": "适合消费者等待新消息"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "中间查找是 O(n)，所以 List 不适合随机访问，只适合头尾操作。",
+      "duration": 6.552,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.9520441379310345,
+          "text": "中间查找是 O(n)"
+        },
+        {
+          "start": 1.9520441379310345,
+          "end": 4.771663448275862,
+          "text": "所以 List 不适合随机访问"
+        },
+        {
+          "start": 4.771663448275862,
+          "end": 6.28992,
+          "text": "只适合头尾操作"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "复杂队列场景更推荐 Stream 或专业 MQ。",
+      "duration": 4.656,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.46976,
+          "text": "复杂队列场景更推荐 Stream 或专业 MQ"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "复杂队列场景更推荐 Stream 或专业 MQ。",
+      "duration": 4.656,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.46976,
+          "text": "复杂队列场景更推荐 Stream 或专业 MQ"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "Set 是无序去重集合，SADD 和 SISMEMBER 都是 O(1)。",
+      "duration": 5.256,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.68192,
+          "text": "Set 是无序去重集合"
+        },
+        {
+          "start": 1.68192,
+          "end": 5.0457600000000005,
+          "text": "SADD 和 SISMEMBER 都是 O(1)"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "适合标签、共同好友、抽奖去重等需要判重的场景。",
+      "duration": 5.448,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.23008,
+          "text": "适合标签、共同好友、抽奖去重等需要判重的场景"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "适合标签、共同好友、抽奖去重等需要判重的场景。",
+      "duration": 5.448,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.23008,
+          "text": "适合标签、共同好友、抽奖去重等需要判重的场景"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "ZSet 在 Set 基础上每个成员带一个 score，按分数排序。",
+      "duration": 5.592,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.409691428571429,
+          "text": "ZSet 在 Set 基础上每个成员带一个 score"
+        },
+        {
+          "start": 4.409691428571429,
+          "end": 5.36832,
+          "text": "按分数排序"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "ZRANGE 取排行榜前 N 名，ZRANK 查排名，非常高效。",
+      "duration": 5.304,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.6477568000000002,
+          "text": "ZRANGE 取排行榜前 N 名"
+        },
+        {
+          "start": 2.6477568000000002,
+          "end": 4.277145600000001,
+          "text": "ZRANK 查排名"
+        },
+        {
+          "start": 4.277145600000001,
+          "end": 5.091840000000001,
+          "text": "非常高效"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "ZRANGE 取排行榜前 N 名，ZRANK 查排名，非常高效。",
+      "duration": 5.304,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.6477568000000002,
+          "text": "ZRANGE 取排行榜前 N 名"
+        },
+        {
+          "start": 2.6477568000000002,
+          "end": 4.277145600000001,
+          "text": "ZRANK 查排名"
+        },
+        {
+          "start": 4.277145600000001,
+          "end": 5.091840000000001,
+          "text": "非常高效"
+        }
+      ]
+    },
+    "3-2-0": {
+      "audio": "audio/s3-f2-d0.mp3",
+      "text": "五种结构选型：缓存用 String，对象用 Hash，队列用 List，去重用 Set，排行用 ZSet。",
+      "duration": 8.472,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.0262772093023256,
+          "text": "五种结构选型：缓存用 String"
+        },
+        {
+          "start": 3.0262772093023256,
+          "end": 4.350273488372093,
+          "text": "对象用 Hash"
+        },
+        {
+          "start": 4.350273488372093,
+          "end": 5.67426976744186,
+          "text": "队列用 List"
+        },
+        {
+          "start": 5.67426976744186,
+          "end": 6.809123720930232,
+          "text": "去重用 Set"
+        },
+        {
+          "start": 6.809123720930232,
+          "end": 8.13312,
+          "text": "排行用 ZSet"
+        }
+      ]
+    },
+    "3-2-1": {
+      "audio": "audio/s3-f2-d1.mp3",
+      "text": "面试按场景选结构，比背命令更重要。",
+      "duration": 3.96,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.02752,
+          "text": "面试按场景选结构"
+        },
+        {
+          "start": 2.02752,
+          "end": 3.8015999999999996,
+          "text": "比背命令更重要"
+        }
+      ]
+    },
+    "3-2-2": {
+      "audio": "audio/s3-f2-d2.mp3",
+      "text": "面试按场景选结构，比背命令更重要。",
+      "duration": 3.96,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.02752,
+          "text": "面试按场景选结构"
+        },
+        {
+          "start": 2.02752,
+          "end": 3.8015999999999996,
+          "text": "比背命令更重要"
+        }
+      ]
+    }
+  }
+}

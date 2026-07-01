@@ -1,0 +1,49 @@
+# jvm-oom-types.quiz
+bank JVM OOM 类型与排查
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 堆内存溢出
+    style pick_one
+    ask Java heap space 属于哪种区域溢出？
+    opt 堆
+    opt 栈
+    opt 元空间
+    opt 程序计数器
+    answer 0
+    explain 对象实例在堆上分配，堆满抛 heap space。
+
+  q 栈溢出
+    style pick_one
+    ask 无限递归通常导致？
+    opt StackOverflowError
+    opt heap space
+    opt Metaspace
+    opt ClassNotFound
+    answer 0
+    explain 栈帧无限入栈，超出栈深度限制。
+
+  q 元空间溢出
+    style true_false
+    ask JDK8 后用 Metaspace 替代永久代存类元数据
+    true
+    explain 永久代在 JDK8 移除，类信息改存本地内存元空间。
+
+  q 排查思路
+    style pick_one
+    ask 堆 OOM 排查首选工具链？
+    opt jmap dump + MAT 分析
+    opt 只看日志
+    opt 重启了事
+    opt 加 synchronized
+    answer 0
+    explain dump 堆快照，MAT 找大对象和 GC Roots 引用链。
+
+trigger
+  after_step 0 堆内存溢出
+  after_step 1 栈溢出
+  after_step 2 元空间溢出
+  after_step 3 排查思路
+  end pick 2

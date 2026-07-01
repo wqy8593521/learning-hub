@@ -1,0 +1,19 @@
+id: rate-limiter-bucket
+title: 令牌桶限流
+subject: 工程实践
+chapter: 系统设计
+subjectOrder: 6
+chapterOrder: 1
+order: 2
+tags:
+  - 限流
+  - 高并发
+  - 后端八股
+prerequisites:
+  - redis-cache-breakdown
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

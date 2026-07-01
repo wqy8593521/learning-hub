@@ -1,0 +1,21 @@
+id: concurrent-hashmap
+title: ConcurrentHashMap
+subject: Java 并发
+chapter: 集合框架
+subjectOrder: 1
+chapterOrder: 1
+order: 5
+tags:
+  - Java
+  - 并发
+  - ConcurrentHashMap
+  - 后端八股
+prerequisites:
+  - hashmap-collision
+  - java-volatile-cas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

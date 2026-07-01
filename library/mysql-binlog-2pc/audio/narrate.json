@@ -1,0 +1,665 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "binlog 是 MySQL Server 层的逻辑日志，记录所有修改数据的语句或行变更。",
+      "duration": 7.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.2110030769230775,
+          "text": "binlog 是 MySQL Server 层的逻辑日志"
+        },
+        {
+          "start": 4.2110030769230775,
+          "end": 6.842880000000001,
+          "text": "记录所有修改数据的语句或行变更"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "主从复制靠 Slave 重放 Master 的 binlog 保持数据一致。",
+      "duration": 5.232,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.02272,
+          "text": "主从复制靠 Slave 重放 Master 的 binlog 保持数据一致"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "主从复制靠 Slave 重放 Master 的 binlog 保持数据一致。",
+      "duration": 5.232,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.02272,
+          "text": "主从复制靠 Slave 重放 Master 的 binlog 保持数据一致"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "数据归档和点对点恢复也靠 binlog，可以恢复到任意时间点。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.6584228571428574,
+          "text": "数据归档和点对点恢复也靠 binlog"
+        },
+        {
+          "start": 3.6584228571428574,
+          "end": 5.69088,
+          "text": "可以恢复到任意时间点"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "binlog 和 redo 不同层：redo 是 InnoDB 物理页日志，binlog 是逻辑 SQL 或行。",
+      "duration": 7.848,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.190143999999999,
+          "text": "binlog 和 redo 不同层：redo 是 InnoDB 物理页日志"
+        },
+        {
+          "start": 5.190143999999999,
+          "end": 7.534079999999999,
+          "text": "binlog 是逻辑 SQL 或行"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "binlog 和 redo 不同层：redo 是 InnoDB 物理页日志，binlog 是逻辑 SQL 或行。",
+      "duration": 7.848,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.190143999999999,
+          "text": "binlog 和 redo 不同层：redo 是 InnoDB 物理页日志"
+        },
+        {
+          "start": 5.190143999999999,
+          "end": 7.534079999999999,
+          "text": "binlog 是逻辑 SQL 或行"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "开启 binlog 是主从和高可用的前提，格式选 ROW 更安全。",
+      "duration": 5.592,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.57888,
+          "text": "开启 binlog 是主从和高可用的前提"
+        },
+        {
+          "start": 3.57888,
+          "end": 5.36832,
+          "text": "格式选 ROW 更安全"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "STATEMENT 可能主从不一致，ROW 记录每行变更更可靠。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.896457142857143,
+          "text": "STATEMENT 可能主从不一致"
+        },
+        {
+          "start": 2.896457142857143,
+          "end": 5.0687999999999995,
+          "text": "ROW 记录每行变更更可靠"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "STATEMENT 可能主从不一致，ROW 记录每行变更更可靠。",
+      "duration": 5.28,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.896457142857143,
+          "text": "STATEMENT 可能主从不一致"
+        },
+        {
+          "start": 2.896457142857143,
+          "end": 5.0687999999999995,
+          "text": "ROW 记录每行变更更可靠"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "binlog 在事务提交时写入，不是每条语句执行完就写。",
+      "duration": 5.256,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8256256000000004,
+          "text": "binlog 在事务提交时写入"
+        },
+        {
+          "start": 2.8256256000000004,
+          "end": 5.0457600000000005,
+          "text": "不是每条语句执行完就写"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "三种格式：STATEMENT 记 SQL，ROW 记行变更，MIXED 自动选。",
+      "duration": 5.952,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.116683636363636,
+          "text": "三种格式：STATEMENT 记 SQL"
+        },
+        {
+          "start": 3.116683636363636,
+          "end": 4.3287272727272725,
+          "text": "ROW 记行变更"
+        },
+        {
+          "start": 4.3287272727272725,
+          "end": 5.71392,
+          "text": "MIXED 自动选"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "三种格式：STATEMENT 记 SQL，ROW 记行变更，MIXED 自动选。",
+      "duration": 5.952,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.116683636363636,
+          "text": "三种格式：STATEMENT 记 SQL"
+        },
+        {
+          "start": 3.116683636363636,
+          "end": 4.3287272727272725,
+          "text": "ROW 记行变更"
+        },
+        {
+          "start": 4.3287272727272725,
+          "end": 5.71392,
+          "text": "MIXED 自动选"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "ROW 格式日志量大但准确，主从数据一致性好，生产推荐 ROW。",
+      "duration": 6.168,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.63168,
+          "text": "ROW 格式日志量大但准确"
+        },
+        {
+          "start": 2.63168,
+          "end": 4.386133333333333,
+          "text": "主从数据一致性好"
+        },
+        {
+          "start": 4.386133333333333,
+          "end": 5.92128,
+          "text": "生产推荐 ROW"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "MIXED 在简单 SQL 用 STATEMENT，复杂用 ROW。",
+      "duration": 4.536,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3868799999999997,
+          "text": "MIXED 在简单 SQL 用 STATEMENT"
+        },
+        {
+          "start": 3.3868799999999997,
+          "end": 4.354559999999999,
+          "text": "复杂用 ROW"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "MIXED 在简单 SQL 用 STATEMENT，复杂用 ROW。",
+      "duration": 4.536,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.3868799999999997,
+          "text": "MIXED 在简单 SQL 用 STATEMENT"
+        },
+        {
+          "start": 3.3868799999999997,
+          "end": 4.354559999999999,
+          "text": "复杂用 ROW"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "sync_binlog=1 表示每次提交都刷盘，最安全但性能有影响。",
+      "duration": 6.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.7254296774193545,
+          "text": "sync_binlog=1 表示每次提交都刷盘"
+        },
+        {
+          "start": 4.7254296774193545,
+          "end": 6.65856,
+          "text": "最安全但性能有影响"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "和 innodb_flush_log_at_trx_commit 一起调，平衡安全和性能。",
+      "duration": 9.888,
+      "cues": [
+        {
+          "start": 0,
+          "end": 7.871812682926828,
+          "text": "和 innodb_flush_log_at_trx_commit 一起调"
+        },
+        {
+          "start": 7.871812682926828,
+          "end": 9.492479999999999,
+          "text": "平衡安全和性能"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "和 innodb_flush_log_at_trx_commit 一起调，平衡安全和性能。",
+      "duration": 9.888,
+      "cues": [
+        {
+          "start": 0,
+          "end": 7.871812682926828,
+          "text": "和 innodb_flush_log_at_trx_commit 一起调"
+        },
+        {
+          "start": 7.871812682926828,
+          "end": 9.492479999999999,
+          "text": "平衡安全和性能"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "一个事务既要写 InnoDB redo，又要写 Server binlog，必须保证一致。",
+      "duration": 6.408,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.7520673684210526,
+          "text": "一个事务既要写 InnoDB redo"
+        },
+        {
+          "start": 2.7520673684210526,
+          "end": 5.180362105263158,
+          "text": "又要写 Server binlog"
+        },
+        {
+          "start": 5.180362105263158,
+          "end": 6.15168,
+          "text": "必须保证一致"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "流程：InnoDB redo prepare → 写 binlog 落盘 → InnoDB redo commit。",
+      "duration": 6.096,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.85216,
+          "text": "流程：InnoDB redo prepare → 写 binlog 落盘 → InnoDB redo commit"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "流程：InnoDB redo prepare → 写 binlog 落盘 → InnoDB redo commit。",
+      "duration": 6.096,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.85216,
+          "text": "流程：InnoDB redo prepare → 写 binlog 落盘 → InnoDB redo commit"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "如果 redo prepare 后写 binlog 前崩溃，重启后事务回滚，主从没有这条。",
+      "duration": 6.792,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.229396756756757,
+          "text": "如果 redo prepare 后写 binlog 前崩溃"
+        },
+        {
+          "start": 4.229396756756757,
+          "end": 5.462970810810811,
+          "text": "重启后事务回滚"
+        },
+        {
+          "start": 5.462970810810811,
+          "end": 6.52032,
+          "text": "主从没有这条"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "如果 binlog 写完 redo commit 前崩溃，重启后根据 binlog 补提交。",
+      "duration": 6.192,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.695117837837838,
+          "text": "如果 binlog 写完 redo commit 前崩溃"
+        },
+        {
+          "start": 3.695117837837838,
+          "end": 5.94432,
+          "text": "重启后根据 binlog 补提交"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "如果 binlog 写完 redo commit 前崩溃，重启后根据 binlog 补提交。",
+      "duration": 6.192,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.695117837837838,
+          "text": "如果 binlog 写完 redo commit 前崩溃"
+        },
+        {
+          "start": 3.695117837837838,
+          "end": 5.94432,
+          "text": "重启后根据 binlog 补提交"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "两阶段提交保证：要么 redo 和 binlog 都有，要么都没有。",
+      "duration": 5.664,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.466468571428571,
+          "text": "两阶段提交保证：要么 redo 和 binlog 都有"
+        },
+        {
+          "start": 4.466468571428571,
+          "end": 5.43744,
+          "text": "要么都没有"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "不会出现主库有数据从库没有的情况。",
+      "duration": 3.864,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.70944,
+          "text": "不会出现主库有数据从库没有的情况"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "不会出现主库有数据从库没有的情况。",
+      "duration": 3.864,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.70944,
+          "text": "不会出现主库有数据从库没有的情况"
+        }
+      ]
+    },
+    "2-3-0": {
+      "audio": "audio/s2-f3-d0.mp3",
+      "text": "这是 MySQL 高可用的基石，面试必须能讲清楚三步。",
+      "duration": 5.64,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.0603130434782604,
+          "text": "这是 MySQL 高可用的基石"
+        },
+        {
+          "start": 3.0603130434782604,
+          "end": 5.414399999999999,
+          "text": "面试必须能讲清楚三步"
+        }
+      ]
+    },
+    "2-3-1": {
+      "audio": "audio/s2-f3-d1.mp3",
+      "text": "XA 事务协调 redo 和 binlog 的语义。",
+      "duration": 3.744,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.59424,
+          "text": "XA 事务协调 redo 和 binlog 的语义"
+        }
+      ]
+    },
+    "2-3-2": {
+      "audio": "audio/s2-f3-d2.mp3",
+      "text": "XA 事务协调 redo 和 binlog 的语义。",
+      "duration": 3.744,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.59424,
+          "text": "XA 事务协调 redo 和 binlog 的语义"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "重启时 InnoDB 扫描 redo，发现 prepare 状态的事务。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.5383724137931036,
+          "text": "重启时 InnoDB 扫描 redo"
+        },
+        {
+          "start": 2.5383724137931036,
+          "end": 4.90752,
+          "text": "发现 prepare 状态的事务"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "去 binlog 里查有没有对应的事务，有则 commit，无则 rollback。",
+      "duration": 5.76,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.685805714285714,
+          "text": "去 binlog 里查有没有对应的事务"
+        },
+        {
+          "start": 2.685805714285714,
+          "end": 3.9497142857142853,
+          "text": "有则 commit"
+        },
+        {
+          "start": 3.9497142857142853,
+          "end": 5.529599999999999,
+          "text": "无则 rollback"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "去 binlog 里查有没有对应的事务，有则 commit，无则 rollback。",
+      "duration": 5.76,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.685805714285714,
+          "text": "去 binlog 里查有没有对应的事务"
+        },
+        {
+          "start": 2.685805714285714,
+          "end": 3.9497142857142853,
+          "text": "有则 commit"
+        },
+        {
+          "start": 3.9497142857142853,
+          "end": 5.529599999999999,
+          "text": "无则 rollback"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "redo 有 binlog 无：说明 binlog 没写完，事务无效，回滚。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.368384,
+          "text": "redo 有 binlog 无：说明 binlog 没写完"
+        },
+        {
+          "start": 4.368384,
+          "end": 5.096448,
+          "text": "事务无效"
+        },
+        {
+          "start": 5.096448,
+          "end": 5.46048,
+          "text": "回滚"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "都有：说明已完整提交，前滚恢复。",
+      "duration": 4.08,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.7977142857142856,
+          "text": "都有：说明已完整提交"
+        },
+        {
+          "start": 2.7977142857142856,
+          "end": 3.9168,
+          "text": "前滚恢复"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "都有：说明已完整提交，前滚恢复。",
+      "duration": 4.08,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.7977142857142856,
+          "text": "都有：说明已完整提交"
+        },
+        {
+          "start": 2.7977142857142856,
+          "end": 3.9168,
+          "text": "前滚恢复"
+        }
+      ]
+    },
+    "3-2-0": {
+      "audio": "audio/s3-f2-d0.mp3",
+      "text": "这个判断逻辑保证了主从数据最终一致。",
+      "duration": 4.056,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.89376,
+          "text": "这个判断逻辑保证了主从数据最终一致"
+        }
+      ]
+    },
+    "3-2-1": {
+      "audio": "audio/s3-f2-d1.mp3",
+      "text": "配合上一课 redo 和 undo，三日志体系就完整了。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8890156521739128,
+          "text": "配合上一课 redo 和 undo"
+        },
+        {
+          "start": 2.8890156521739128,
+          "end": 4.746239999999999,
+          "text": "三日志体系就完整了"
+        }
+      ]
+    },
+    "3-2-2": {
+      "audio": "audio/s3-f2-d2.mp3",
+      "text": "配合上一课 redo 和 undo，三日志体系就完整了。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8890156521739128,
+          "text": "配合上一课 redo 和 undo"
+        },
+        {
+          "start": 2.8890156521739128,
+          "end": 4.746239999999999,
+          "text": "三日志体系就完整了"
+        }
+      ]
+    }
+  }
+}

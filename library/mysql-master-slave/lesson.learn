@@ -1,0 +1,55 @@
+# MySQL 主从复制 — VML
+lesson MySQL 主从复制
+tags MySQL, 主从, 高可用, 后端八股
+
+step 复制架构
+  frames 2
+  cap 主库写binlog | 从库IO+SQL线程 | 异步复制
+  @all
+    cols 主库:30 从库:400
+  @0
+    box 30 70 140 50 label=Master stroke=blue
+    box 400 70 140 50 label=Slave stroke=green
+    arrow 主库 从库 binlog
+  @1
+    flow 620 50 主写|dump线程|IO线程|relay log|SQL线程
+
+step binlog同步
+  frames 3
+  cap 主库提交写binlog | dump线程推送 | 从库写relay log
+  @all
+    cols 主库:30 从库:400
+  @0
+    box 30 130 120 44 label=binlog stroke=orange
+    arrow 主库 从库 dump
+  @1
+    box 400 130 140 44 label=relay log stroke=purple
+    text IO线程 400 190 fill=purple
+  @2
+  @2 L1
+    text 异步=主从不强一致 80 250 fill=warn
+
+step SQL线程回放
+  frames 3
+  cap 从库SQL线程读relay | 重放SQL | 数据追平
+  @all
+    cols relay:200 从库表:500
+  @0
+    arrow relay 从库表 回放
+    box 500 70 140 50 label=从库数据 stroke=green
+  @1
+    meter 120 200 400 延迟 grow max=100
+    text 复制延迟 200 260 fill=warn
+  @2
+    compare 80 200 300 同步复制|强一致|慢 vs 异步|快|可能延迟
+
+step 读写分离
+  frames 2
+  cap 写走主库 | 读走从库 | 注意主从延迟
+  @all
+    cols 应用:30 主库:300 从库:550
+  @0
+    arrow 应用 主库 写
+    arrow 应用 从库 读
+  @1
+    callout 300 150 520 50 写完立刻读可能脏读

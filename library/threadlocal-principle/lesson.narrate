@@ -1,0 +1,34 @@
+# ThreadLocal 原理 — 口语旁白
+lesson ThreadLocal 原理
+
+step 线程隔离
+  @0: 每个 Thread 对象内部有一个 ThreadLocalMap，存该线程私有的变量副本。
+  @0 L1: ThreadLocal 本身不存值，它只是 Map 的 key，实现线程间数据隔离。
+  @1: 线程 A 和线程 B 各用同一个 ThreadLocal，拿到的是各自独立的值。
+  @1 L1: 典型场景：SimpleDateFormat 线程不安全，每个线程放一份就安全了。
+  @2: 还有用户上下文、链路 traceId 等，都靠 ThreadLocal 在同线程内传递。
+  @2 L1: 理解关键：数据存在线程里，不是存在 ThreadLocal 对象里。
+
+step get/set路径
+  @0: 调用 get 时，先取当前线程 Thread.currentThread。
+  @0 L1: 再从该线程的 ThreadLocalMap 里用 ThreadLocal 作 key 查找。
+  @1: 如果 key 不存在，会调用 initialValue 初始化一个默认值放进去。
+  @1 L1: set 就是直接往当前线程的 Map 里 put，不影响其他线程。
+  @2: 整个路径没有加锁，因为每个线程只操作自己的 Map，天然无竞争。
+  @2 L1: 性能很好，但线程池场景下要特别注意清理。
+
+step 内存泄漏
+  @0: ThreadLocalMap 的 key 是 ThreadLocal 的弱引用，GC 时 key 可能被回收。
+  @0 L1: 但 value 是强引用，key 没了 value 却还在 Map 里，这就是泄漏。
+  @1: 线程池里的 worker 线程长期存活不销毁，泄漏的 value 永远占着内存。
+  @1 L1: 典型事故：Web 容器线程池加 ThreadLocal 不 remove，慢慢 OOM。
+  @2: 所以用完必须 remove，尤其在 try-finally 的 finally 里清理。
+  @2 L1: 面试必考：弱引用 key 加强引用 value 加线程池复用，三者叠加导致泄漏。
+
+step 正确使用
+  @0: 标准写法是 try-finally，业务逻辑在 try 里，finally 里一定调 remove。
+  @0 L1: 线程池场景下这是硬性要求，不能省略。
+  @1: 不要往 ThreadLocal 里放大对象或集合，泄漏时代价更大。
+  @1 L1: 能用方法参数传递的就不要滥用 ThreadLocal，减少隐式依赖。
+  @2: 框架里如 Spring 的 RequestContextHolder 也是 ThreadLocal，请求结束会清理。
+  @2 L1: 自己写的 ThreadLocal 没有框架帮你清，必须手动负责。

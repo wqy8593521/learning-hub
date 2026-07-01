@@ -1,0 +1,49 @@
+# mysql-lock-row-gap.quiz
+bank 行锁与间隙锁
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 行锁Record
+    style pick_one
+    ask 对 id=10 行 SELECT FOR UPDATE 加？
+    opt 行锁 Record Lock
+    opt 表锁
+    opt 无锁
+    opt 间隙锁 only
+    answer 0
+    explain 精确匹配索引记录，当前读加行锁。
+
+  q 间隙锁Gap
+    style pick_one
+    ask 间隙锁主要防止？
+    opt 幻读（范围内插入）
+    opt 脏读
+    opt 缓存击穿
+    opt 死锁
+    answer 0
+    explain RR 下锁定索引间隙，阻止其他事务插入。
+
+  q Next-Key
+    style pick_one
+    ask Next-Key Lock 是？
+    opt 行锁 + 间隙锁
+    opt 仅表锁
+    opt 仅共享锁
+    opt 乐观锁
+    answer 0
+    explain 左开右闭区间，InnoDB 默认加锁单位。
+
+  q 死锁检测
+    style true_false
+    ask InnoDB 会自动检测死锁并回滚其中一个事务
+    true
+    explain wait-for graph 检测环，回滚 undo 量小的事务。
+
+trigger
+  after_step 0 行锁Record
+  after_step 1 间隙锁Gap
+  after_step 2 Next-Key
+  after_step 3 死锁检测
+  end pick 2

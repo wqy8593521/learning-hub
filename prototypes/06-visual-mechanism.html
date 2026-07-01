@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>缓存击穿 · 可视化机制</title>
+  <style>
+    :root {
+      --bg: #050508; --panel: #0e0e14; --border: #252530;
+      --text: #f0f0f5; --muted: #6b7280;
+      --ok: #22c55e; --warn: #fbbf24; --lock: #a855f7;
+      --l0: #3b82f6; --l1: #f59e0b; --l2: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; padding: 1rem 1.25rem 1.5rem;
+    }
+    .top { max-width: 820px; margin: 0 auto 0.6rem; display: flex; justify-content: space-between; align-items: center; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 0.82rem; }
+    .badge { font-size: 0.68rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: #0a2a1a; color: var(--ok); border: 1px solid #1a4a2a; }
+    .main { max-width: 820px; margin: 0 auto; }
+    h1 { font-size: 1.15rem; }
+    .stage { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .viz-area { height: 340px; background: radial-gradient(ellipse at 50% 0%, #12121a, #08080c 70%); }
+    svg { width: 100%; height: 100%; display: block; }
+
+  /* 统一控制区：深度 + 字幕 + 时间轴 + 播放 一体 */
+    .control-panel {
+      border-top: 1px solid var(--border);
+      padding: 0.85rem 1rem 1rem;
+      background: #0a0a10;
+    }
+    .depth-row {
+      display: flex; gap: 0.35rem; margin-bottom: 0.65rem;
+    }
+    .depth-btn {
+      flex: 1; padding: 0.45rem 0.5rem; border-radius: 8px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); font-size: 0.75rem; font-family: inherit; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .depth-btn.on[data-d="0"] { background: #0f1a30; border-color: var(--l0); color: var(--l0); }
+    .depth-btn.on[data-d="1"] { background: #1a1408; border-color: var(--l1); color: var(--l1); }
+    .depth-btn.on[data-d="2"] { background: #1a0f28; border-color: var(--l2); color: var(--l2); }
+    .caption {
+      font-size: 0.9rem; line-height: 1.45; min-height: 2.6rem;
+      margin-bottom: 0.75rem; color: #d4d4d8;
+    }
+    .caption em { color: var(--warn); font-style: normal; }
+    .step-labels {
+      display: flex; gap: 4px; margin-bottom: 0.4rem;
+    }
+    .step-chip {
+      flex: 1; text-align: center; font-size: 0.65rem; color: var(--muted);
+      padding: 0.2rem 0; border-radius: 4px; cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+    .step-chip.on { color: var(--text); background: #1a1a22; font-weight: 600; }
+    .step-chip.done { color: var(--ok); }
+    .timeline-wrap { position: relative; margin-bottom: 0.65rem; }
+    .timeline {
+      width: 100%; height: 8px; -webkit-appearance: none; appearance: none;
+      background: #1a1a22; border-radius: 4px; outline: none; cursor: pointer;
+    }
+    .timeline::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--ok); border: 2px solid #041a0a; cursor: grab;
+    }
+    .timeline-marks {
+      display: flex; justify-content: space-between;
+      font-size: 0.62rem; color: #4b5563; margin-top: 0.2rem;
+    }
+    .transport {
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .btn {
+      font-family: inherit; font-size: 0.82rem; padding: 0.5rem 0.85rem;
+      border-radius: 8px; border: none; cursor: pointer; background: #1a1a22; color: var(--text);
+    }
+    .btn-play { background: var(--ok); color: #041a0a; font-weight: 600; min-width: 72px; }
+    .btn-speed { font-size: 0.75rem; min-width: 42px; }
+    .frame-ind { flex: 1; text-align: center; font-size: 0.72rem; color: var(--muted); }
+    .pulse { animation: pulse 1s infinite; }
+    .fade-in { animation: fadeIn 0.4s ease forwards; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+    @keyframes strike { 0%{stroke-dashoffset:100} 100%{stroke-dashoffset:0} }
+    .draw-line { stroke-dasharray: 100; animation: strike 0.5s ease forwards; }
+    .key-expired { animation: blink 0.8s ease infinite; }
+    @keyframes blink { 0%,100%{fill:#dc2626} 50%{fill:#450a0a} }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a href="../index.html">← 库</a>
+    <span class="badge">统一播放器 v2</span>
+  </div>
+  <div class="main">
+    <h1 id="title">缓存击穿 · 可视化机制</h1>
+    <div class="stage" style="margin-top:0.6rem">
+      <div class="viz-area"><svg id="svg" viewBox="0 0 760 340"></svg></div>
+      <div class="control-panel">
+        <div class="depth-row">
+          <button class="depth-btn on" data-d="0">L0 现象</button>
+          <button class="depth-btn" data-d="1">L1 机制</button>
+          <button class="depth-btn" data-d="2">L2 底层</button>
+        </div>
+        <div class="caption" id="caption"></div>
+        <div class="step-labels" id="stepLabels"></div>
+        <div class="timeline-wrap">
+          <input type="range" class="timeline" id="timeline" min="0" max="9" value="0" />
+          <div class="timeline-marks" id="timeMarks"></div>
+        </div>
+        <div class="transport">
+          <button class="btn btn-play" id="playBtn">⏸</button>
+          <button class="btn btn-speed" id="speedBtn">1×</button>
+          <span class="frame-ind" id="frameInd"></span>
+          <button class="btn" id="restartBtn">↺</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/scene-renderers.js"></script>
+  <script>
+    // 扁平时间轴：每步多帧，一步一区间
+    const LESSON = {
+      title: '缓存击穿 · 可视化机制',
+      scenes: window.CACHE_BREAKDOWN_SCENES
+    };
+
+    let depth = 0, flatPos = 0, playing = true, speed = 1, timer = null;
+    const speeds = [1, 1.5, 2];
+
+    // 构建扁平索引
+    const flatMap = [];
+    LESSON.scenes.forEach((sc, si) => {
+      for (let f = 0; f < sc.frames; f++) flatMap.push({ step: si, frame: f });
+    });
+    const total = flatMap.length;
+
+    const svg = document.getElementById('svg');
+    const caption = document.getElementById('caption');
+    const timeline = document.getElementById('timeline');
+    const playBtn = document.getElementById('playBtn');
+    const speedBtn = document.getElementById('speedBtn');
+    const frameInd = document.getElementById('frameInd');
+    const stepLabels = document.getElementById('stepLabels');
+    const timeMarks = document.getElementById('timeMarks');
+
+    timeline.max = total - 1;
+
+    function pos() { return flatMap[flatPos]; }
+
+    function draw() {
+      const { step, frame } = pos();
+      const sc = LESSON.scenes[step];
+      svg.innerHTML = sc.render(depth, frame);
+      caption.innerHTML = sc.captions[depth];
+      frameInd.textContent = `步骤 ${step + 1}/${LESSON.scenes.length} · 帧 ${frame + 1}/${sc.frames} · L${depth}`;
+      timeline.value = flatPos;
+      stepLabels.innerHTML = LESSON.scenes.map((s, i) =>
+        `<div class="step-chip ${i === step ? 'on' : ''} ${i < step ? 'done' : ''}" data-s="${i}">${s.short || ('步骤'+(i+1))}</div>`
+      ).join('');
+      stepLabels.querySelectorAll('.step-chip').forEach(el => {
+        el.onclick = () => jumpToStep(+el.dataset.s);
+      });
+      playBtn.textContent = playing ? '⏸' : '▶';
+    }
+
+    function jumpToStep(si) {
+      flatPos = flatMap.findIndex(p => p.step === si);
+      draw();
+    }
+
+    function advance() {
+      if (flatPos < total - 1) { flatPos++; draw(); }
+      else { playing = false; draw(); stopTimer(); }
+    }
+
+    function startTimer() {
+      stopTimer();
+      if (!playing) return;
+      timer = setInterval(advance, 1400 / speed);
+    }
+    function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+    playBtn.onclick = () => {
+      playing = !playing;
+      draw();
+      playing ? startTimer() : stopTimer();
+    };
+
+    speedBtn.onclick = () => {
+      const idx = (speeds.indexOf(speed) + 1) % speeds.length;
+      speed = speeds[idx];
+      speedBtn.textContent = speed + '×';
+      if (playing) startTimer();
+    };
+
+    document.getElementById('restartBtn').onclick = () => {
+      flatPos = 0; playing = true; draw(); startTimer();
+    };
+
+    document.querySelectorAll('.depth-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.depth-btn').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        depth = +btn.dataset.d;
+        draw(); // 不切帧、不暂停，只换剖面
+      };
+    });
+
+    timeline.oninput = () => {
+      flatPos = +timeline.value;
+      draw();
+    };
+
+    // 步骤标记
+    timeMarks.innerHTML = LESSON.scenes.map(s => s.short || '').join(' · ');
+
+    draw();
+    startTimer();
+  </script>
+</body>
+</html>

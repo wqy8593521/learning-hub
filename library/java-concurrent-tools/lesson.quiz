@@ -1,0 +1,53 @@
+# java-concurrent-tools.quiz
+bank 并发工具类
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q CountDownLatch
+    style pick_one
+    ask CountDownLatch 计数到 0 时？
+    opt 等待的线程被唤醒
+    opt 自动重置
+    opt 抛异常
+    opt 锁升级
+    answer 0
+    explain 一次性，countDown 到 0 唤醒 await 线程，不可重置。
+
+  q CyclicBarrier
+    style pick_one
+    ask CyclicBarrier 与 CountDownLatch 区别？
+    opt Barrier 可循环复用
+    opt 完全一样
+    opt Latch 可复用
+    opt Barrier 只能主线程等
+    answer 0
+    explain Barrier 多线程互相等齐；Latch 是一个等多个完成。
+
+  q Semaphore
+    style pick_one
+    ask Semaphore(3) 最多允许几个线程同时执行？
+    opt 3
+    opt 1
+    opt 无限
+    opt 0
+    answer 0
+    explain 许可数为 3，acquire 消耗 release 归还。
+
+  q 选型对比
+    style pick_one
+    ask 限制数据库连接池最大 10 个并发用？
+    opt Semaphore
+    opt CountDownLatch
+    opt CyclicBarrier
+    opt volatile
+    answer 0
+    explain Semaphore 典型用于限流、连接池并发控制。
+
+trigger
+  after_step 0 CountDownLatch
+  after_step 1 CyclicBarrier
+  after_step 2 Semaphore
+  after_step 3 选型对比
+  end pick 2

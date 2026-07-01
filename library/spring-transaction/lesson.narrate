@@ -1,0 +1,34 @@
+# Spring 事务传播 — 口语旁白
+lesson Spring 事务传播
+
+step 事务边界
+  @0: @Transactional 标注的方法由 Spring AOP 代理拦截，开启数据库事务。
+  @0 L1: 方法正常返回提交，抛异常回滚，事务边界就是方法调用。
+  @1: 实际执行的是代理对象的方法，不是原始类，所以同类内部调用不生效。
+  @1 L1: 这是 @Transactional 失效的第一大坑：自调用绕过了代理。
+  @2: 理解代理机制才能理解为什么要把 @Transactional 放在 public 方法上。
+  @2 L1: private 方法无法被 CGLIB 或 JDK 代理拦截。
+
+step REQUIRED
+  @0: REQUIRED 是默认传播行为：当前有事务就加入，没有就新建一个。
+  @0 L1: 外层和内层共用一个事务，内层抛异常外层也回滚。
+  @1: 最常用，适合大多数嵌套调用场景。
+  @1 L1: A 调 B，A 有事务 B 加入，一起提交或一起回滚。
+  @2: 记住 REQUIRED 等于加入或新建，是默认首选。
+  @2 L1: 面试先答 REQUIRED，再展开其他传播级别。
+
+step REQUIRES_NEW
+  @0: REQUIRES_NEW 总是新建事务，如果外层有事务就先挂起外层。
+  @0 L1: 内外两个事务完全独立，内层提交不受外层影响。
+  @1: 典型场景：记日志，即使主业务回滚，日志也要保留。
+  @1 L1: 或者需要独立提交的子操作，比如发通知。
+  @2: 代价是多一个数据库连接和事务开销，别滥用。
+  @2 L1: 和 NESTED 区别：NESTED 是嵌套保存点，REQUIRES_NEW 是完全新事务。
+
+step 回滚规则
+  @0: 默认只在 RuntimeException 和 Error 时回滚，checked 异常不回滚。
+  @0 L1: 业务抛 IOException 默认不会触发回滚，数据可能已提交。
+  @1: 用 rollbackFor = Exception.class 让所有异常都回滚。
+  @1 L1: noRollbackFor 可以指定某些异常不回滚。
+  @2: 传播行为加回滚规则一起考，答题时两个都要提到。
+  @2 L1: 生产环境建议显式指定 rollbackFor，别依赖默认行为。

@@ -1,0 +1,19 @@
+id: jvm-gc-algorithms
+title: GC 算法对比
+subject: JVM
+chapter: 内存与类加载
+subjectOrder: 8
+chapterOrder: 0
+order: 5
+tags:
+  - JVM
+  - GC
+  - 后端八股
+prerequisites:
+  - jvm-gc-generations
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

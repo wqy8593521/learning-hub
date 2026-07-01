@@ -1,0 +1,49 @@
+# arraylist-linkedlist.quiz
+bank ArrayList vs LinkedList
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 底层结构
+    style pick_one
+    ask ArrayList 底层是？
+    opt 动态数组
+    opt 双向链表
+    opt 哈希表
+    opt 红黑树
+    answer 0
+    explain ArrayList 可变数组，LinkedList 双向链表节点。
+
+  q 随机访问
+    style pick_one
+    ask get(index) 谁更快？
+    opt ArrayList O(1)
+    opt LinkedList O(1)
+    opt 一样快
+    opt 都 O(n)
+    answer 0
+    explain 数组下标直达，链表需遍历。
+
+  q 头尾插入
+    style pick_one
+    ask 在头部频繁插入谁更合适？
+    opt LinkedList
+    opt ArrayList
+    opt 一样
+    opt TreeMap
+    answer 0
+    explain 链表头插 O(1)，数组头插需搬移元素 O(n)。
+
+  q 选型结论
+    style true_false
+    ask 大多数业务场景 ArrayList 是默认首选
+    true
+    explain 读多写少、随机访问多时 ArrayList 更优。
+
+trigger
+  after_step 0 底层结构
+  after_step 1 随机访问
+  after_step 2 头尾插入
+  after_step 3 选型结论
+  end pick 2

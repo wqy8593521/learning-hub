@@ -1,0 +1,38 @@
+# 线程状态转换 — 口语旁白
+lesson 线程状态转换
+
+step 六种状态
+  @0: Java 线程有六种状态：NEW、RUNNABLE、BLOCKED、WAITING、TIMED_WAITING、TERMINATED。
+  @0 L1: NEW 是刚 new 出来还没 start，TERMINATED 是执行完毕。
+  @1: RUNNABLE 包含就绪和正在运行，BLOCKED 是等 synchronized 锁。
+  @1 L1: WAITING 和 TIMED_WAITING 是调用了 wait、join、park 等进入的等待。
+  @2: 记住这六态是面试画图的基础，状态之间靠 start、锁、wait、sleep 等事件切换。
+  @2 L1: 实际调试用 jstack 看到的也是这些状态名。
+
+step 运行与阻塞
+  @0: 调用 start 后线程从 NEW 进入 RUNNABLE，等待 CPU 调度执行。
+  @0 L1: RUNNABLE 不代表一定在跑，可能只是排队等时间片。
+  @1: 竞争 synchronized 锁失败时，从 RUNNABLE 变成 BLOCKED，进锁队列等待。
+  @1 L1: 锁被释放后，BLOCKED 线程重新参与竞争，抢到才回到 RUNNABLE。
+  @2: 获锁成功后继续执行同步块里的代码，执行完释放锁别人才能进。
+  @2 L1: BLOCKED 和 WAITING 区别：BLOCKED 等锁，WAITING 等通知或条件。
+  @3: 一张状态图把 start、抢锁、获锁三条路径串起来就清晰了。
+  @3 L1: 面试常考：sleep 不释放锁，wait 会释放锁，这是关键区别。
+
+step wait与notify
+  @0: 在同步块里调用 wait，线程释放锁并进入 WAITING，等别人 notify。
+  @0 L1: wait 必须在持有锁时调用，否则抛 IllegalMonitorStateException。
+  @1: notify 唤醒等待队列中的一个线程，被唤醒后还要重新竞争锁。
+  @1 L1: notifyAll 唤醒全部，但同一时刻仍只有一个能拿到锁执行。
+  @2: 被唤醒的线程从 WAITING 回到 BLOCKED 或 RUNNABLE，取决于能否立刻获锁。
+  @2 L1: 经典模式是 while 判断条件加 wait，防止虚假唤醒。
+  @3: 生产者消费者模型就是靠 wait 和 notify 配合 synchronized 实现的。
+  @3 L1: 现代代码更推荐用 Lock 加 Condition，语义相同但更灵活。
+
+step sleep与yield
+  @0: Thread.sleep 让当前线程休眠指定毫秒，但绝不释放已持有的锁。
+  @0 L1: 所以别在持有锁时 sleep，会阻塞其他等锁的线程。
+  @1: sleep 期间线程进入 TIMED_WAITING，时间到自动醒来回到 RUNNABLE。
+  @1 L1: TIMED_WAITING 和 WAITING 的区别就是有没有超时时间。
+  @2: yield 是礼让 CPU，把当前时间片让给别人，但不释放锁也不阻塞。
+  @2 L1: yield 只是建议调度器，不保证一定切换，实际开发很少用。

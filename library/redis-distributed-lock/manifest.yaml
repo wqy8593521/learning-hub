@@ -1,0 +1,21 @@
+id: redis-distributed-lock
+title: Redis 分布式锁
+subject: Redis 缓存
+chapter: 高级应用
+subjectOrder: 2
+chapterOrder: 2
+order: 1
+tags:
+  - Redis
+  - 分布式锁
+  - 高并发
+  - 后端八股
+prerequisites:
+  - redis-cache-breakdown
+  - java-volatile-cas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

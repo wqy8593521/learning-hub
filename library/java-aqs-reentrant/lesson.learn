@@ -1,0 +1,63 @@
+# AQS 与 ReentrantLock — VML
+lesson AQS 与 ReentrantLock
+tags Java, 并发, AQS
+
+step AQS核心
+  frames 3
+  cap state存锁状态 | CLH双向队列 | CAS改state
+  @all
+    box 300 60 160 50 label=state=0 stroke=blue
+    queue 300 140 8 filled=0 label=CLH队列
+    cols 等待:30
+  @0
+    text state=0未锁 380 50 fill=green
+  @1
+    box 300 60 160 50 label=state=1 stroke=orange
+    circle 50 80 9 fill=green
+    text CAS成功 80 130 fill=green
+  @2
+    queue 300 140 8 filled=4 label=等待队列
+    threads 4 zone=等待 grow
+
+step 可重入
+  frames 3
+  cap 同线程再次lock | state+1 | unlock减到0释放
+  @all
+    cols 线程T1:30 锁:310
+  @0
+    circle 50 80 9 fill=green
+    box 310 70 120 44 label=state=1 stroke=green
+    arrow 线程T1 锁 lock
+  @1
+    arrow 线程T1 锁 再lock
+    box 310 70 120 44 label=state=2 stroke=green blink
+  @2
+    arrow 线程T1 锁 unlock
+    box 310 70 120 44 label=state=1 stroke=orange
+    arrow 线程T1 锁 unlock
+    box 310 70 120 44 label=state=0 stroke=blue
+
+step 公平与非公平
+  frames 3
+  cap 非公平直接CAS抢 | 公平排队FIFO | 吞吐vs公平
+  @all
+    cols 队首:30 锁:310 新线程:600
+  @0
+    circle 620 80 9 fill=orange
+    arrow 新线程 锁 插队CAS
+    queue 300 140 6 filled=3 label=队列
+    text 非公平 380 200 fill=orange
+  @1
+    queue 300 140 6 filled=3 label=FIFO
+    arrow 队首 锁 获锁
+    circle 50 80 9 fill=green
+    text 公平 380 200 fill=green
+  @2
+    compare 80 230 300 非公平|吞吐高|默认 vs 公平|按序|低吞吐
+
+step 对比synchronized
+  frames 2
+  cap ReentrantLock可中断 | 可tryLock超时 | 多Condition
+  @1
+    compare 80 55 300 synchronized|JVM内置|自动释放 vs ReentrantLock|API灵活|需unlock
+    table 60 200 能力,sync,Lock/可中断,✗,✓/tryLock,✗,✓/多条件,✗,✓

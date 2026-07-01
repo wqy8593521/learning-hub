@@ -1,0 +1,50 @@
+# Spring AOP — VML
+lesson Spring AOP 原理
+tags Spring, AOP, 后端八股
+
+step 切面概念
+  frames 2
+  cap 横切关注点 | 切点+通知 | 不侵入业务
+  @all
+    flow 620 50 切点|前置|环绕|后置|异常
+  @0
+    stack 200 70 Controller,Service,DAO
+    box 200 200 300 40 label=日志/事务/权限 stroke=purple
+  @1
+    compare 80 200 300 硬编码|耦合 vs AOP|解耦|复用
+
+step JDK动态代理
+  frames 3
+  cap 基于接口 | Proxy.newProxyInstance | 调用转发到增强
+  @all
+    cols 客户端:30 代理:310 目标:600
+  @0
+    box 600 70 120 50 label=UserService stroke=blue
+    box 310 70 160 50 label=JDK代理 stroke=purple
+  @1
+    arrow 客户端 代理 调用
+    arrow 代理 目标 转发+增强
+  @2
+    text 必须有接口 310 150 fill=warn
+
+step CGLIB代理
+  frames 3
+  cap 无接口时 | 子类继承目标 | 不能代理final
+  @all
+    cols 代理子类:310 父类:600
+  @0
+    box 600 70 140 50 label=目标类 stroke=blue
+    box 310 70 160 50 label=子类代理 stroke=orange
+  @1
+    arrow 代理子类 父类 继承
+  @2
+    text final方法无法代理 310 150 fill=red
+
+step 执行顺序
+  frames 2
+  cap @Around包目标 | @Before先执行 | @After最后
+  @0
+    timeline 80 客户端|@Before|目标方法|@After|@AfterReturning
+  @1
+    codeblock 40 200 3 @Around\|proceed()\|@After
+    text 事务常放@Around 200 280 fill=green

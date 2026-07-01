@@ -1,0 +1,57 @@
+# 分库分表 — VML
+lesson 分库分表原理
+tags MySQL, 分库分表, 后端八股
+
+step 为什么要分
+  frames 3
+  cap 单表数据过亿 | 单库连接/IO瓶颈 | 水平拆分
+  @all
+    meter 120 80 400 单表数据量 grow max=100 pulse
+  @0
+    box 200 150 200 60 label=单库单表 stroke=red
+    text 查询变慢 200 230 fill=red
+  @1
+    box 120 150 120 50 label=DB1 stroke=green
+    box 280 150 120 50 label=DB2 stroke=green
+    box 440 150 120 50 label=DB3 stroke=green
+  @2
+    compare 80 230 300 垂直拆分|按业务 vs 水平拆分|按行|大数据
+
+step 路由规则
+  frames 3
+  cap 按user_id取模 | 一致性哈希 | 范围分片
+  @all
+    math 200 80 "db = user\\_id \\bmod 4"
+  @0
+    buckets 4 130 100 hi=1
+    text user_id=5→db1 200 200 fill=green
+  @1
+    text 一致性哈希 200 250 fill=purple
+    text 扩缩容迁移少 380 250 fill=purple
+  @2
+    table 60 280 策略,特点/取模,简单|扩容麻烦/范围,范围查询好|热点风险
+
+step 跨分片问题
+  frames 3
+  cap 跨库JOIN难 | 分布式ID | 跨片事务
+  @all
+    cols 分片1:30 分片2:310 中间件:600
+  @0
+    text 禁止跨库JOIN 200 130 fill=red
+    text 冗余字段/应用层拼 200 170 fill=warn
+  @1
+    box 600 70 160 50 label=雪花ID stroke=blue
+    text 全局唯一ID 600 140 fill=blue
+  @2
+    text 跨片事务→最终一致 200 230 fill=orange
+
+step 中间件
+  frames 2
+  cap ShardingSphere路由 | 对应用透明 | 读写分离可叠加
+  @all
+    cols 应用:30 中间件:310 分片:600
+  @0
+    arrow 应用 中间件 SQL
+    arrow 中间件 分片 路由
+  @1
+    flow 620 50 解析SQL|算分片|改写|聚合|返回

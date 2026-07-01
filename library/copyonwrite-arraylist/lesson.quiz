@@ -1,0 +1,49 @@
+# copyonwrite-arraylist.quiz
+bank CopyOnWrite 读写
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 读无锁
+    style pick_one
+    ask CopyOnWriteArrayList 适合什么场景？
+    opt 读多写少
+    opt 写多读少
+    opt 频繁随机写
+    opt 超大列表排序
+    answer 0
+    explain 读不加锁，写时复制，适合监听器、配置等读远多于写。
+
+  q 写时复制
+    style pick_one
+    ask 写操作时 COW 的做法是？
+    opt 复制新数组再切换引用
+    opt 原地修改加锁
+    opt 丢弃旧数据
+    opt 阻塞所有读
+    answer 0
+    explain 写锁内复制数组、写入、volatile 切换引用。
+
+  q 弱一致迭代
+    style true_false
+    ask COW 迭代器不会抛 ConcurrentModificationException
+    true
+    explain 迭代基于快照数组，弱一致，看不到后续写入。
+
+  q 适用场景
+    style pick_one
+    ask COW 写操作的主要代价是？
+    opt 数组复制开销
+    opt 哈希冲突
+    opt 树旋转
+    opt 网络 IO
+    answer 0
+    explain 每次写复制整个数组，写频繁时性能差。
+
+trigger
+  after_step 0 读无锁
+  after_step 1 写时复制
+  after_step 2 弱一致迭代
+  after_step 3 适用场景
+  end pick 2

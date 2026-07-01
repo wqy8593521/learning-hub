@@ -1,0 +1,36 @@
+# Spring IOC 注入 — 口语旁白
+lesson Spring IOC 注入
+
+step 容器启动
+  @0: Spring 启动时扫描 @Component、@Service 等注解，找到所有候选类。
+  @0 L1: 解析类的元数据，生成 BeanDefinition 注册到 BeanFactory。
+  @1: BeanDefinition 描述怎么创建 Bean：类名、作用域、依赖、初始化方法等。
+  @1 L1: 此时还没创建对象，只是登记了配方。
+  @2: 扫描路径由 @ComponentScan 指定，Spring Boot 默认扫启动类所在包。
+  @2 L1: 理解启动流程：扫描、注册定义、实例化、注入、初始化。
+
+step 依赖注入
+  @0: 创建 Bean 时，发现字段或构造器有 @Autowired，就从容器找匹配的 Bean。
+  @0 L1: 按类型匹配，多个同类型时按 @Qualifier 或 @Primary 选择。
+  @1: 通过反射把依赖对象设入字段，或调用构造器传入。
+  @1 L1: 这就是控制反转：对象不自己 new 依赖，由容器注入。
+  @2: 注入方式：构造器注入推荐，字段注入简单但不好测试。
+  @2 L1: Spring 推荐构造器注入，依赖明确且方便单元测试 mock。
+
+step 循环依赖
+  @0: A 依赖 B，B 又依赖 A，单例 Bean 可能循环依赖。
+  @0 L1: Spring 用三级缓存解决：singletonObjects、earlySingletonObjects、singletonFactories。
+  @1: A 创建到一半放入三级缓存暴露工厂，B 创建时从工厂拿到 A 的早期引用。
+  @1 L1: B 创建完注入 A，A 继续完成创建，循环解开。
+  @2: 只能解决单例 setter 或字段注入，构造器循环依赖无解，会直接报错。
+  @2 L1: 设计时避免循环依赖，真出现了说明架构可能需要重构。
+  @3: prototype 作用域不参与三级缓存，循环依赖会失败。
+  @3 L1: 三级缓存是 Spring IOC 面试高频题。
+
+step 作用域
+  @0: singleton 默认单例，整个容器只有一个实例，最常用。
+  @0 L1: prototype 每次 getBean 都 new 一个新实例。
+  @1: Web 环境还有 request、session、application 作用域。
+  @1 L1: request 每个 HTTP 请求一个 Bean，session 每个会话一个。
+  @2: 单例 Bean 注入 prototype Bean 时，prototype 不会每次请求新建。
+  @2 L1: 需要用 ObjectFactory 或 @Lookup 每次动态获取 prototype。

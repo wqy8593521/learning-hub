@@ -1,0 +1,49 @@
+# jvm-object-alloc.quiz
+bank 对象创建与内存分配
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q new对象流程
+    style pick_one
+    ask new 对象时「零值初始化」发生在？
+    opt 分配内存之后、构造方法之前
+    opt 构造方法之后
+    opt 类加载之前
+    opt GC 之后
+    answer 0
+    explain 先分配空间并置零，再执行 <init> 构造。
+
+  q 栈与堆
+    style pick_one
+    ask 对象实例通常存在哪？
+    opt 堆
+    opt 虚拟机栈
+    opt 程序计数器
+    opt 本地方法栈
+    answer 0
+    explain 实例在堆；栈存引用和基本类型局部变量。
+
+  q TLAB分配
+    style true_false
+    ask TLAB 用于减少多线程分配时的堆锁竞争
+    true
+    explain 每线程一小块 Eden，优先本地分配，满了再同步扩。
+
+  q 逃逸分析
+    style pick_one
+    ask 对象未逃逸时 JIT 可能做什么优化？
+    opt 栈上分配或标量替换
+    opt 永久存入老年代
+    opt 强制 synchronized
+    opt 禁用 GC
+    answer 0
+    explain 未逃出方法作用域，可不堆分配，甚至拆成标量。
+
+trigger
+  after_step 0 new对象流程
+  after_step 1 栈与堆
+  after_step 2 TLAB分配
+  after_step 3 逃逸分析
+  end pick 2

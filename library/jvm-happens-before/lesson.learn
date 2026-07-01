@@ -1,0 +1,57 @@
+# JMM happens-before — VML
+lesson JMM 与 happens-before
+tags JVM, JMM, 并发, 后端八股
+
+step 可见性问题
+  frames 3
+  cap 多线程共享变量 | 工作内存缓存 | 可能读到旧值
+  @all
+    cols 线程A:30 主内存:310 线程B:600
+  @0
+    box 310 70 160 50 label=主内存 x=0 stroke=blue
+    circle 30 80 9 fill=green
+    circle 600 80 9 fill=orange
+  @1
+    box 30 130 100 44 label=x=1本地 stroke=green
+    text 未刷回 30 190 fill=warn
+  @2
+    box 600 130 100 44 label=x=0旧值 stroke=red blink
+
+step happens-before
+  frames 3
+  cap JMM定义的偏序 | 保证可见性 | 不等于时间先后
+  @all
+    flow 620 50 规则1|规则2|规则3|可见性保证
+  @0
+    table 60 65 规则,说明/程序次序,同线程内/监视器锁,unlock先于lock/volatile写,写先于读
+  @1
+    arrow 线程A 主内存 写volatile
+    arrow 主内存 线程B 读可见
+  @2
+    text hb≠物理时间先后 200 250 fill=warn
+
+step volatile语义
+  frames 3
+  cap 写立即刷主内存 | 读从主内存取 | 禁止指令重排
+  @all
+    cols 线程A:30 主内存:310 线程B:600
+  @0
+    text volatile写 30 130 fill=green
+    arrow 线程A 主内存 flush
+  @1
+    arrow 主内存 线程B 读最新
+    text volatile读 600 130 fill=green
+  @2
+    compare 80 200 300 volatile|可见+有序 vs synchronized|互斥+可见
+
+step 双重检查锁
+  frames 3
+  cap 懒加载单例 | 需volatile防重排 | 经典面试题
+  @all
+    code 30 200 500 80 "if(instance==null){\n  synchronized(lock){\n    instance=new T();\n  }\n}" java
+  @0
+    text 未初始化完就被读 200 130 fill=red
+  @1
+    text volatile修饰instance 200 180 fill=green
+  @2
+    callout 30 290 520 50 禁止对象引用先于构造完成可见

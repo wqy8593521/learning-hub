@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <script src="../../shared/preferences.js"></script>
+  <link rel="stylesheet" href="../../shared/player.css" />
+</head>
+<body>
+  <div class="top">
+    <div class="top-left">
+      <a href="../../index.html#intro">← 指南</a>
+      <span class="badge">VML + Quiz</span>
+    </div>
+    <div id="prefMount"></div>
+  </div>
+  <div class="main">
+    <h1 id="title">加载中…</h1>
+    <div class="lesson-shell" style="margin-top:0.6rem">
+      <div class="lesson-viewport" id="viewport">
+        <div class="viz-area"><svg id="svg" viewBox="0 0 760 340"></svg></div>
+        <aside class="code-panel" id="codePanel" hidden>
+          <header class="code-panel-head">
+            <span class="code-panel-title">代码</span>
+            <span class="code-panel-lang" id="codeLang">Java</span>
+            <button type="button" class="code-copy-btn" id="codeCopy" title="复制代码">复制</button>
+          </header>
+          <div class="code-panel-body" id="codeBody"></div>
+        </aside>
+        <div class="quiz-layer" id="quizLayer"></div>
+      </div>
+      <div class="transport-dock" id="transport">
+        <div class="depth-row">
+          <button class="depth-btn on" data-d="0">L0 现象</button>
+          <button class="depth-btn" data-d="1">L1 机制</button>
+          <button class="depth-btn" data-d="2">L2 底层</button>
+        </div>
+        <div class="caption" id="caption"></div>
+        <div class="step-labels" id="stepLabels"></div>
+        <input type="range" class="timeline" id="timeline" min="0" value="0" />
+        <div class="timeline-marks" id="timeMarks"></div>
+        <div class="transport">
+          <button class="btn btn-mode" id="modeBtn" type="button" title="自动/手动 (M)">自动</button>
+          <button class="btn btn-step" id="prevBtn" type="button" title="上一帧 (←)" style="display:none">◀</button>
+          <button class="btn btn-step" id="nextBtn" type="button" title="下一帧 (→)" style="display:none">▶</button>
+          <button class="btn btn-play" id="playBtn">⏸</button>
+          <button class="btn btn-speed" id="speedBtn" title="播放倍速">1×</button>
+          <button class="btn btn-fs" id="fullscreenBtn" type="button" title="全屏">⛶</button>
+          <button class="btn btn-narrate" id="narrateBtn" type="button" title="旁白 (N)">🔇</button>
+          <button class="btn btn-quiz-mode" id="quizModeBtn" type="button" title="自动测验模式">模式 全开</button>
+          <button class="btn btn-quiz" id="quizBtn" type="button" title="当前步骤做题">做题</button>
+          <span class="frame-ind" id="frameInd"></span>
+          <button class="btn" id="restartBtn" title="重新开始">↺</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../shared/vml.js"></script>
+  <script src="../../shared/code-highlight.js"></script>
+  <script src="../../shared/vml-rich.js"></script>
+  <script src="../../shared/quiz-parse.js"></script>
+  <script src="../../shared/narrate-parse.js"></script>
+  <script src="../../shared/wrong-book.js"></script>
+  <script src="../../shared/quiz-engine.js"></script>
+  <script src="../../shared/lesson-engine.js"></script>
+  <script src="../../shared/lesson-narrator.js"></script>
+  <script src="../../shared/lesson-quiz.js"></script>
+  <script src="../../shared/lesson-viewport.js"></script>
+  <script src="../../shared/lesson-transport.js"></script>
+  <script src="../../shared/lesson-player.js"></script>
+  <script>
+    HubPrefs.mount(document.getElementById('prefMount'));
+    loadLearnLesson('lesson.learn', {
+      lessonId: '{{id}}',
+      titleEl: document.getElementById('title'),
+      svgEl: document.getElementById('svg'),
+      captionEl: document.getElementById('caption'),
+      timelineEl: document.getElementById('timeline'),
+      stepLabelsEl: document.getElementById('stepLabels'),
+      timeMarksEl: document.getElementById('timeMarks'),
+      playBtn: document.getElementById('playBtn'),
+      speedBtn: document.getElementById('speedBtn'),
+      frameIndEl: document.getElementById('frameInd'),
+      restartBtn: document.getElementById('restartBtn'),
+      depthBtns: document.querySelectorAll('.depth-btn'),
+      quizLayerEl: document.getElementById('quizLayer'),
+      viewportEl: document.getElementById('viewport'),
+      fullscreenBtn: document.getElementById('fullscreenBtn'),
+      modeBtn: document.getElementById('modeBtn'),
+      prevBtn: document.getElementById('prevBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      codePanelEl: document.getElementById('codePanel'),
+      codeBodyEl: document.getElementById('codeBody'),
+      codeLangEl: document.getElementById('codeLang'),
+      codeCopyBtn: document.getElementById('codeCopy'),
+      quizModeBtn: document.getElementById('quizModeBtn'),
+      quizBtn: document.getElementById('quizBtn'),
+      narrateBtn: document.getElementById('narrateBtn')
+    });
+  </script>
+</body>
+</html>

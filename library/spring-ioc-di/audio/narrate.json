@@ -1,0 +1,599 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "Spring 启动时扫描 @Component、@Service 等注解，找到所有候选类。",
+      "duration": 6.384,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.056127999999999,
+          "text": "Spring 启动时扫描 @Component、@Service 等注解"
+        },
+        {
+          "start": 5.056127999999999,
+          "end": 6.128639999999999,
+          "text": "找到所有候选类"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "解析类的元数据，生成 BeanDefinition 注册到 BeanFactory。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9458854054054054,
+          "text": "解析类的元数据"
+        },
+        {
+          "start": 0.9458854054054054,
+          "end": 4.999680000000001,
+          "text": "生成 BeanDefinition 注册到 BeanFactory"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "解析类的元数据，生成 BeanDefinition 注册到 BeanFactory。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9458854054054054,
+          "text": "解析类的元数据"
+        },
+        {
+          "start": 0.9458854054054054,
+          "end": 4.999680000000001,
+          "text": "生成 BeanDefinition 注册到 BeanFactory"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "BeanDefinition 描述怎么创建 Bean：类名、作用域、依赖、初始化方法等。",
+      "duration": 6.648,
+      "cues": [
+        {
+          "start": 0,
+          "end": 6.382079999999999,
+          "text": "BeanDefinition 描述怎么创建 Bean：类名、作用域、依赖、初始化方法等"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "此时还没创建对象，只是登记了配方。",
+      "duration": 3.912,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.002944,
+          "text": "此时还没创建对象"
+        },
+        {
+          "start": 2.002944,
+          "end": 3.7555199999999997,
+          "text": "只是登记了配方"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "此时还没创建对象，只是登记了配方。",
+      "duration": 3.912,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.002944,
+          "text": "此时还没创建对象"
+        },
+        {
+          "start": 2.002944,
+          "end": 3.7555199999999997,
+          "text": "只是登记了配方"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "扫描路径由 @ComponentScan 指定，Spring Boot 默认扫启动类所在包。",
+      "duration": 6.288,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.169152,
+          "text": "扫描路径由 @ComponentScan 指定"
+        },
+        {
+          "start": 3.169152,
+          "end": 6.03648,
+          "text": "Spring Boot 默认扫启动类所在包"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "理解启动流程：扫描、注册定义、实例化、注入、初始化。",
+      "duration": 6.264,
+      "cues": [
+        {
+          "start": 0,
+          "end": 6.01344,
+          "text": "理解启动流程：扫描、注册定义、实例化、注入、初始化"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "理解启动流程：扫描、注册定义、实例化、注入、初始化。",
+      "duration": 6.264,
+      "cues": [
+        {
+          "start": 0,
+          "end": 6.01344,
+          "text": "理解启动流程：扫描、注册定义、实例化、注入、初始化"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "创建 Bean 时，发现字段或构造器有 @Autowired，就从容器找匹配的 Bean。",
+      "duration": 6.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.226576842105263,
+          "text": "创建 Bean 时"
+        },
+        {
+          "start": 1.226576842105263,
+          "end": 4.555856842105262,
+          "text": "发现字段或构造器有 @Autowired"
+        },
+        {
+          "start": 4.555856842105262,
+          "end": 6.658559999999999,
+          "text": "就从容器找匹配的 Bean"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "按类型匹配，多个同类型时按 @Qualifier 或 @Primary 选择。",
+      "duration": 6.288,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9146181818181819,
+          "text": "按类型匹配"
+        },
+        {
+          "start": 0.9146181818181819,
+          "end": 6.03648,
+          "text": "多个同类型时按 @Qualifier 或 @Primary 选择"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "按类型匹配，多个同类型时按 @Qualifier 或 @Primary 选择。",
+      "duration": 6.288,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9146181818181819,
+          "text": "按类型匹配"
+        },
+        {
+          "start": 0.9146181818181819,
+          "end": 6.03648,
+          "text": "多个同类型时按 @Qualifier 或 @Primary 选择"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "通过反射把依赖对象设入字段，或调用构造器传入。",
+      "duration": 5.352,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1806171428571433,
+          "text": "通过反射把依赖对象设入字段"
+        },
+        {
+          "start": 3.1806171428571433,
+          "end": 5.13792,
+          "text": "或调用构造器传入"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "这就是控制反转：对象不自己 new 依赖，由容器注入。",
+      "duration": 5.184,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8947617391304346,
+          "text": "这就是控制反转：对象不自己 new 依赖"
+        },
+        {
+          "start": 3.8947617391304346,
+          "end": 4.97664,
+          "text": "由容器注入"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "这就是控制反转：对象不自己 new 依赖，由容器注入。",
+      "duration": 5.184,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8947617391304346,
+          "text": "这就是控制反转：对象不自己 new 依赖"
+        },
+        {
+          "start": 3.8947617391304346,
+          "end": 4.97664,
+          "text": "由容器注入"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "注入方式：构造器注入推荐，字段注入简单但不好测试。",
+      "duration": 5.832,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.9210713043478256,
+          "text": "注入方式：构造器注入推荐"
+        },
+        {
+          "start": 2.9210713043478256,
+          "end": 5.598719999999999,
+          "text": "字段注入简单但不好测试"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "Spring 推荐构造器注入，依赖明确且方便单元测试 mock。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.588708571428571,
+          "text": "Spring 推荐构造器注入"
+        },
+        {
+          "start": 2.588708571428571,
+          "end": 5.575679999999999,
+          "text": "依赖明确且方便单元测试 mock"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "Spring 推荐构造器注入，依赖明确且方便单元测试 mock。",
+      "duration": 5.808,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.588708571428571,
+          "text": "Spring 推荐构造器注入"
+        },
+        {
+          "start": 2.588708571428571,
+          "end": 5.575679999999999,
+          "text": "依赖明确且方便单元测试 mock"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "A 依赖 B，B 又依赖 A，单例 Bean 可能循环依赖。",
+      "duration": 5.112,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9347657142857142,
+          "text": "A 依赖 B"
+        },
+        {
+          "start": 0.9347657142857142,
+          "end": 2.103222857142857,
+          "text": "B 又依赖 A"
+        },
+        {
+          "start": 2.103222857142857,
+          "end": 4.90752,
+          "text": "单例 Bean 可能循环依赖"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "Spring 用三级缓存解决：singletonObjects、earlySingletonObjects、singletonFactories。",
+      "duration": 7.368,
+      "cues": [
+        {
+          "start": 0,
+          "end": 7.0732800000000005,
+          "text": "Spring 用三级缓存解决：singletonObjects、earlySingletonObjects、singletonFactories"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "Spring 用三级缓存解决：singletonObjects、earlySingletonObjects、singletonFactories。",
+      "duration": 7.368,
+      "cues": [
+        {
+          "start": 0,
+          "end": 7.0732800000000005,
+          "text": "Spring 用三级缓存解决：singletonObjects、earlySingletonObjects、singletonFactories"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "A 创建到一半放入三级缓存暴露工厂，B 创建时从工厂拿到 A 的早期引用。",
+      "duration": 7.392,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.6626167741935487,
+          "text": "A 创建到一半放入三级缓存暴露工厂"
+        },
+        {
+          "start": 3.6626167741935487,
+          "end": 7.09632,
+          "text": "B 创建时从工厂拿到 A 的早期引用"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "B 创建完注入 A，A 继续完成创建，循环解开。",
+      "duration": 5.136,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.91744,
+          "text": "B 创建完注入 A"
+        },
+        {
+          "start": 1.91744,
+          "end": 3.83488,
+          "text": "A 继续完成创建"
+        },
+        {
+          "start": 3.83488,
+          "end": 4.93056,
+          "text": "循环解开"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "B 创建完注入 A，A 继续完成创建，循环解开。",
+      "duration": 5.136,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.91744,
+          "text": "B 创建完注入 A"
+        },
+        {
+          "start": 1.91744,
+          "end": 3.83488,
+          "text": "A 继续完成创建"
+        },
+        {
+          "start": 3.83488,
+          "end": 4.93056,
+          "text": "循环解开"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "只能解决单例 setter 或字段注入，构造器循环依赖无解，会直接报错。",
+      "duration": 7.008,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.689372903225806,
+          "text": "只能解决单例 setter 或字段注入"
+        },
+        {
+          "start": 3.689372903225806,
+          "end": 5.642570322580644,
+          "text": "构造器循环依赖无解"
+        },
+        {
+          "start": 5.642570322580644,
+          "end": 6.7276799999999986,
+          "text": "会直接报错"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "设计时避免循环依赖，真出现了说明架构可能需要重构。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.1367095652173913,
+          "text": "设计时避免循环依赖"
+        },
+        {
+          "start": 2.1367095652173913,
+          "end": 5.4604800000000004,
+          "text": "真出现了说明架构可能需要重构"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "设计时避免循环依赖，真出现了说明架构可能需要重构。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.1367095652173913,
+          "text": "设计时避免循环依赖"
+        },
+        {
+          "start": 2.1367095652173913,
+          "end": 5.4604800000000004,
+          "text": "真出现了说明架构可能需要重构"
+        }
+      ]
+    },
+    "2-3-0": {
+      "audio": "audio/s2-f3-d0.mp3",
+      "text": "prototype 作用域不参与三级缓存，循环依赖会失败。",
+      "duration": 5.184,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.636775384615384,
+          "text": "prototype 作用域不参与三级缓存"
+        },
+        {
+          "start": 3.636775384615384,
+          "end": 4.97664,
+          "text": "循环依赖会失败"
+        }
+      ]
+    },
+    "2-3-1": {
+      "audio": "audio/s2-f3-d1.mp3",
+      "text": "三级缓存是 Spring IOC 面试高频题。",
+      "duration": 4.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.96288,
+          "text": "三级缓存是 Spring IOC 面试高频题"
+        }
+      ]
+    },
+    "2-3-2": {
+      "audio": "audio/s2-f3-d2.mp3",
+      "text": "三级缓存是 Spring IOC 面试高频题。",
+      "duration": 4.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.96288,
+          "text": "三级缓存是 Spring IOC 面试高频题"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "singleton 默认单例，整个容器只有一个实例，最常用。",
+      "duration": 5.184,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.48832,
+          "text": "singleton 默认单例"
+        },
+        {
+          "start": 2.48832,
+          "end": 4.402412307692307,
+          "text": "整个容器只有一个实例"
+        },
+        {
+          "start": 4.402412307692307,
+          "end": 4.97664,
+          "text": "最常用"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "prototype 每次 getBean 都 new 一个新实例。",
+      "duration": 3.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.7785599999999997,
+          "text": "prototype 每次 getBean 都 new 一个新实例"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "prototype 每次 getBean 都 new 一个新实例。",
+      "duration": 3.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.7785599999999997,
+          "text": "prototype 每次 getBean 都 new 一个新实例"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "Web 环境还有 request、session、application 作用域。",
+      "duration": 4.848,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.6540799999999996,
+          "text": "Web 环境还有 request、session、application 作用域"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "request 每个 HTTP 请求一个 Bean，session 每个会话一个。",
+      "duration": 5.496,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.258804705882353,
+          "text": "request 每个 HTTP 请求一个 Bean"
+        },
+        {
+          "start": 3.258804705882353,
+          "end": 5.27616,
+          "text": "session 每个会话一个"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "request 每个 HTTP 请求一个 Bean，session 每个会话一个。",
+      "duration": 5.496,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.258804705882353,
+          "text": "request 每个 HTTP 请求一个 Bean"
+        },
+        {
+          "start": 3.258804705882353,
+          "end": 5.27616,
+          "text": "session 每个会话一个"
+        }
+      ]
+    }
+  }
+}

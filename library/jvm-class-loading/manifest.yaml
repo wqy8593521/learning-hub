@@ -1,0 +1,19 @@
+id: jvm-class-loading
+title: 类加载与双亲委派
+subject: JVM
+chapter: 内存与类加载
+subjectOrder: 8
+chapterOrder: 0
+order: 1
+tags:
+  - JVM
+  - 类加载
+  - JavaGuide
+prerequisites:
+  - jvm-memory-areas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

@@ -1,0 +1,20 @@
+id: redis-cluster-sentinel
+title: Redis 哨兵与集群
+subject: Redis 缓存
+chapter: 持久化与高可用
+subjectOrder: 3
+chapterOrder: 4
+order: 3
+tags:
+  - Redis
+  - 哨兵
+  - 集群
+  - 后端八股
+prerequisites:
+  - redis-replication
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

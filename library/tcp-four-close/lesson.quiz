@@ -1,0 +1,49 @@
+# tcp-four-close.quiz
+bank TCP 四次挥手
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 第一次FIN
+    style pick_one
+    ask 主动关闭方第一次发送？
+    opt FIN
+    opt SYN
+    opt RST
+    opt ACK
+    answer 0
+    explain 主动方发 FIN，进入 FIN_WAIT_1。
+
+  q 第二次ACK
+    style pick_one
+    ask 被动方收到 FIN 后先回复？
+    opt ACK
+    opt FIN
+    opt SYN
+    opt RST
+    answer 0
+    explain 被动方 ACK ack=u+1，进入 CLOSE_WAIT。
+
+  q 第三次FIN
+    style true_false
+    ask 被动方发完自己的 FIN 后进入 LAST_ACK
+    true
+    explain 被动方 CLOSE_WAIT 后发 FIN，状态 LAST_ACK。
+
+  q 第四次ACK
+    style pick_one
+    ask TIME_WAIT 状态主要等待多久？
+    opt 2MSL
+    opt 1RTT
+    opt 30秒
+    opt 立即关闭
+    answer 0
+    explain 主动方 ACK 后 TIME_WAIT 等 2MSL，防旧包干扰新连接。
+
+trigger
+  after_step 0 第一次FIN
+  after_step 1 第二次ACK
+  after_step 2 第三次FIN
+  after_step 3 第四次ACK
+  end pick 2

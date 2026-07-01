@@ -1,0 +1,49 @@
+# mysql-index-failure.quiz
+bank 索引失效场景
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 最左前缀
+    style pick_one
+    ask 联合索引 (a,b,c)，哪个查询最可能不走索引？
+    opt WHERE b = 1
+    opt WHERE a = 1
+    opt WHERE a = 1 AND b = 1
+    opt WHERE a = 1 AND b = 1 AND c = 1
+    answer 0
+    explain 跳过最左列 a，索引无法定位。
+
+  q 函数与计算
+    style pick_one
+    ask 下列哪种写法易导致索引失效？
+    opt WHERE DATE(create_time) = '2024-01-01'
+    opt WHERE create_time = '2024-01-01'
+    opt WHERE id = 1
+    opt WHERE status = 1 AND id = 1
+    answer 0
+    explain 对索引列套函数，优化器难以用 B+ 树有序性。
+
+  q 模糊与范围
+    style true_false
+    ask WHERE a > 10 AND b = 5 中，b 的索引可能无法充分利用
+    true
+    explain a 范围扫描后，b 往往无法继续走联合索引有序匹配。
+
+  q 优化建议
+    style pick_one
+    ask 怀疑索引失效首先应？
+    opt EXPLAIN 看 type 和 rows
+    opt 直接加内存
+    opt 删索引
+    opt 换数据库
+    answer 0
+    explain EXPLAIN 验证执行计划，再针对性改写或建索引。
+
+trigger
+  after_step 0 最左前缀
+  after_step 1 函数与计算
+  after_step 2 模糊与范围
+  after_step 3 优化建议
+  end pick 2

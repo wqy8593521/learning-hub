@@ -1,0 +1,53 @@
+# TCP 三次握手 — VML
+lesson TCP 三次握手
+tags 计网, TCP, 后端八股
+
+step 第一次SYN
+  frames 2
+  cap 客户端发SYN | seq=x随机序号 | 进入SYN_SENT
+  @all
+    cols 客户端:200 服务端:500
+    timeline 100 客户端|SYN|服务端
+  @0
+    circle 200 80 9 fill=green
+    box 500 70 120 44 label=LISTEN stroke=muted
+  @1
+    arrow 客户端 服务端 SYN
+    box 240 130 100 36 label=SYN seq=x stroke=blue
+    state 300 关闭,SYN_SENT,监听
+
+step 第二次SYN-ACK
+  frames 2
+  cap 服务端回SYN+ACK | ack=x+1确认 | 进入SYN_RCVD
+  @all
+    cols 客户端:200 服务端:500
+  @0
+    arrow 服务端 客户端 SYN+ACK
+    box 460 130 120 40 label=SYN+ACK stroke=green
+    text ack=x+1 480 180 fill=green
+  @1
+    state 300 关闭,SYN_SENT,SYN_RCVD,监听
+    box 500 70 120 44 label=SYN_RCVD stroke=orange
+
+step 第三次ACK
+  frames 3
+  cap 客户端发ACK | ack=y+1 | 双方ESTABLISHED
+  @all
+    cols 客户端:200 服务端:500
+  @0
+    arrow 客户端 服务端 ACK
+    box 240 130 100 36 label=ACK stroke=green
+  @1
+    circle 200 80 9 fill=green blink
+    circle 500 80 9 fill=green blink
+    state 300 ESTABLISHED
+  @2
+    line 200 100 500 100 stroke=green draw
+    text 连接就绪 380 180 fill=green
+
+step 为何三次
+  frames 2
+  cap 两次无法确认客户端存活 | 防历史重复连接 | 同步双方序号
+  @1
+    compare 80 55 300 两次|服务端无法确认客户端收到 vs 三次|双方都确认|可靠
+    flow 620 50 确认能力|同步seq|防旧连接

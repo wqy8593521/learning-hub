@@ -1,0 +1,21 @@
+id: distributed-cap
+title: CAP 与一致性
+subject: 分布式
+chapter: 理论基础
+subjectOrder: 4
+chapterOrder: 1
+order: 1
+tags:
+  - 分布式
+  - CAP
+  - 一致性
+  - 后端八股
+prerequisites:
+  - Redis 基础
+  - MySQL 基础
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

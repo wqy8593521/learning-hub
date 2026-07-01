@@ -1,0 +1,21 @@
+# {{id}}.quiz
+bank {{title}}
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 示例概念
+    style pick_one
+    ask 这是一道示例题，替换为真实考点
+    opt 正确选项
+    opt 干扰项 A
+    opt 干扰项 B
+    opt 干扰项 C
+    answer 0
+    explain 替换为解析说明
+
+trigger
+  after_step 0 示例概念
+  after_step 1 示例概念
+  end pick 1

@@ -1,0 +1,21 @@
+id: redis-hot-key
+title: Redis 热点 Key
+subject: Redis 缓存
+chapter: 高级应用
+subjectOrder: 3
+chapterOrder: 3
+order: 2
+tags:
+  - Redis
+  - 热点
+  - 高并发
+  - 后端八股
+prerequisites:
+  - redis-cache-breakdown
+  - redis-single-thread
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

@@ -1,0 +1,20 @@
+# {{title}} — 用 VML 编写，删除本注释行
+lesson {{title}}
+tags 待分类
+
+step 第一步
+  frames 2
+  cap L0 现象描述 | L1 机制说明 | L2 底层细节
+  @0
+    label 标题区 380 28
+    text 第一步内容 380 120
+  @1
+    text 状态变化 380 160 fade fill=warn
+
+step 第二步
+  frames 2
+  cap 第二步 L0 | 第二步 L1 | 第二步 L2
+  @0
+    text 继续讲解 380 120
+  @1
+    note 180 200 400 48 总结要点

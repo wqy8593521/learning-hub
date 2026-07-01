@@ -1,0 +1,59 @@
+# CopyOnWrite — VML
+lesson CopyOnWrite 读写
+tags Java, 并发, 集合
+
+step 读无锁
+  frames 3
+  cap 读线程直接读数组 | 不加任何锁 | 适合读多写少
+  @all
+    cols 读:30 数组:310 写:600
+  @0
+    threads 6 zone=读 grow
+    arrow 读 数组 直接读
+    box 310 70 180 50 label=array[] stroke=green
+  @1
+    circle 50 80 9 fill=green blink
+    circle 90 80 9 fill=green blink
+    threads 10 zone=读 grow
+  @2
+    meter 120 200 400 读吞吐 grow max=100
+
+step 写时复制
+  frames 4
+  cap 写操作加锁 | 复制一份新数组 | 改完切换引用
+  @all
+    cols 读:30 数组:310 写:600 新数组:500
+    state 300 读旧,加锁,复制,写入,切换
+  @0
+    box 310 70 180 50 label=旧数组 stroke=blue
+    threads 4 zone=读
+  @1
+    lock 600 60
+    circle 620 80 9 fill=orange
+    box 500 130 180 50 label=新数组 stroke=orange opacity=0.5
+  @2
+    arrow 写 新数组 写入
+    box 500 130 180 50 label=新数组 stroke=orange
+  @3
+    box 500 70 180 50 label=新数组 stroke=green blink
+    path M310 100 Q400 50 500 70 stroke=green draw
+
+step 弱一致迭代
+  frames 2
+  cap 迭代器快照旧数组 | 看不到写后新元素 | 不会抛CME
+  @all
+    cols 迭代:30 快照:310
+  @0
+    box 310 70 180 50 label=快照 stroke=blue
+    arrow 迭代 快照 遍历
+    circle 50 80 9 fill=green
+  @1
+    box 500 130 180 50 label=新数据 stroke=green
+    text 迭代器看不到 380 230 fill=muted
+
+step 适用场景
+  frames 2
+  cap 读多写极少 | 如监听器列表 | 写开销大慎用
+  @1
+    compare 80 55 300 COW|读无锁|写复制 vs ArrayList|读写都锁|通用
+    flow 620 50 监听器|配置|黑白名单|读>>写

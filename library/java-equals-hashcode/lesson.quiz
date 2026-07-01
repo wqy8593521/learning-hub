@@ -1,0 +1,49 @@
+# java-equals-hashcode.quiz
+bank equals 与 hashCode
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q equals契约
+    style pick_one
+    ask a.equals(null) 应返回？
+    opt false
+    opt true
+    opt 抛异常
+    opt null
+    answer 0
+    explain equals 契约：与 null 比较恒为 false。
+
+  q hashCode契约
+    style pick_one
+    ask 两个对象 equals 相等，hashCode 必须？
+    opt 相等
+    opt 可以不等
+    opt 随机
+    opt 为 0
+    answer 0
+    explain 相等对象 hashCode 必须相同；反之不成立。
+
+  q HashMap依赖
+    style pick_one
+    ask 用作 HashMap key 只重写 equals 不重写 hashCode 会导致？
+    opt 大量冲突性能差
+    opt 无法 put
+    opt 自动修复
+    opt 无影响
+    answer 0
+    explain 所有 key 可能落到同一桶，退化为链表遍历。
+
+  q 正确重写
+    style true_false
+    ask 重写 equals 必须同时重写 hashCode
+    true
+    explain Java 规范要求，HashMap/HashSet 依赖两者配合。
+
+trigger
+  after_step 0 equals契约
+  after_step 1 hashCode契约
+  after_step 2 HashMap依赖
+  after_step 3 正确重写
+  end pick 2

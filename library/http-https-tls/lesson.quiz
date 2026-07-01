@@ -1,0 +1,49 @@
+# http-https-tls.quiz
+bank HTTP 与 HTTPS
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q HTTP请求响应
+    style pick_one
+    ask HTTP 是无状态协议，意思是？
+    opt 每次请求独立，服务端不记上下文
+    opt 不能传 Cookie
+    opt 只能 GET
+    opt 必须加密
+    answer 0
+    explain 无状态靠 Session/Cookie/Token 维持会话。
+
+  q HTTPS加密
+    style pick_one
+    ask HTTPS 数据传输主要用什么加密？
+    opt 对称加密（会话密钥）
+    opt 仅非对称加密
+    opt 不加密
+    opt MD5
+    answer 0
+    explain TLS 握手用非对称协商，传输用对称密钥效率高。
+
+  q TLS握手
+    style true_false
+    ask TLS 握手阶段会验证服务端证书
+    true
+    explain 客户端校验 CA 签名，防中间人攻击。
+
+  q 常见状态码
+    style pick_one
+    ask 404 表示？
+    opt 资源未找到
+    opt 服务器内部错误
+    opt 请求成功
+    opt 需要认证
+    answer 0
+    explain 4xx 客户端问题；5xx 服务端问题。
+
+trigger
+  after_step 0 HTTP请求响应
+  after_step 1 HTTPS加密
+  after_step 2 TLS握手
+  after_step 3 常见状态码
+  end pick 2

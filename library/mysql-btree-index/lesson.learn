@@ -1,0 +1,70 @@
+# MySQL B+树 — 动画强化版
+lesson MySQL B+树索引
+tags MySQL, 索引, 数据库
+
+step 树高决定IO
+  frames 3
+  cap 磁盘按页读 | 二叉树层数太高 | B+扇出大树很矮
+  @0
+    tree list 200 80 6
+    math 200 220 "IO \\approx 层高"
+    badge 6层 200 60 fill=red
+  @1
+    tree btree 380 70 levels=3
+    badge 3层 380 50 fill=green
+  @2
+    compare 80 230 300 二叉树|层高|IO多 vs B+树|扇出大|IO少
+  @2 L2
+    note 100 300 560 30 InnoDB页16KB·非叶只存键
+
+step 聚簇一行
+  frames 3
+  cap 主键索引叶子 | 直接存完整行 | 按主键物理有序
+  @all
+    cols 查询:30 聚簇:380
+    tree btree 380 70 levels=2
+  @0
+    line 360 130 480 175 stroke=muted draw
+    box 480 175 170 48 label=叶子:整行 stroke=muted opacity=0.4
+  @1
+    line 360 130 480 175 stroke=green draw
+    box 480 175 170 48 label=叶子:整行 stroke=green
+    circle 50 80 9 fill=green
+    arrow 查询 聚簇 命中
+  @2
+    text PK范围查 380 260 fill=green fade
+    path M200 280 Q380 300 560 280 stroke=green draw
+
+step 二级回表
+  frames 4
+  cap 按name建二级索引 | 叶子只存主键id | 再回表查聚簇
+  @all
+    cols 查询:30 二级:310 聚簇:600
+  @0
+    tree btree 310 65 levels=2
+    box 480 155 150 40 label=id only stroke=blue
+    arrow 查询 二级 ①
+  @1
+    line 360 115 480 155 stroke=blue draw
+    arrow 二级 聚簇 ②回表
+  @2
+    tree btree 600 65 levels=2
+    box 600 155 140 40 label=整行 stroke=green
+  @3
+    compare 80 230 300 回表|两次查找|慢 vs 覆盖索引|一次|免回表
+
+step 最左前缀
+  frames 3
+  cap 联合索引(a,b,c) | 从左连续匹配 | 跳列索引失效
+  @all
+    table 60 75 查询,命中/WHERE a,✓/WHERE b,✗/a+b,✓
+  @0
+    buckets 8 130 80 hi=0
+    text a 114 175 fill=green
+  @1
+    buckets 8 130 80 hi=0
+    text b? 200 175 fill=red pulse
+  @2
+    buckets 8 130 80 hi=0,1
+    text a+b 200 175 fill=green
+    codeblock 40 230 1 w=420 WHERE a=? AND b=?|WHERE b=? ✗

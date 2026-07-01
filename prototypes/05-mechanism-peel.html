@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E · 机制剖面 · 缓存击穿</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --panel: #141416;
+      --border: #2a2a30;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --L0: #3b82f6;
+      --L1: #8b5cf6;
+      --L2: #f59e0b;
+      --ok: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .top { max-width: 680px; margin: 0 auto 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .badge { font-size: 0.7rem; padding: 0.25rem 0.55rem; border-radius: 4px; background: #2a1f0a; color: var(--L2); border: 1px solid #5c4a1a; }
+    .main { max-width: 680px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+    .hint { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.25rem; }
+    .layers-legend {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .leg {
+      font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;
+    }
+    .leg.l0 { background: #172554; color: var(--L0); }
+    .leg.l1 { background: #2e1a4a; color: var(--L1); }
+    .leg.l2 { background: #2a1f0a; color: var(--L2); }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .step-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .step-num { font-size: 0.75rem; color: var(--muted); }
+    .step-title { font-size: 1rem; font-weight: 600; }
+    .layer {
+      border-bottom: 1px solid var(--border);
+    }
+    .layer:last-child { border-bottom: none; }
+    .layer-head {
+      padding: 0.85rem 1.25rem;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 0.75rem;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .layer-head:hover { background: #1a1a1e; }
+    .layer-tag {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em;
+      padding: 0.2rem 0.45rem; border-radius: 4px; flex-shrink: 0;
+    }
+    .layer-tag.l0 { background: #172554; color: var(--L0); }
+    .layer-tag.l1 { background: #2e1a4a; color: var(--L1); }
+    .layer-tag.l2 { background: #2a1f0a; color: var(--L2); }
+    .layer-summary { font-size: 0.9rem; flex: 1; }
+    .chevron { color: var(--muted); transition: transform 0.2s; font-size: 0.8rem; }
+    .layer.open .chevron { transform: rotate(90deg); }
+    .layer-body {
+      display: none;
+      padding: 0 1.25rem 1rem 3.5rem;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #d4d4d8;
+    }
+    .layer.open .layer-body { display: block; }
+    .layer-body code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      background: #0a0a0c;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      color: #fde68a;
+    }
+    .layer-body .because {
+      margin-top: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: #0c0c0e;
+      border-left: 3px solid var(--L2);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .layer-body .because strong { color: var(--L2); }
+    .nav {
+      display: flex; gap: 0.75rem; justify-content: space-between; margin-top: 0.5rem;
+    }
+    button {
+      font-family: inherit; font-size: 0.88rem;
+      padding: 0.65rem 1.2rem; border-radius: 8px; border: none; cursor: pointer;
+    }
+    .btn-prev { background: #27272a; color: var(--text); }
+    .btn-next { background: var(--L2); color: #1a1000; font-weight: 600; flex: 1; }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .progress { display: flex; gap: 5px; margin-bottom: 1rem; }
+    .p-dot { flex: 1; height: 3px; border-radius: 2px; background: #27272a; }
+    .p-dot.done { background: var(--L2); }
+    .p-dot.cur { background: #fbbf24; }
+    .self-check {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: none;
+    }
+    .self-check.show { display: block; }
+    .self-check h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    .check-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      padding: 0.6rem 0; border-bottom: 1px solid #1f1f23;
+      font-size: 0.85rem; color: var(--muted); cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-box {
+      width: 18px; height: 18px; border: 2px solid #52525b; border-radius: 4px;
+      flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+    }
+    .check-item.done .check-box { background: var(--ok); border-color: var(--ok); color: #052e16; }
+    .check-item.done { color: var(--text); }
+    .note {
+      margin-top: 1rem; font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+      padding: 0.75rem; background: #0c0c0e; border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a href="../index.html">← 返回对比页</a>
+    <span class="badge">Prototype E · 机制剖面 ★ 新版</span>
+  </div>
+  <div class="main">
+    <h1>缓存击穿 · 三层剖面</h1>
+    <p class="hint">
+      针对「A 还行但学不到底层」：<strong>每一步强制钻到 L2</strong>，不是看现象，是搞清「系统为什么这样运作」。
+      先读 L0 因果 → 点开 L1 机制 → 再点开 L2 底层。
+    </p>
+    <div class="layers-legend">
+      <span class="leg l0">L0 因果链</span>
+      <span class="leg l1">L1 运行机制</span>
+      <span class="leg l2">L2 底层原理</span>
+    </div>
+    <div class="progress" id="progress"></div>
+    <div id="stepContainer"></div>
+    <div class="nav" id="nav">
+      <button class="btn-prev" id="prevBtn" disabled>上一步</button>
+      <button class="btn-next" id="nextBtn">下一步</button>
+    </div>
+    <div class="self-check" id="selfCheck">
+      <h3>闭卷自检：你能讲清底层吗？（口述，不选选项）</h3>
+      <div class="check-item" data-i="0"><div class="check-box"></div><span>Redis 的 key 过期后，GET 返回什么？应用代码为什么会去查 DB？</span></div>
+      <div class="check-item" data-i="1"><div class="check-box"></div><span>为什么 1000 个并发会打出 1000 次 DB 查询？瓶颈在哪一层？</span></div>
+      <div class="check-item" data-i="2"><div class="check-box"></div><span>SET NX 为什么能保证只有一个线程查库？Redis 单线程和这件事什么关系？</span></div>
+      <div class="check-item" data-i="3"><div class="check-box"></div><span>逻辑过期为什么不删 key？和互斥锁各解决的是什么层面的问题？</span></div>
+      <p class="note">能流利讲出 3 条以上 = 你真的懂了，不是记住现象。讲不出 → 回去展开 L2 重读。</p>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        title: '热点 key 过期',
+        layers: [
+          { level: 'l0', tag: 'L0 因果', summary: '秒杀商品缓存 TTL 到了 → 这条 key 从 Redis 消失', body: '高 QPS 全靠这一个 key 扛流量。过期瞬间，缓存层不再能拦截请求。' },
+          { level: 'l1', tag: 'L1 机制', summary: 'Redis 怎么判定「过期」？', body: 'Redis 用 <strong>定期删除 + 惰性删除</strong>：<br>• 惰性：访问 key 时发现过期才删<br>• 定期：随机抽查一批 key<br>过期后 <code>GET hotkey</code> 返回 <code>(nil)</code>，应用层 cache-aside 模式会判定为 miss，转去查 DB。', because: '因为应用代码写的是：缓存没有 → 查库 → 回填缓存。不是 Redis 自动帮你查库。' },
+          { level: 'l2', tag: 'L2 底层', summary: 'key 存在哪？删了意味着什么？', body: 'Redis 内存中每个 key 是 dictEntry，指向 redisObject（含 type、encoding、<code>expiretime</code>）。<br>过期删除 = 释放这块内存 + dict 中移除条目。<br><strong>底层事实</strong>：不是「数据变旧」，是「这条记录不存在了」，所以所有后续 GET 都是冷启动。', because: '底层理解：击穿不是 Redis 坏了，是 <strong>热点 key 的生命周期结束</strong> + <strong>应用 miss 处理逻辑无保护</strong> 叠加。' }
+        ]
+      },
+      {
+        title: '并发 miss 同时打 DB',
+        layers: [
+          { level: 'l0', tag: 'L0 因果', summary: '1000 请求同时 GET → 都拿到 nil → 都去查 DB', body: '没有协调机制，每个请求独立走自己的 cache-aside 逻辑。' },
+          { level: 'l1', tag: 'L1 机制', summary: '为什么不是 1 次 DB 查询？', body: '每个 HTTP 请求在独立线程（Tomcat 线程池）。<br>时间线：<br><code>T0</code> 线程1 GET nil → 开始查 DB<br><code>T0+1ms</code> 线程2 GET nil（线程1还没回填）→ 也查 DB<br>…1000 个线程在<strong>回填完成前</strong>都看到 nil。<br>这是典型的 <strong>check-then-act 竞态</strong>。', because: '机制层关键：不是 DB 慢，是 <strong>多个线程同时通过「检查」</strong>，都以为自己是第一个。' },
+          { level: 'l2', tag: 'L2 底层', summary: '竞态发生在哪？', body: 'JVM 里每个线程有独立栈帧，执行：<br><code>if (cache.get(k) == null) { db.query(); cache.set(k,v); }</code><br>这不是原子操作。CPU 可能在任何两条指令间切换线程。<br>DB 侧：1000 个连接同时发 <code>SELECT</code> → 连接池打满 → 慢查询堆积 → 可能 OOM 或超时。<br><strong>底层</strong>：击穿 = 应用层缺少 <strong>互斥 / 合并 / 单飞（singleflight）</strong> 原语。', because: '所以 B 沙箱只看到「DB 1000 次」现象；底层是 <strong>无锁的 check-then-act + 热点过期</strong> 共同导致。' }
+        ]
+      },
+      {
+        title: '互斥锁方案',
+        layers: [
+          { level: 'l0', tag: 'L0 因果', summary: '只允许一个线程查库，其余等待或重试', body: '第一个拿到锁的查 DB 并回填，后来的读到缓存直接返回。' },
+          { level: 'l1', tag: 'L1 机制', summary: 'SET NX 怎么实现互斥？', body: '<code>SET lock:hotkey random_value NX EX 10</code><br>• <code>NX</code> = Only Set If Not Exists → 只有一个 client 成功<br>• 成功者查 DB → <code>SET hotkey value EX 3600</code> → <code>DEL lock:hotkey</code><br>• 失败者 <code>sleep(50)</code> 后重试 GET，或直接返回「请重试」<br>用 Lua 脚本保证「查库+回填+删锁」原子性，防死锁。', because: '机制层：锁在 Redis 里，所有 JVM 线程通过同一个协调点竞争。' },
+          { level: 'l2', tag: 'L2 底层', summary: 'Redis 单线程为何能保证 NX 原子？', body: 'Redis 处理命令是<strong>单线程串行</strong>（6.0 后 IO 多线程但命令执行仍主线程）。<br>所有 <code>SET NX</code> 排队执行，不存在两个 client「同时」 SET 成功。<br>这是分布式锁能用 Redis 实现的<strong>根本原因</strong>。<br>但：主从切换时锁可能丢（Redisson 看门狗续期解决超时，RedLock 有争议）。', because: '底层理解：互斥锁不是魔法，是 <strong>利用 Redis 单线程命令原子性</strong> 把多 JVM 线程的竞态变成串行。' }
+        ]
+      },
+      {
+        title: '逻辑过期方案',
+        layers: [
+          { level: 'l0', tag: 'L0 因果', summary: 'key 永不物理删除，后台异步更新', body: '用户永远 GET 到值（可能略旧），不会 miss。' },
+          { level: 'l1', tag: 'L1 机制', summary: 'value 里藏什么？', body: 'value 存 JSON：<code>{ "data": {...}, "expireAt": 1700000000 }</code><br>GET 时：<br>• <code>now < expireAt</code> → 直接返回 data<br>• <code>now >= expireAt</code> → 返回旧 data（用户不感知 miss）+ <strong>异步线程</strong>去 DB 拉新值写回<br>用 <code>isRefreshing</code> 标记防重复刷新。', because: '机制层：把「过期」从 Redis key 生命周期，转移到 value 内部的逻辑字段。' },
+          { level: 'l2', tag: 'L2 底层', summary: '和互斥锁解决的是不同层面的问题', body: '<table style="width:100%;font-size:0.8rem;margin-top:0.5rem;border-collapse:collapse"><tr style="color:var(--L2)"><td style="padding:4px;border:1px solid #333">互斥锁</td><td style="padding:4px;border:1px solid #333">解决 miss 瞬间的竞态</td><td style="padding:4px;border:1px solid #333">用户可能短暂等待</td></tr><tr><td style="padding:4px;border:1px solid #333">逻辑过期</td><td style="padding:4px;border:1px solid #333">消灭 miss 本身</td><td style="padding:4px;border:1px solid #333">用户永远有响应，容忍短暂不一致</td></tr></table><br>底层取舍：<strong>CAP 里选可用性</strong>，接受最终一致。适合秒杀页「宁可旧一点不能白屏」。', because: '面试底层答法：不是哪个更好，是 <strong>一致性要求 vs 可用性要求</strong> 的工程取舍。' }
+        ]
+      }
+    ];
+
+    let cur = 0;
+    const container = document.getElementById('stepContainer');
+    const progress = document.getElementById('progress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function render() {
+      const s = steps[cur];
+      progress.innerHTML = steps.map((_, i) =>
+        `<div class="p-dot ${i < cur ? 'done' : ''} ${i === cur ? 'cur' : ''}"></div>`
+      ).join('');
+
+      container.innerHTML = `
+        <div class="card">
+          <div class="step-header">
+            <div>
+              <div class="step-num">步骤 ${cur + 1} / ${steps.length}</div>
+              <div class="step-title">${s.title}</div>
+            </div>
+          </div>
+          ${s.layers.map((l, i) => `
+            <div class="layer ${i === 0 ? 'open' : ''}" data-layer="${i}">
+              <div class="layer-head">
+                <span class="layer-tag ${l.level}">${l.tag}</span>
+                <span class="layer-summary">${l.summary}</span>
+                <span class="chevron">▶</span>
+              </div>
+              <div class="layer-body">
+                ${l.body}
+                ${l.because ? `<div class="because"><strong>底层连接：</strong>${l.because}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      container.querySelectorAll('.layer-head').forEach(head => {
+        head.onclick = () => head.parentElement.classList.toggle('open');
+      });
+
+      prevBtn.disabled = cur === 0;
+      nextBtn.textContent = cur === steps.length - 1 ? '完成 → 闭卷自检' : '下一步';
+      document.getElementById('selfCheck').classList.remove('show');
+      document.getElementById('nav').style.display = 'flex';
+    }
+
+    prevBtn.onclick = () => { if (cur > 0) { cur--; render(); } };
+    nextBtn.onclick = () => {
+      if (cur < steps.length - 1) { cur++; render(); }
+      else {
+        document.getElementById('selfCheck').classList.add('show');
+        document.getElementById('nav').style.display = 'none';
+        container.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;text-align:center;padding:1rem">四步剖面走完。下面自检能不能讲清底层。</p>';
+      }
+    };
+
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.onclick = () => {
+        item.classList.toggle('done');
+        item.querySelector('.check-box').textContent = item.classList.contains('done') ? '✓' : '';
+      };
+    });
+
+    render();
+  </script>
+</body>
+</html>

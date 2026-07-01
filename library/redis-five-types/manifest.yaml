@@ -1,0 +1,18 @@
+id: redis-five-types
+title: Redis 五大数据结构
+subject: Redis 缓存
+chapter: 基础原理
+subjectOrder: 2
+chapterOrder: 0
+order: 0
+tags:
+  - Redis
+  - 数据结构
+  - JavaGuide
+prerequisites: []
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

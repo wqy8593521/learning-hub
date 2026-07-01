@@ -1,0 +1,49 @@
+# java-lock-upgrade.quiz
+bank 锁升级机制
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 锁状态机
+    style pick_one
+    ask synchronized 锁信息存在哪里？
+    opt 对象头 Mark Word
+    opt 方法栈帧
+    opt 类元数据
+    opt 常量池
+    answer 0
+    explain 每个 Java 对象头存锁状态，无锁→偏向→轻量→重量。
+
+  q 偏向锁
+    style pick_one
+    ask 偏向锁适合什么场景？
+    opt 只有一个线程反复加锁
+    opt 多线程激烈竞争
+    opt 跨进程同步
+    opt 读写分离
+    answer 0
+    explain 偏向锁记录线程 ID，同线程再进入零开销。
+
+  q 轻量锁
+    style true_false
+    ask 轻量锁通过 CAS + 自旋避免线程阻塞
+    true
+    explain 竞争不激烈时自旋等待，比 OS 阻塞唤醒快。
+
+  q 重量锁
+    style pick_one
+    ask 轻量锁膨胀为重量锁的触发条件是？
+    opt 自旋失败或竞争激烈
+    opt 方法执行超过 1 秒
+    opt GC 发生时
+    opt 对象被 finalize
+    answer 0
+    explain 自旋过久或竞争多线程，升级为 Monitor 阻塞等待。
+
+trigger
+  after_step 0 锁状态机
+  after_step 1 偏向锁
+  after_step 2 轻量锁
+  after_step 3 重量锁
+  end pick 2

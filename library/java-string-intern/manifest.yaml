@@ -1,0 +1,19 @@
+id: java-string-intern
+title: String 与常量池
+subject: Java 基础
+chapter: 语言核心
+subjectOrder: 1
+chapterOrder: 0
+order: 0
+tags:
+  - Java
+  - String
+  - JVM
+  - JavaGuide
+prerequisites: []
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

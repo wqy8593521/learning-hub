@@ -1,0 +1,59 @@
+# Redis 五大数据结构 — VML
+lesson Redis 五大数据结构
+tags Redis, 数据结构, 面试
+
+step String
+  frames 3
+  cap 最基本二进制安全 | SET/GET O(1) | 可存计数/缓存/分布式锁
+  @all
+    cols 客户端:30 Redis:310
+  @0
+    arrow 客户端 Redis SET
+    box 310 70 140 50 label=key→value stroke=green
+  @1
+    arrow 客户端 Redis GET
+    box 310 70 140 50 label=命中 stroke=green blink
+  @2
+    box 310 130 140 40 label=INCR计数 stroke=orange
+    badge 分布式锁 480 70
+
+step Hash
+  frames 3
+  cap 字段值对集合 | 适合存对象属性 | HGET/HSET O(1)
+  @0
+    box 280 60 220 90 label=user:1001 stroke=blue
+    box 300 80 80 30 label=name stroke=green
+    box 400 80 80 30 label=age stroke=green
+  @1
+    line 50 120 300 95 stroke=green draw
+    text HGET O(1) 380 200 fill=green
+  @2
+    compare 80 200 300 String|整个序列化|改字段重写 vs Hash|字段级|省带宽
+
+step List
+  frames 3
+  cap 双向链表 | LPUSH/RPOP做队列 | 消息队列/时间线
+  @all
+    cols 左:200 列表:380 右:560
+  @0
+    tree list 380 90 5
+    arrow 左 列表 LPUSH
+  @1
+    tree list 380 90 6
+    arrow 列表 右 RPOP
+  @2
+    queue 380 200 8 filled=5 label=消息队列
+
+step Set与ZSet
+  frames 3
+  cap Set去重集合 | SADD/SISMEMBER | ZSet带score排序
+  @0
+    buckets 8 80 130 hi=1,3,5
+    text Set去重 380 50 fill=green
+  @1
+    box 280 180 220 60 label=ZSet stroke=purple
+    text score排序 380 260 fill=purple
+    box 300 200 60 30 label=99 stroke=orange
+    box 380 200 60 30 label=85 stroke=orange
+  @2
+    table 60 280 结构,场景/String,缓存/Hash,对象/List,队列/Set,去重/ZSet,排行榜

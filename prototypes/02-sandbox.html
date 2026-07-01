@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B · 参数沙箱 · 缓存击穿</title>
+  <style>
+    :root {
+      --bg: #080c10;
+      --panel: #111820;
+      --border: #263040;
+      --text: #e8edf3;
+      --muted: #7d92a8;
+      --accent: #38bdf8;
+      --danger: #fb7185;
+      --ok: #4ade80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .top { max-width: 900px; margin: 0 auto 1rem; display: flex; justify-content: space-between; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: #0c2340; color: var(--accent); border: 1px solid #1e4a6e; }
+    .layout { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 700px) { .layout { grid-template-columns: 1fr; } }
+    h1 { font-size: 1.3rem; grid-column: 1 / -1; }
+    .hint { color: var(--muted); font-size: 0.85rem; grid-column: 1 / -1; margin-bottom: 0.5rem; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    .panel h2 { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    label { display: block; font-size: 0.82rem; margin-bottom: 0.35rem; color: var(--muted); }
+    input[type=range] { width: 100%; margin-bottom: 0.25rem; accent-color: var(--accent); }
+    .val { font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem; }
+    .toggle-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .toggle {
+      padding: 0.45rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0a0f14;
+      color: var(--muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .toggle.on { border-color: var(--accent); color: var(--accent); background: #0c1a28; }
+    .meter { margin: 1rem 0; }
+    .meter-label { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 0.3rem; }
+    .bar-bg { height: 12px; background: #1a2332; border-radius: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 6px; transition: width 0.3s, background 0.3s; }
+    .log {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      background: #060a0e;
+      border-radius: 8px;
+      padding: 0.75rem;
+      height: 200px;
+      overflow-y: auto;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+    .log .hit { color: var(--ok); }
+    .log .miss { color: var(--danger); }
+    .log .db { color: #fbbf24; }
+    .phase { margin-top: 1rem; padding: 0.75rem; background: #0a0f14; border-radius: 8px; font-size: 0.85rem; line-height: 1.5; }
+    .phase strong { color: var(--accent); }
+    .btn-run {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.7rem;
+      background: var(--accent);
+      color: #041018;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .challenge {
+      grid-column: 1 / -1;
+      margin-top: 0.5rem;
+      padding: 1rem;
+      border: 1px dashed #334155;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .challenge.done { border-color: var(--ok); color: var(--ok); }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <a href="../index.html">← 返回对比页</a>
+    <span class="badge">Prototype B · 参数沙箱</span>
+  </div>
+  <div class="layout">
+    <h1>缓存击穿 · 动手验证</h1>
+    <p class="hint">改参数 → 点「模拟 1 秒流量」→ 看 DB 查询次数。逻辑靠现象记住。</p>
+
+    <div class="panel">
+      <h2>控制面板</h2>
+      <label>并发 QPS</label>
+      <input type="range" id="qps" min="10" max="2000" value="500" />
+      <div class="val" id="qpsVal">500 QPS</div>
+
+      <label>热点 key TTL（秒）</label>
+      <input type="range" id="ttl" min="0" max="60" value="0" />
+      <div class="val" id="ttlVal">已过期</div>
+
+      <label>防护策略</label>
+      <div class="toggle-row">
+        <button class="toggle" id="tNone" data-v="none">无防护</button>
+        <button class="toggle on" id="tMutex" data-v="mutex">互斥锁</button>
+        <button class="toggle" id="tLogic" data-v="logic">逻辑过期</button>
+      </div>
+
+      <button class="btn-run" id="runBtn">▶ 模拟 1 秒流量</button>
+
+      <div class="phase" id="phaseHint">
+        <strong>当前：</strong>互斥锁开启 — 缓存 miss 时只有一个请求查库。
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>实时观测</h2>
+      <div class="meter">
+        <div class="meter-label"><span>缓存命中</span><span id="hitPct">—</span></div>
+        <div class="bar-bg"><div class="bar-fill" id="hitBar" style="width:0;background:var(--ok)"></div></div>
+      </div>
+      <div class="meter">
+        <div class="meter-label"><span>DB 查询次数</span><span id="dbCount">0</span></div>
+        <div class="bar-bg"><div class="bar-fill" id="dbBar" style="width:0;background:var(--danger)"></div></div>
+      </div>
+      <div class="log" id="log">等待模拟…</div>
+    </div>
+
+    <div class="challenge" id="challenge">
+      🎯 挑战：把 QPS 拉到 1000+、TTL 设为过期、关掉防护 — 观察 DB 被打多少次。再开互斥锁，对比差异。
+    </div>
+  </div>
+
+  <script>
+    const qps = document.getElementById('qps');
+    const ttl = document.getElementById('ttl');
+    const qpsVal = document.getElementById('qpsVal');
+    const ttlVal = document.getElementById('ttlVal');
+    const log = document.getElementById('log');
+    const hitBar = document.getElementById('hitBar');
+    const dbBar = document.getElementById('dbBar');
+    const hitPct = document.getElementById('hitPct');
+    const dbCountEl = document.getElementById('dbCount');
+    const phaseHint = document.getElementById('phaseHint');
+    const challenge = document.getElementById('challenge');
+    let strategy = 'mutex';
+
+    qps.oninput = () => qpsVal.textContent = qps.value + ' QPS';
+    ttl.oninput = () => ttlVal.textContent = +ttl.value === 0 ? '已过期' : ttl.value + 's';
+
+    document.querySelectorAll('.toggle').forEach(t => {
+      t.onclick = () => {
+        document.querySelectorAll('.toggle').forEach(x => x.classList.remove('on'));
+        t.classList.add('on');
+        strategy = t.dataset.v;
+        const hints = {
+          none: '无防护 — 每个 miss 都打 DB，击穿风险最高。',
+          mutex: '互斥锁 — miss 时仅 1 个请求查库，其余等待。',
+          logic: '逻辑过期 — key 永不过期，后台异步更新。'
+        };
+        phaseHint.innerHTML = '<strong>当前：</strong>' + hints[strategy];
+      };
+    });
+
+    document.getElementById('runBtn').onclick = () => {
+      const q = +qps.value;
+      const expired = +ttl.value === 0;
+      let hits = 0, dbQueries = 0;
+      const lines = [];
+
+      if (!expired && strategy === 'logic') {
+        hits = q;
+        lines.push(`<span class="hit">[HIT×${q}]</span> 逻辑过期，全部走缓存`);
+      } else if (!expired) {
+        hits = Math.floor(q * 0.95);
+        dbQueries = q - hits;
+        lines.push(`<span class="hit">[HIT×${hits}]</span> <span class="db">[DB×${dbQueries}]</span> 正常 miss`);
+      } else if (strategy === 'mutex') {
+        hits = 0;
+        dbQueries = 1;
+        lines.push(`<span class="miss">[MISS×${q}]</span> 热点过期！`);
+        lines.push(`<span class="db">[DB×1]</span> 互斥锁：仅 1 次查库，${q-1} 请求等待回填`);
+        hits = q - 1;
+      } else if (strategy === 'logic') {
+        hits = q;
+        dbQueries = 0;
+        lines.push(`<span class="hit">[HIT×${q}]</span> 逻辑过期：返回旧值，后台异步更新`);
+      } else {
+        dbQueries = q;
+        lines.push(`<span class="miss">[MISS×${q}]</span> 击穿！`);
+        lines.push(`<span class="db">[DB×${dbQueries}]</span> 无防护：每个请求独立查库`);
+      }
+
+      const hitRate = Math.round((hits / q) * 100);
+      hitPct.textContent = hitRate + '%';
+      hitBar.style.width = hitRate + '%';
+      dbCountEl.textContent = dbQueries;
+      dbBar.style.width = Math.min(100, (dbQueries / q) * 100 * (strategy === 'none' && expired ? 1 : 5)) + '%';
+
+      log.innerHTML = lines.join('<br>');
+
+      if (expired && strategy === 'none' && q >= 500) {
+        challenge.classList.add('done');
+        challenge.textContent = '✓ 你亲眼看到击穿了：' + dbQueries + ' 次 DB 查询。这就是「逻辑能记住」的感觉。';
+      }
+    };
+  </script>
+</body>
+</html>

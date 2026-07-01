@@ -1,0 +1,67 @@
+# JVM 分代 GC — VML
+lesson JVM 分代 GC
+tags JVM, GC, 后端八股
+
+step 分代布局
+  frames 3
+  cap 新生代放新对象 | 老年代放长寿对象 | 元空间放类信息
+  @0
+    box 120 60 200 80 label=新生代 stroke=green
+    box 360 60 280 80 label=老年代 stroke=blue
+    box 120 160 520 40 label=元空间 stroke=muted
+  @1
+    circle 150 90 8 fill=green
+    circle 180 90 8 fill=green
+    text 新对象→新生代 200 155 fill=green
+  @2
+  @2 L1
+    compare 80 220 300 新生代|Minor GC|频繁快 vs 老年代|Major GC|慢
+
+step Minor GC
+  frames 3
+  cap Eden满触发 | 复制存活到Survivor | 年龄够进老年代
+  @all
+    box 120 60 120 60 label=Eden stroke=green
+    box 260 60 60 60 label=S0 stroke=muted
+    box 340 60 60 60 label=S1 stroke=muted
+  @0
+    circle 130 80 8 fill=green
+    circle 160 80 8 fill=green
+    circle 190 80 8 fill=green
+    meter 120 140 120 Eden满 grow max=100 pulse
+  @1
+    path M150 120 Q260 100 280 80 stroke=green draw
+    circle 280 80 8 fill=green
+    text 存活复制 300 130 fill=green
+  @2
+    path M280 100 Q380 80 420 80 stroke=blue draw
+    text age≥15→老年代 420 130 fill=blue
+
+step 标记清除
+  frames 3
+  cap 从GC Roots遍历 | 标记存活对象 | 清除未标记
+  @all
+    flow 620 50 Roots|标记|清除|碎片?
+  @0
+    stack 100 60 栈,静态,JNI
+    circle 150 150 8 fill=green
+    circle 250 150 8 fill=green
+    circle 350 150 8 fill=muted opacity=0.3
+  @1
+    circle 150 150 10 fill=green blink
+    circle 250 150 10 fill=green blink
+    text 标记存活 380 150 fill=green
+  @2
+    circle 350 150 8 fill=red expired
+    text 清除垃圾 380 200 fill=red
+
+step G1 Region
+  frames 2
+  cap 堆切均等Region | 优先回收垃圾多 | 可预测停顿
+  @0
+    buckets 8 70 130
+    text 每块Region 380 50 fill=lyellow
+  @1
+    buckets 8 70 130 hi=2,5,7
+    meter 120 220 400 回收 grow max=100
+    text 优先回收脏块 380 230 fill=green

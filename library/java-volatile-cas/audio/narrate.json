@@ -1,0 +1,655 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "多线程各自有 CPU 缓存，线程 A 改了 flag，线程 B 可能还读到旧值 0。",
+      "duration": 7.656,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.60797935483871,
+          "text": "多线程各自有 CPU 缓存"
+        },
+        {
+          "start": 2.60797935483871,
+          "end": 4.74178064516129,
+          "text": "线程 A 改了 flag"
+        },
+        {
+          "start": 4.74178064516129,
+          "end": 7.34976,
+          "text": "线程 B 可能还读到旧值 0"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "这就是可见性问题，每个线程各看各的本地缓存，互不通知。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.87392,
+          "text": "这就是可见性问题"
+        },
+        {
+          "start": 1.87392,
+          "end": 4.6848,
+          "text": "每个线程各看各的本地缓存"
+        },
+        {
+          "start": 4.6848,
+          "end": 5.62176,
+          "text": "互不通知"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "这就是可见性问题，每个线程各看各的本地缓存，互不通知。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.87392,
+          "text": "这就是可见性问题"
+        },
+        {
+          "start": 1.87392,
+          "end": 4.6848,
+          "text": "每个线程各看各的本地缓存"
+        },
+        {
+          "start": 4.6848,
+          "end": 5.62176,
+          "text": "互不通知"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "没有同步机制时，编译器和 CPU 还可能重排指令，导致更诡异的结果。",
+      "duration": 6.936,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6072386206896552,
+          "text": "没有同步机制时"
+        },
+        {
+          "start": 1.6072386206896552,
+          "end": 4.821715862068966,
+          "text": "编译器和 CPU 还可能重排指令"
+        },
+        {
+          "start": 4.821715862068966,
+          "end": 6.65856,
+          "text": "导致更诡异的结果"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "可见性和有序性是并发 bug 的两大根源。",
+      "duration": 4.224,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.05504,
+          "text": "可见性和有序性是并发 bug 的两大根源"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "可见性和有序性是并发 bug 的两大根源。",
+      "duration": 4.224,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.05504,
+          "text": "可见性和有序性是并发 bug 的两大根源"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "普通变量无法保证跨线程可见，需要 volatile 或 synchronized 打通缓存。",
+      "duration": 6.792,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.119104,
+          "text": "普通变量无法保证跨线程可见"
+        },
+        {
+          "start": 2.119104,
+          "end": 6.52032,
+          "text": "需要 volatile 或 synchronized 打通缓存"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "面试先讲可见性裂缝，再引出 volatile 的解决方案。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7086463999999997,
+          "text": "面试先讲可见性裂缝"
+        },
+        {
+          "start": 1.7086463999999997,
+          "end": 4.746239999999999,
+          "text": "再引出 volatile 的解决方案"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "面试先讲可见性裂缝，再引出 volatile 的解决方案。",
+      "duration": 4.944,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7086463999999997,
+          "text": "面试先讲可见性裂缝"
+        },
+        {
+          "start": 1.7086463999999997,
+          "end": 4.746239999999999,
+          "text": "再引出 volatile 的解决方案"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "volatile 写操作会立刻刷到主内存，读操作强制从主内存拉最新值。",
+      "duration": 6.816,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8851199999999997,
+          "text": "volatile 写操作会立刻刷到主内存"
+        },
+        {
+          "start": 3.8851199999999997,
+          "end": 6.54336,
+          "text": "读操作强制从主内存拉最新值"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "相当于在读写之间插了内存屏障，挡掉有害的重排序。",
+      "duration": 5.568,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.401541818181818,
+          "text": "相当于在读写之间插了内存屏障"
+        },
+        {
+          "start": 3.401541818181818,
+          "end": 5.34528,
+          "text": "挡掉有害的重排序"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "相当于在读写之间插了内存屏障，挡掉有害的重排序。",
+      "duration": 5.568,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.401541818181818,
+          "text": "相当于在读写之间插了内存屏障"
+        },
+        {
+          "start": 3.401541818181818,
+          "end": 5.34528,
+          "text": "挡掉有害的重排序"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "一个线程写 volatile 变量，其他线程能立刻看到，解决可见性问题。",
+      "duration": 6.6,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.065806451612903,
+          "text": "一个线程写 volatile 变量"
+        },
+        {
+          "start": 3.065806451612903,
+          "end": 4.905290322580645,
+          "text": "其他线程能立刻看到"
+        },
+        {
+          "start": 4.905290322580645,
+          "end": 6.335999999999999,
+          "text": "解决可见性问题"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "但 volatile 不保证原子性，i++ 这种复合操作仍需要 synchronized 或 Atomic。",
+      "duration": 7.416,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3215304347826087,
+          "text": "但 volatile 不保证原子性"
+        },
+        {
+          "start": 2.3215304347826087,
+          "end": 7.11936,
+          "text": "i++ 这种复合操作仍需要 synchronized 或 Atomic"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "但 volatile 不保证原子性，i++ 这种复合操作仍需要 synchronized 或 Atomic。",
+      "duration": 7.416,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3215304347826087,
+          "text": "但 volatile 不保证原子性"
+        },
+        {
+          "start": 2.3215304347826087,
+          "end": 7.11936,
+          "text": "i++ 这种复合操作仍需要 synchronized 或 Atomic"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "典型用法：状态标志位、双重检查锁里的 instance 变量。",
+      "duration": 5.688,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.46048,
+          "text": "典型用法：状态标志位、双重检查锁里的 instance 变量"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "记住 volatile 保证可见性和有序性，不保证复合操作的原子性。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.79392,
+          "text": "记住 volatile 保证可见性和有序性"
+        },
+        {
+          "start": 3.79392,
+          "end": 5.990399999999999,
+          "text": "不保证复合操作的原子性"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "记住 volatile 保证可见性和有序性，不保证复合操作的原子性。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.79392,
+          "text": "记住 volatile 保证可见性和有序性"
+        },
+        {
+          "start": 3.79392,
+          "end": 5.990399999999999,
+          "text": "不保证复合操作的原子性"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "CAS 是 Compare And Swap，先读内存旧值 expect，相等才改成新值。",
+      "duration": 6.624,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.0935870270270267,
+          "text": "CAS 是 Compare And Swap"
+        },
+        {
+          "start": 3.0935870270270267,
+          "end": 5.155978378378379,
+          "text": "先读内存旧值 expect"
+        },
+        {
+          "start": 5.155978378378379,
+          "end": 6.35904,
+          "text": "相等才改成新值"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "底层由 CPU 一条指令完成，保证检查和修改的原子性。",
+      "duration": 5.592,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.800862608695652,
+          "text": "底层由 CPU 一条指令完成"
+        },
+        {
+          "start": 2.800862608695652,
+          "end": 5.36832,
+          "text": "保证检查和修改的原子性"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "底层由 CPU 一条指令完成，保证检查和修改的原子性。",
+      "duration": 5.592,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.800862608695652,
+          "text": "底层由 CPU 一条指令完成"
+        },
+        {
+          "start": 2.800862608695652,
+          "end": 5.36832,
+          "text": "保证检查和修改的原子性"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "如果期间被别的线程改了，CAS 失败，当前线程重试或放弃。",
+      "duration": 6.096,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.5749503999999996,
+          "text": "如果期间被别的线程改了"
+        },
+        {
+          "start": 2.5749503999999996,
+          "end": 3.7453823999999996,
+          "text": "CAS 失败"
+        },
+        {
+          "start": 3.7453823999999996,
+          "end": 5.85216,
+          "text": "当前线程重试或放弃"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "AtomicInteger 的 incrementAndGet 就是自旋 CAS 直到成功。",
+      "duration": 5.16,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.9536,
+          "text": "AtomicInteger 的 incrementAndGet 就是自旋 CAS 直到成功"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "AtomicInteger 的 incrementAndGet 就是自旋 CAS 直到成功。",
+      "duration": 5.16,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.9536,
+          "text": "AtomicInteger 的 incrementAndGet 就是自旋 CAS 直到成功"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "CAS 无锁，避免了 synchronized 的阻塞开销，适合低竞争场景。",
+      "duration": 5.712,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.8567999999999999,
+          "text": "CAS 无锁"
+        },
+        {
+          "start": 0.8567999999999999,
+          "end": 4.284,
+          "text": "避免了 synchronized 的阻塞开销"
+        },
+        {
+          "start": 4.284,
+          "end": 5.4835199999999995,
+          "text": "适合低竞争场景"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "高竞争下 CAS 自旋会浪费 CPU，这时锁反而更合适。",
+      "duration": 5.424,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.395895652173913,
+          "text": "高竞争下 CAS 自旋会浪费 CPU"
+        },
+        {
+          "start": 3.395895652173913,
+          "end": 5.20704,
+          "text": "这时锁反而更合适"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "高竞争下 CAS 自旋会浪费 CPU，这时锁反而更合适。",
+      "duration": 5.424,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.395895652173913,
+          "text": "高竞争下 CAS 自旋会浪费 CPU"
+        },
+        {
+          "start": 3.395895652173913,
+          "end": 5.20704,
+          "text": "这时锁反而更合适"
+        }
+      ]
+    },
+    "2-3-0": {
+      "audio": "audio/s2-f3-d0.mp3",
+      "text": "ABA 问题是 CAS 的经典陷阱：值从 A 变 B 又变回 A，CAS 以为没变。",
+      "duration": 6.84,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.083664516129032,
+          "text": "ABA 问题是 CAS 的经典陷阱：值从 A 变 B 又变回 A"
+        },
+        {
+          "start": 5.083664516129032,
+          "end": 6.5664,
+          "text": "CAS 以为没变"
+        }
+      ]
+    },
+    "2-3-1": {
+      "audio": "audio/s2-f3-d1.mp3",
+      "text": "AtomicStampedReference 用版本号戳破 ABA 幻觉。",
+      "duration": 4.536,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.354559999999999,
+          "text": "AtomicStampedReference 用版本号戳破 ABA 幻觉"
+        }
+      ]
+    },
+    "2-3-2": {
+      "audio": "audio/s2-f3-d2.mp3",
+      "text": "AtomicStampedReference 用版本号戳破 ABA 幻觉。",
+      "duration": 4.536,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.354559999999999,
+          "text": "AtomicStampedReference 用版本号戳破 ABA 幻觉"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "栈顶节点被弹出又压回相同值，CAS 比较值相同就误以为没人动过。",
+      "duration": 6.768,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.9125737931034483,
+          "text": "栈顶节点被弹出又压回相同值"
+        },
+        {
+          "start": 2.9125737931034483,
+          "end": 6.49728,
+          "text": "CAS 比较值相同就误以为没人动过"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "在链表栈等数据结构中，ABA 可能导致结构损坏。",
+      "duration": 4.992,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.282057142857143,
+          "text": "在链表栈等数据结构中"
+        },
+        {
+          "start": 2.282057142857143,
+          "end": 4.79232,
+          "text": "ABA 可能导致结构损坏"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "在链表栈等数据结构中，ABA 可能导致结构损坏。",
+      "duration": 4.992,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.282057142857143,
+          "text": "在链表栈等数据结构中"
+        },
+        {
+          "start": 2.282057142857143,
+          "end": 4.79232,
+          "text": "ABA 可能导致结构损坏"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "解决方案是给每次修改加一个版本戳，比较时同时比对值和版本。",
+      "duration": 6.6,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.754666666666666,
+          "text": "解决方案是给每次修改加一个版本戳"
+        },
+        {
+          "start": 3.754666666666666,
+          "end": 6.3359999999999985,
+          "text": "比较时同时比对值和版本"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "AtomicStampedReference 和 AtomicMarkableReference 就是干这个的。",
+      "duration": 5.376,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.16096,
+          "text": "AtomicStampedReference 和 AtomicMarkableReference 就是干这个的"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "AtomicStampedReference 和 AtomicMarkableReference 就是干这个的。",
+      "duration": 5.376,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.16096,
+          "text": "AtomicStampedReference 和 AtomicMarkableReference 就是干这个的"
+        }
+      ]
+    },
+    "3-2-0": {
+      "audio": "audio/s3-f2-d0.mp3",
+      "text": "实际业务中 ABA 不常见，但面试必须能讲清楚原理和应对。",
+      "duration": 5.904,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.4938496,
+          "text": "实际业务中 ABA 不常见"
+        },
+        {
+          "start": 2.4938496,
+          "end": 5.66784,
+          "text": "但面试必须能讲清楚原理和应对"
+        }
+      ]
+    },
+    "3-2-1": {
+      "audio": "audio/s3-f2-d1.mp3",
+      "text": "理解 ABA 说明你真的懂了 CAS 的局限性。",
+      "duration": 3.888,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.73248,
+          "text": "理解 ABA 说明你真的懂了 CAS 的局限性"
+        }
+      ]
+    },
+    "3-2-2": {
+      "audio": "audio/s3-f2-d2.mp3",
+      "text": "理解 ABA 说明你真的懂了 CAS 的局限性。",
+      "duration": 3.888,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.73248,
+          "text": "理解 ABA 说明你真的懂了 CAS 的局限性"
+        }
+      ]
+    }
+  }
+}

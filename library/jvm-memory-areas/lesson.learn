@@ -1,0 +1,64 @@
+# JVM 内存结构 — VML
+lesson JVM 内存结构
+tags JVM, 内存, Java
+
+step 线程私有
+  frames 3
+  cap 程序计数器 | 虚拟机栈 | 本地方法栈
+  @all
+    cols 线程1:200 线程2:500
+  @0
+    stack 200 70 pc,栈帧,局部变量
+    stack 500 70 pc,栈帧,局部变量
+    text 各线程独立 380 50 fill=lyellow
+  @1
+    box 200 200 140 50 label=栈帧 stroke=blue
+    box 200 260 140 40 label=局部变量 stroke=green
+  @2
+    line 200 150 500 150 stroke=muted draw
+    text 互不共享 380 300 fill=green
+
+step 堆与元空间
+  frames 3
+  cap 堆存所有对象实例 | 元空间存类元数据 | JDK8后永久代移除
+  @0
+    box 120 60 520 100 label=堆 Heap stroke=green
+    circle 200 90 8 fill=green
+    circle 300 90 8 fill=green
+    circle 400 90 8 fill=green
+    text 对象实例 380 50 fill=green
+  @1
+    box 120 180 520 50 label=元空间 Metaspace stroke=purple
+    box 200 195 100 36 label=类信息 stroke=purple
+    box 360 195 100 36 label=方法元数据 stroke=purple
+  @2
+    compare 80 260 300 JDK7永久代|在堆内|易OOM vs JDK8元空间|本地内存|自动扩
+
+step 对象创建
+  frames 4
+  cap new触发类检查 | 堆分配内存 | 零值初始化
+  @all
+    cols 代码:30 堆:310
+    flow 620 50 类加载|分配|零值|构造|引用
+  @0
+    arrow 代码 堆 检查类
+  @1
+    box 300 120 160 60 label=分配内存 stroke=orange
+    meter 120 200 400 堆使用 grow max=60
+  @2
+    box 300 120 160 60 label=字段=0 stroke=muted
+  @3
+    box 300 120 160 60 label=对象就绪 stroke=green blink
+
+step 引用类型
+  frames 3
+  cap 强引用默认GC不回收 | 软引用内存不足回收 | 弱引用下次GC回收
+  @0
+    box 300 80 160 56 label=强引用 stroke=green
+    circle 300 80 9 fill=green
+  @1
+    box 300 80 160 56 label=软引用 stroke=orange
+    meter 120 180 400 内存 grow max=100 pulse
+    box 300 80 160 56 label=回收 stroke=red expired
+  @2
+    compare 80 230 300 弱引用|下次GC清|ThreadLocalKey vs 虚引用|跟踪回收|堆外

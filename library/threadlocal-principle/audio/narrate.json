@@ -1,0 +1,588 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "每个 Thread 对象内部有一个 ThreadLocalMap，存该线程私有的变量副本。",
+      "duration": 6.336,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.4098559999999996,
+          "text": "每个 Thread 对象内部有一个 ThreadLocalMap"
+        },
+        {
+          "start": 4.4098559999999996,
+          "end": 6.08256,
+          "text": "存该线程私有的变量副本"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "ThreadLocal 本身不存值，它只是 Map 的 key，实现线程间数据隔离。",
+      "duration": 6.12,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.685805714285714,
+          "text": "ThreadLocal 本身不存值"
+        },
+        {
+          "start": 2.685805714285714,
+          "end": 4.364434285714285,
+          "text": "它只是 Map 的 key"
+        },
+        {
+          "start": 4.364434285714285,
+          "end": 5.8751999999999995,
+          "text": "实现线程间数据隔离"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "ThreadLocal 本身不存值，它只是 Map 的 key，实现线程间数据隔离。",
+      "duration": 6.12,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.685805714285714,
+          "text": "ThreadLocal 本身不存值"
+        },
+        {
+          "start": 2.685805714285714,
+          "end": 4.364434285714285,
+          "text": "它只是 Map 的 key"
+        },
+        {
+          "start": 4.364434285714285,
+          "end": 5.8751999999999995,
+          "text": "实现线程间数据隔离"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "线程 A 和线程 B 各用同一个 ThreadLocal，拿到的是各自独立的值。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.1751272727272735,
+          "text": "线程 A 和线程 B 各用同一个 ThreadLocal"
+        },
+        {
+          "start": 4.1751272727272735,
+          "end": 5.990400000000001,
+          "text": "拿到的是各自独立的值"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "典型场景：SimpleDateFormat 线程不安全，每个线程放一份就安全了。",
+      "duration": 6.456,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.355182702702703,
+          "text": "典型场景：SimpleDateFormat 线程不安全"
+        },
+        {
+          "start": 4.355182702702703,
+          "end": 6.197760000000001,
+          "text": "每个线程放一份就安全了"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "典型场景：SimpleDateFormat 线程不安全，每个线程放一份就安全了。",
+      "duration": 6.456,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.355182702702703,
+          "text": "典型场景：SimpleDateFormat 线程不安全"
+        },
+        {
+          "start": 4.355182702702703,
+          "end": 6.197760000000001,
+          "text": "每个线程放一份就安全了"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "还有用户上下文、链路 traceId 等，都靠 ThreadLocal 在同线程内传递。",
+      "duration": 6.696,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.0449178947368414,
+          "text": "还有用户上下文、链路 traceId 等"
+        },
+        {
+          "start": 3.0449178947368414,
+          "end": 6.428159999999998,
+          "text": "都靠 ThreadLocal 在同线程内传递"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "理解关键：数据存在线程里，不是存在 ThreadLocal 对象里。",
+      "duration": 5.736,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2026239999999997,
+          "text": "理解关键：数据存在线程里"
+        },
+        {
+          "start": 2.2026239999999997,
+          "end": 5.5065599999999995,
+          "text": "不是存在 ThreadLocal 对象里"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "理解关键：数据存在线程里，不是存在 ThreadLocal 对象里。",
+      "duration": 5.736,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2026239999999997,
+          "text": "理解关键：数据存在线程里"
+        },
+        {
+          "start": 2.2026239999999997,
+          "end": 5.5065599999999995,
+          "text": "不是存在 ThreadLocal 对象里"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "调用 get 时，先取当前线程 Thread.currentThread。",
+      "duration": 4.584,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.8251199999999999,
+          "text": "调用 get 时"
+        },
+        {
+          "start": 0.8251199999999999,
+          "end": 4.400639999999999,
+          "text": "先取当前线程 Thread.currentThread"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "再从该线程的 ThreadLocalMap 里用 ThreadLocal 作 key 查找。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.99968,
+          "text": "再从该线程的 ThreadLocalMap 里用 ThreadLocal 作 key 查找"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "再从该线程的 ThreadLocalMap 里用 ThreadLocal 作 key 查找。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.99968,
+          "text": "再从该线程的 ThreadLocalMap 里用 ThreadLocal 作 key 查找"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "如果 key 不存在，会调用 initialValue 初始化一个默认值放进去。",
+      "duration": 5.76,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.3010823529411764,
+          "text": "如果 key 不存在"
+        },
+        {
+          "start": 1.3010823529411764,
+          "end": 5.5295999999999985,
+          "text": "会调用 initialValue 初始化一个默认值放进去"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "set 就是直接往当前线程的 Map 里 put，不影响其他线程。",
+      "duration": 5.664,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.027733333333333,
+          "text": "set 就是直接往当前线程的 Map 里 put"
+        },
+        {
+          "start": 4.027733333333333,
+          "end": 5.43744,
+          "text": "不影响其他线程"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "set 就是直接往当前线程的 Map 里 put，不影响其他线程。",
+      "duration": 5.664,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.027733333333333,
+          "text": "set 就是直接往当前线程的 Map 里 put"
+        },
+        {
+          "start": 4.027733333333333,
+          "end": 5.43744,
+          "text": "不影响其他线程"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "整个路径没有加锁，因为每个线程只操作自己的 Map，天然无竞争。",
+      "duration": 6.24,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.711542857142857,
+          "text": "整个路径没有加锁"
+        },
+        {
+          "start": 1.711542857142857,
+          "end": 4.920685714285714,
+          "text": "因为每个线程只操作自己的 Map"
+        },
+        {
+          "start": 4.920685714285714,
+          "end": 5.990399999999999,
+          "text": "天然无竞争"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "性能很好，但线程池场景下要特别注意清理。",
+      "duration": 4.68,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9984,
+          "text": "性能很好"
+        },
+        {
+          "start": 0.9984,
+          "end": 4.4928,
+          "text": "但线程池场景下要特别注意清理"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "性能很好，但线程池场景下要特别注意清理。",
+      "duration": 4.68,
+      "cues": [
+        {
+          "start": 0,
+          "end": 0.9984,
+          "text": "性能很好"
+        },
+        {
+          "start": 0.9984,
+          "end": 4.4928,
+          "text": "但线程池场景下要特别注意清理"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "ThreadLocalMap 的 key 是 ThreadLocal 的弱引用，GC 时 key 可能被回收。",
+      "duration": 5.952,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.317184,
+          "text": "ThreadLocalMap 的 key 是 ThreadLocal 的弱引用"
+        },
+        {
+          "start": 4.317184,
+          "end": 5.71392,
+          "text": "GC 时 key 可能被回收"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "但 value 是强引用，key 没了 value 却还在 Map 里，这就是泄漏。",
+      "duration": 5.904,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7711999999999999,
+          "text": "但 value 是强引用"
+        },
+        {
+          "start": 1.7711999999999999,
+          "end": 4.78224,
+          "text": "key 没了 value 却还在 Map 里"
+        },
+        {
+          "start": 4.78224,
+          "end": 5.66784,
+          "text": "这就是泄漏"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "但 value 是强引用，key 没了 value 却还在 Map 里，这就是泄漏。",
+      "duration": 5.904,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.7711999999999999,
+          "text": "但 value 是强引用"
+        },
+        {
+          "start": 1.7711999999999999,
+          "end": 4.78224,
+          "text": "key 没了 value 却还在 Map 里"
+        },
+        {
+          "start": 4.78224,
+          "end": 5.66784,
+          "text": "这就是泄漏"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "线程池里的 worker 线程长期存活不销毁，泄漏的 value 永远占着内存。",
+      "duration": 6.84,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.8625882352941177,
+          "text": "线程池里的 worker 线程长期存活不销毁"
+        },
+        {
+          "start": 3.8625882352941177,
+          "end": 6.5664,
+          "text": "泄漏的 value 永远占着内存"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "典型事故：Web 容器线程池加 ThreadLocal 不 remove，慢慢 OOM。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.862062702702703,
+          "text": "典型事故：Web 容器线程池加 ThreadLocal 不 remove"
+        },
+        {
+          "start": 4.862062702702703,
+          "end": 5.62176,
+          "text": "慢慢 OOM"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "典型事故：Web 容器线程池加 ThreadLocal 不 remove，慢慢 OOM。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.862062702702703,
+          "text": "典型事故：Web 容器线程池加 ThreadLocal 不 remove"
+        },
+        {
+          "start": 4.862062702702703,
+          "end": 5.62176,
+          "text": "慢慢 OOM"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "所以用完必须 remove，尤其在 try-finally 的 finally 里清理。",
+      "duration": 5.208,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6215178378378379,
+          "text": "所以用完必须 remove"
+        },
+        {
+          "start": 1.6215178378378379,
+          "end": 4.99968,
+          "text": "尤其在 try-finally 的 finally 里清理"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "面试必考：弱引用 key 加强引用 value 加线程池复用，三者叠加导致泄漏。",
+      "duration": 7.416,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.444216470588235,
+          "text": "面试必考：弱引用 key 加强引用 value 加线程池复用"
+        },
+        {
+          "start": 5.444216470588235,
+          "end": 7.1193599999999995,
+          "text": "三者叠加导致泄漏"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "面试必考：弱引用 key 加强引用 value 加线程池复用，三者叠加导致泄漏。",
+      "duration": 7.416,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.444216470588235,
+          "text": "面试必考：弱引用 key 加强引用 value 加线程池复用"
+        },
+        {
+          "start": 5.444216470588235,
+          "end": 7.1193599999999995,
+          "text": "三者叠加导致泄漏"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "标准写法是 try-finally，业务逻辑在 try 里，finally 里一定调 remove。",
+      "duration": 6.192,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.264502857142857,
+          "text": "标准写法是 try-finally"
+        },
+        {
+          "start": 2.264502857142857,
+          "end": 3.5382857142857143,
+          "text": "业务逻辑在 try 里"
+        },
+        {
+          "start": 3.5382857142857143,
+          "end": 5.94432,
+          "text": "finally 里一定调 remove"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "线程池场景下这是硬性要求，不能省略。",
+      "duration": 4.32,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1104,
+          "text": "线程池场景下这是硬性要求"
+        },
+        {
+          "start": 3.1104,
+          "end": 4.1472,
+          "text": "不能省略"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "线程池场景下这是硬性要求，不能省略。",
+      "duration": 4.32,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1104,
+          "text": "线程池场景下这是硬性要求"
+        },
+        {
+          "start": 3.1104,
+          "end": 4.1472,
+          "text": "不能省略"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "不要往 ThreadLocal 里放大对象或集合，泄漏时代价更大。",
+      "duration": 5.472,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.985125517241379,
+          "text": "不要往 ThreadLocal 里放大对象或集合"
+        },
+        {
+          "start": 3.985125517241379,
+          "end": 5.25312,
+          "text": "泄漏时代价更大"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "能用方法参数传递的就不要滥用 ThreadLocal，减少隐式依赖。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.533677419354839,
+          "text": "能用方法参数传递的就不要滥用 ThreadLocal"
+        },
+        {
+          "start": 4.533677419354839,
+          "end": 5.62176,
+          "text": "减少隐式依赖"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "能用方法参数传递的就不要滥用 ThreadLocal，减少隐式依赖。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.533677419354839,
+          "text": "能用方法参数传递的就不要滥用 ThreadLocal"
+        },
+        {
+          "start": 4.533677419354839,
+          "end": 5.62176,
+          "text": "减少隐式依赖"
+        }
+      ]
+    }
+  }
+}

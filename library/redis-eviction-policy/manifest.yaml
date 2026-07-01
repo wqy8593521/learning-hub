@@ -1,0 +1,21 @@
+id: redis-eviction-policy
+title: Redis 内存淘汰
+subject: Redis 缓存
+chapter: 基础原理
+subjectOrder: 3
+chapterOrder: 1
+order: 3
+tags:
+  - Redis
+  - 内存
+  - 淘汰
+  - 后端八股
+prerequisites:
+  - redis-five-types
+  - redis-single-thread
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

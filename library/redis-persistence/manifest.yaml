@@ -1,0 +1,19 @@
+id: redis-persistence
+title: RDB 与 AOF
+subject: Redis 缓存
+chapter: 持久化与高可用
+subjectOrder: 2
+chapterOrder: 3
+order: 1
+tags:
+  - Redis
+  - 持久化
+  - JavaGuide
+prerequisites:
+  - redis-single-thread
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-06-30
+steps: 4

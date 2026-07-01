@@ -1,0 +1,53 @@
+# mysql-redo-undo.quiz
+bank redo 与 undo 日志
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 崩溃恢复
+    style pick_one
+    ask InnoDB 崩溃恢复依赖？
+    opt redo log
+    opt undo log only
+    opt binlog only
+    opt 慢查询日志
+    answer 0
+    explain redo 记录物理页修改，崩溃后重做已提交事务。
+
+  q redo两阶段
+    style pick_one
+    ask 两阶段提交顺序？
+    opt redo prepare → binlog → redo commit
+    opt binlog → undo → redo
+    opt 直接 commit
+    opt 只写 undo
+    answer 0
+    explain 保证 redo 与 binlog 一致性，崩溃可协调恢复。
+
+  q undo回滚
+    style pick_one
+    ask undo log 的作用包括？
+    opt 事务回滚和 MVCC 读旧版本
+    opt 主从复制
+    opt 索引查找
+    opt 连接池
+    answer 0
+    explain undo 存修改前镜像，回滚和一致性读都依赖它。
+
+  q 职责对比
+    style pick_one
+    ask redo 和 undo 分别保证？
+    opt 持久性 vs 原子性
+    opt 原子性 vs 持久性
+    opt 隔离性 vs 一致性
+    opt 都一样
+    answer 0
+    explain ACID：redo→持久性，undo→原子性（+MVCC 一致性读）。
+
+trigger
+  after_step 0 崩溃恢复
+  after_step 1 redo两阶段
+  after_step 2 undo回滚
+  after_step 3 职责对比
+  end pick 2

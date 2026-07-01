@@ -1,0 +1,20 @@
+id: mysql-sharding
+title: 分库分表原理
+subject: MySQL
+chapter: 高可用
+subjectOrder: 4
+chapterOrder: 3
+order: 2
+tags:
+  - MySQL
+  - 分库分表
+  - 后端八股
+prerequisites:
+  - mysql-master-slave
+  - mysql-btree-index
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

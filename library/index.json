@@ -1,0 +1,2941 @@
+{
+  "version": 3,
+  "format": "vml",
+  "tree": [
+    {
+      "id": "java-并发",
+      "title": "Java 并发",
+      "order": 1,
+      "chapters": [
+        {
+          "id": "集合框架",
+          "title": "集合框架",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "concurrent-hashmap",
+              "title": "ConcurrentHashMap",
+              "subject": "Java 并发",
+              "chapter": "集合框架",
+              "order": 5,
+              "tags": [
+                "Java",
+                "并发",
+                "ConcurrentHashMap",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "hashmap-collision",
+                "java-volatile-cas"
+              ],
+              "dsl": "library/concurrent-hashmap/lesson.learn",
+              "path": "library/concurrent-hashmap/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 1,
+              "quiz": "library/concurrent-hashmap/lesson.quiz",
+              "narrate": "library/concurrent-hashmap/lesson.narrate",
+              "narrateAudio": "library/concurrent-hashmap/audio/narrate.json"
+            }
+          ]
+        },
+        {
+          "id": "线程与锁",
+          "title": "线程与锁",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "java-thread-lifecycle",
+              "title": "线程状态转换",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 1,
+              "tags": [
+                "Java",
+                "线程",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "Java 基础"
+              ],
+              "dsl": "library/java-thread-lifecycle/lesson.learn",
+              "path": "library/java-thread-lifecycle/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-thread-lifecycle/lesson.quiz",
+              "narrate": "library/java-thread-lifecycle/lesson.narrate",
+              "narrateAudio": "library/java-thread-lifecycle/audio/narrate.json"
+            },
+            {
+              "id": "java-thread-pool",
+              "title": "Java 线程池",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 2,
+              "tags": [
+                "Java",
+                "并发",
+                "线程池",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础",
+                "多线程入门"
+              ],
+              "dsl": "library/java-thread-pool/lesson.learn",
+              "path": "library/java-thread-pool/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-thread-pool/lesson.quiz",
+              "narrate": "library/java-thread-pool/lesson.narrate",
+              "narrateAudio": "library/java-thread-pool/audio/narrate.json"
+            },
+            {
+              "id": "java-lock-upgrade",
+              "title": "锁升级机制",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 3,
+              "tags": [
+                "Java",
+                "并发",
+                "synchronized",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础",
+                "java-thread-pool"
+              ],
+              "dsl": "library/java-lock-upgrade/lesson.learn",
+              "path": "library/java-lock-upgrade/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-lock-upgrade/lesson.quiz",
+              "narrate": "library/java-lock-upgrade/lesson.narrate",
+              "narrateAudio": "library/java-lock-upgrade/audio/narrate.json"
+            },
+            {
+              "id": "java-volatile-cas",
+              "title": "volatile 与 CAS",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 4,
+              "tags": [
+                "Java",
+                "并发",
+                "volatile",
+                "CAS",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础",
+                "java-lock-upgrade"
+              ],
+              "dsl": "library/java-volatile-cas/lesson.learn",
+              "path": "library/java-volatile-cas/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-volatile-cas/lesson.quiz",
+              "narrate": "library/java-volatile-cas/lesson.narrate",
+              "narrateAudio": "library/java-volatile-cas/audio/narrate.json"
+            },
+            {
+              "id": "dead-lock-condition",
+              "title": "死锁四条件",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 5,
+              "tags": [
+                "Java",
+                "并发",
+                "死锁",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "java-lock-upgrade"
+              ],
+              "dsl": "library/dead-lock-condition/lesson.learn",
+              "path": "library/dead-lock-condition/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/dead-lock-condition/lesson.quiz",
+              "narrate": "library/dead-lock-condition/lesson.narrate",
+              "narrateAudio": "library/dead-lock-condition/audio/narrate.json"
+            },
+            {
+              "id": "threadlocal-principle",
+              "title": "ThreadLocal 原理",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 6,
+              "tags": [
+                "Java",
+                "ThreadLocal",
+                "并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "java-thread-pool"
+              ],
+              "dsl": "library/threadlocal-principle/lesson.learn",
+              "path": "library/threadlocal-principle/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/threadlocal-principle/lesson.quiz",
+              "narrate": "library/threadlocal-principle/lesson.narrate",
+              "narrateAudio": "library/threadlocal-principle/audio/narrate.json"
+            },
+            {
+              "id": "java-aqs-reentrant",
+              "title": "AQS 与 ReentrantLock",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 7,
+              "tags": [
+                "Java",
+                "AQS",
+                "ReentrantLock",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "java-lock-upgrade",
+                "java-volatile-cas"
+              ],
+              "dsl": "library/java-aqs-reentrant/lesson.learn",
+              "path": "library/java-aqs-reentrant/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-aqs-reentrant/lesson.quiz",
+              "narrate": "library/java-aqs-reentrant/lesson.narrate",
+              "narrateAudio": "library/java-aqs-reentrant/audio/narrate.json"
+            },
+            {
+              "id": "java-concurrent-tools",
+              "title": "并发工具类",
+              "subject": "Java 并发",
+              "chapter": "线程与锁",
+              "order": 8,
+              "tags": [
+                "Java",
+                "JUC",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "java-aqs-reentrant",
+                "java-thread-pool"
+              ],
+              "dsl": "library/java-concurrent-tools/lesson.learn",
+              "path": "library/java-concurrent-tools/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 2,
+              "quiz": "library/java-concurrent-tools/lesson.quiz",
+              "narrate": "library/java-concurrent-tools/lesson.narrate",
+              "narrateAudio": "library/java-concurrent-tools/audio/narrate.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java-基础",
+      "title": "Java 基础",
+      "order": 1,
+      "chapters": [
+        {
+          "id": "语言核心",
+          "title": "语言核心",
+          "order": 0,
+          "lessons": [
+            {
+              "id": "java-string-intern",
+              "title": "String 与常量池",
+              "subject": "Java 基础",
+              "chapter": "语言核心",
+              "order": 0,
+              "tags": [
+                "Java",
+                "String",
+                "JVM",
+                "JavaGuide"
+              ],
+              "prerequisites": [],
+              "dsl": "library/java-string-intern/lesson.learn",
+              "path": "library/java-string-intern/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 0,
+              "quiz": "library/java-string-intern/lesson.quiz",
+              "narrate": "library/java-string-intern/lesson.narrate",
+              "narrateAudio": "library/java-string-intern/audio/narrate.json"
+            },
+            {
+              "id": "java-equals-hashcode",
+              "title": "equals 与 hashCode",
+              "subject": "Java 基础",
+              "chapter": "语言核心",
+              "order": 1,
+              "tags": [
+                "Java",
+                "equals",
+                "hashCode",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "java-string-intern"
+              ],
+              "dsl": "library/java-equals-hashcode/lesson.learn",
+              "path": "library/java-equals-hashcode/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 0,
+              "quiz": "library/java-equals-hashcode/lesson.quiz",
+              "narrate": "library/java-equals-hashcode/lesson.narrate",
+              "narrateAudio": "library/java-equals-hashcode/audio/narrate.json"
+            }
+          ]
+        },
+        {
+          "id": "集合框架",
+          "title": "集合框架",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "hashmap-collision",
+              "title": "HashMap 冲突",
+              "subject": "Java 基础",
+              "chapter": "集合框架",
+              "order": 1,
+              "tags": [
+                "Java",
+                "HashMap",
+                "集合",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础",
+                "equals/hashCode"
+              ],
+              "dsl": "library/hashmap-collision/lesson.learn",
+              "path": "library/hashmap-collision/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 1,
+              "narrate": "library/hashmap-collision/lesson.narrate",
+              "narrateAudio": "library/hashmap-collision/audio/narrate.json"
+            },
+            {
+              "id": "arraylist-linkedlist",
+              "title": "ArrayList vs LinkedList",
+              "subject": "Java 基础",
+              "chapter": "集合框架",
+              "order": 2,
+              "tags": [
+                "Java",
+                "集合",
+                "ArrayList",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "hashmap-collision"
+              ],
+              "dsl": "library/arraylist-linkedlist/lesson.learn",
+              "path": "library/arraylist-linkedlist/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 1,
+              "quiz": "library/arraylist-linkedlist/lesson.quiz",
+              "narrate": "library/arraylist-linkedlist/lesson.narrate",
+              "narrateAudio": "library/arraylist-linkedlist/audio/narrate.json"
+            },
+            {
+              "id": "copyonwrite-arraylist",
+              "title": "CopyOnWrite 读写",
+              "subject": "Java 基础",
+              "chapter": "集合框架",
+              "order": 6,
+              "tags": [
+                "Java",
+                "并发",
+                "CopyOnWrite",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "arraylist-linkedlist"
+              ],
+              "dsl": "library/copyonwrite-arraylist/lesson.learn",
+              "path": "library/copyonwrite-arraylist/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 1,
+              "chapterOrder": 1,
+              "quiz": "library/copyonwrite-arraylist/lesson.quiz",
+              "narrate": "library/copyonwrite-arraylist/lesson.narrate",
+              "narrateAudio": "library/copyonwrite-arraylist/audio/narrate.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "redis-缓存",
+      "title": "Redis 缓存",
+      "order": 2,
+      "chapters": [
+        {
+          "id": "基础原理",
+          "title": "基础原理",
+          "order": 0,
+          "lessons": [
+            {
+              "id": "redis-five-types",
+              "title": "Redis 五大数据结构",
+              "subject": "Redis 缓存",
+              "chapter": "基础原理",
+              "order": 0,
+              "tags": [
+                "Redis",
+                "数据结构",
+                "JavaGuide"
+              ],
+              "prerequisites": [],
+              "dsl": "library/redis-five-types/lesson.learn",
+              "path": "library/redis-five-types/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 0,
+              "quiz": "library/redis-five-types/lesson.quiz",
+              "narrate": "library/redis-five-types/lesson.narrate",
+              "narrateAudio": "library/redis-five-types/audio/narrate.json"
+            },
+            {
+              "id": "redis-single-thread",
+              "title": "Redis 单线程模型",
+              "subject": "Redis 缓存",
+              "chapter": "基础原理",
+              "order": 1,
+              "tags": [
+                "Redis",
+                "原理",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "redis-five-types"
+              ],
+              "dsl": "library/redis-single-thread/lesson.learn",
+              "path": "library/redis-single-thread/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 0,
+              "quiz": "library/redis-single-thread/lesson.quiz",
+              "narrate": "library/redis-single-thread/lesson.narrate",
+              "narrateAudio": "library/redis-single-thread/audio/narrate.json"
+            },
+            {
+              "id": "redis-eviction-policy",
+              "title": "Redis 内存淘汰",
+              "subject": "Redis 缓存",
+              "chapter": "基础原理",
+              "order": 3,
+              "tags": [
+                "Redis",
+                "内存",
+                "淘汰",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "redis-five-types",
+                "redis-single-thread"
+              ],
+              "dsl": "library/redis-eviction-policy/lesson.learn",
+              "path": "library/redis-eviction-policy/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 1,
+              "quiz": "library/redis-eviction-policy/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "缓存三兄弟",
+          "title": "缓存三兄弟",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "redis-cache-breakdown",
+              "title": "Redis 缓存击穿",
+              "subject": "Redis 缓存",
+              "chapter": "缓存三兄弟",
+              "order": 1,
+              "tags": [
+                "Redis",
+                "缓存",
+                "高并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Redis 基础"
+              ],
+              "dsl": "library/redis-cache-breakdown/lesson.learn",
+              "path": "library/redis-cache-breakdown/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 1,
+              "quiz": "library/redis-cache-breakdown/lesson.quiz",
+              "narrate": "library/redis-cache-breakdown/lesson.narrate",
+              "narrateAudio": "library/redis-cache-breakdown/audio/narrate.json"
+            },
+            {
+              "id": "redis-cache-avalanche",
+              "title": "缓存穿透与雪崩",
+              "subject": "Redis 缓存",
+              "chapter": "缓存三兄弟",
+              "order": 2,
+              "tags": [
+                "Redis",
+                "缓存",
+                "高并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Redis 基础",
+                "redis-cache-breakdown"
+              ],
+              "dsl": "library/redis-cache-avalanche/lesson.learn",
+              "path": "library/redis-cache-avalanche/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 1,
+              "quiz": "library/redis-cache-avalanche/lesson.quiz",
+              "narrate": "library/redis-cache-avalanche/lesson.narrate",
+              "narrateAudio": "library/redis-cache-avalanche/audio/narrate.json"
+            }
+          ]
+        },
+        {
+          "id": "高级应用",
+          "title": "高级应用",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "redis-distributed-lock",
+              "title": "Redis 分布式锁",
+              "subject": "Redis 缓存",
+              "chapter": "高级应用",
+              "order": 1,
+              "tags": [
+                "Redis",
+                "分布式锁",
+                "高并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "redis-cache-breakdown",
+                "java-volatile-cas"
+              ],
+              "dsl": "library/redis-distributed-lock/lesson.learn",
+              "path": "library/redis-distributed-lock/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 2,
+              "quiz": "library/redis-distributed-lock/lesson.quiz",
+              "narrate": "library/redis-distributed-lock/lesson.narrate",
+              "narrateAudio": "library/redis-distributed-lock/audio/narrate.json"
+            },
+            {
+              "id": "redis-hot-key",
+              "title": "Redis 热点 Key",
+              "subject": "Redis 缓存",
+              "chapter": "高级应用",
+              "order": 2,
+              "tags": [
+                "Redis",
+                "热点",
+                "高并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "redis-cache-breakdown",
+                "redis-single-thread"
+              ],
+              "dsl": "library/redis-hot-key/lesson.learn",
+              "path": "library/redis-hot-key/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 3,
+              "quiz": "library/redis-hot-key/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "持久化与高可用",
+          "title": "持久化与高可用",
+          "order": 3,
+          "lessons": [
+            {
+              "id": "redis-persistence",
+              "title": "RDB 与 AOF",
+              "subject": "Redis 缓存",
+              "chapter": "持久化与高可用",
+              "order": 1,
+              "tags": [
+                "Redis",
+                "持久化",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "redis-single-thread"
+              ],
+              "dsl": "library/redis-persistence/lesson.learn",
+              "path": "library/redis-persistence/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 3,
+              "quiz": "library/redis-persistence/lesson.quiz",
+              "narrate": "library/redis-persistence/lesson.narrate",
+              "narrateAudio": "library/redis-persistence/audio/narrate.json"
+            },
+            {
+              "id": "redis-replication",
+              "title": "Redis 主从复制",
+              "subject": "Redis 缓存",
+              "chapter": "持久化与高可用",
+              "order": 2,
+              "tags": [
+                "Redis",
+                "主从",
+                "哨兵",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "redis-persistence"
+              ],
+              "dsl": "library/redis-replication/lesson.learn",
+              "path": "library/redis-replication/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 2,
+              "chapterOrder": 3,
+              "quiz": "library/redis-replication/lesson.quiz",
+              "narrate": "library/redis-replication/lesson.narrate",
+              "narrateAudio": "library/redis-replication/audio/narrate.json"
+            },
+            {
+              "id": "redis-cluster-sentinel",
+              "title": "Redis 哨兵与集群",
+              "subject": "Redis 缓存",
+              "chapter": "持久化与高可用",
+              "order": 3,
+              "tags": [
+                "Redis",
+                "哨兵",
+                "集群",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "redis-replication"
+              ],
+              "dsl": "library/redis-cluster-sentinel/lesson.learn",
+              "path": "library/redis-cluster-sentinel/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 4,
+              "quiz": "library/redis-cluster-sentinel/lesson.quiz"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mysql",
+      "title": "MySQL",
+      "order": 3,
+      "chapters": [
+        {
+          "id": "索引与事务",
+          "title": "索引与事务",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "mysql-btree-index",
+              "title": "MySQL B+树索引",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 1,
+              "tags": [
+                "MySQL",
+                "索引",
+                "B+树",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "SQL 基础"
+              ],
+              "dsl": "library/mysql-btree-index/lesson.learn",
+              "path": "library/mysql-btree-index/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-btree-index/lesson.quiz",
+              "narrate": "library/mysql-btree-index/lesson.narrate",
+              "narrateAudio": "library/mysql-btree-index/audio/narrate.json"
+            },
+            {
+              "id": "mysql-transaction-isolation",
+              "title": "事务隔离级别",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 2,
+              "tags": [
+                "MySQL",
+                "事务",
+                "隔离级别",
+                "MVCC",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "SQL 基础",
+                "mysql-btree-index"
+              ],
+              "dsl": "library/mysql-transaction-isolation/lesson.learn",
+              "path": "library/mysql-transaction-isolation/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-transaction-isolation/lesson.quiz",
+              "narrate": "library/mysql-transaction-isolation/lesson.narrate",
+              "narrateAudio": "library/mysql-transaction-isolation/audio/narrate.json"
+            },
+            {
+              "id": "mysql-lock-row-gap",
+              "title": "行锁与间隙锁",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 3,
+              "tags": [
+                "MySQL",
+                "锁",
+                "InnoDB",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "mysql-transaction-isolation"
+              ],
+              "dsl": "library/mysql-lock-row-gap/lesson.learn",
+              "path": "library/mysql-lock-row-gap/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-lock-row-gap/lesson.quiz",
+              "narrate": "library/mysql-lock-row-gap/lesson.narrate",
+              "narrateAudio": "library/mysql-lock-row-gap/audio/narrate.json"
+            },
+            {
+              "id": "mysql-explain-slow",
+              "title": "EXPLAIN 与慢 SQL",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 4,
+              "tags": [
+                "MySQL",
+                "优化",
+                "EXPLAIN",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "mysql-btree-index"
+              ],
+              "dsl": "library/mysql-explain-slow/lesson.learn",
+              "path": "library/mysql-explain-slow/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-explain-slow/lesson.quiz",
+              "narrate": "library/mysql-explain-slow/lesson.narrate",
+              "narrateAudio": "library/mysql-explain-slow/audio/narrate.json"
+            },
+            {
+              "id": "mysql-mvcc-readview",
+              "title": "MVCC 与 ReadView",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 5,
+              "tags": [
+                "MySQL",
+                "MVCC",
+                "事务",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-transaction-isolation",
+                "mysql-redo-undo"
+              ],
+              "dsl": "library/mysql-mvcc-readview/lesson.learn",
+              "path": "library/mysql-mvcc-readview/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-mvcc-readview/lesson.quiz"
+            },
+            {
+              "id": "mysql-index-failure",
+              "title": "索引失效场景",
+              "subject": "MySQL",
+              "chapter": "索引与事务",
+              "order": 6,
+              "tags": [
+                "MySQL",
+                "索引",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-btree-index"
+              ],
+              "dsl": "library/mysql-index-failure/lesson.learn",
+              "path": "library/mysql-index-failure/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 1,
+              "quiz": "library/mysql-index-failure/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "日志与事务",
+          "title": "日志与事务",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "mysql-redo-undo",
+              "title": "redo 与 undo 日志",
+              "subject": "MySQL",
+              "chapter": "日志与事务",
+              "order": 1,
+              "tags": [
+                "MySQL",
+                "InnoDB",
+                "redo",
+                "undo",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "mysql-transaction-isolation"
+              ],
+              "dsl": "library/mysql-redo-undo/lesson.learn",
+              "path": "library/mysql-redo-undo/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 2,
+              "quiz": "library/mysql-redo-undo/lesson.quiz",
+              "narrate": "library/mysql-redo-undo/lesson.narrate",
+              "narrateAudio": "library/mysql-redo-undo/audio/narrate.json"
+            },
+            {
+              "id": "mysql-binlog-2pc",
+              "title": "binlog 与两阶段提交",
+              "subject": "MySQL",
+              "chapter": "日志与事务",
+              "order": 2,
+              "tags": [
+                "MySQL",
+                "binlog",
+                "两阶段提交",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "mysql-redo-undo"
+              ],
+              "dsl": "library/mysql-binlog-2pc/lesson.learn",
+              "path": "library/mysql-binlog-2pc/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 3,
+              "chapterOrder": 2,
+              "quiz": "library/mysql-binlog-2pc/lesson.quiz",
+              "narrate": "library/mysql-binlog-2pc/lesson.narrate",
+              "narrateAudio": "library/mysql-binlog-2pc/audio/narrate.json"
+            }
+          ]
+        },
+        {
+          "id": "高可用",
+          "title": "高可用",
+          "order": 3,
+          "lessons": [
+            {
+              "id": "mysql-master-slave",
+              "title": "MySQL 主从复制",
+              "subject": "MySQL",
+              "chapter": "高可用",
+              "order": 1,
+              "tags": [
+                "MySQL",
+                "主从",
+                "高可用",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-binlog-2pc"
+              ],
+              "dsl": "library/mysql-master-slave/lesson.learn",
+              "path": "library/mysql-master-slave/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 3,
+              "quiz": "library/mysql-master-slave/lesson.quiz"
+            },
+            {
+              "id": "mysql-sharding",
+              "title": "分库分表原理",
+              "subject": "MySQL",
+              "chapter": "高可用",
+              "order": 2,
+              "tags": [
+                "MySQL",
+                "分库分表",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-master-slave",
+                "mysql-btree-index"
+              ],
+              "dsl": "library/mysql-sharding/lesson.learn",
+              "path": "library/mysql-sharding/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 3,
+              "quiz": "library/mysql-sharding/lesson.quiz"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "分布式",
+      "title": "分布式",
+      "order": 4,
+      "chapters": [
+        {
+          "id": "理论基础",
+          "title": "理论基础",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "distributed-cap",
+              "title": "CAP 与一致性",
+              "subject": "分布式",
+              "chapter": "理论基础",
+              "order": 1,
+              "tags": [
+                "分布式",
+                "CAP",
+                "一致性",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Redis 基础",
+                "MySQL 基础"
+              ],
+              "dsl": "library/distributed-cap/lesson.learn",
+              "path": "library/distributed-cap/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 1,
+              "quiz": "library/distributed-cap/lesson.quiz",
+              "narrate": "library/distributed-cap/lesson.narrate",
+              "narrateAudio": "library/distributed-cap/audio/narrate.json"
+            },
+            {
+              "id": "distributed-transaction-tcc",
+              "title": "分布式事务 TCC",
+              "subject": "分布式",
+              "chapter": "理论基础",
+              "order": 2,
+              "tags": [
+                "分布式",
+                "事务",
+                "TCC",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "distributed-cap",
+                "spring-transaction"
+              ],
+              "dsl": "library/distributed-transaction-tcc/lesson.learn",
+              "path": "library/distributed-transaction-tcc/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 1,
+              "quiz": "library/distributed-transaction-tcc/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "消息队列",
+          "title": "消息队列",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "mq-message-reliability",
+              "title": "MQ 消息可靠性",
+              "subject": "分布式",
+              "chapter": "消息队列",
+              "order": 1,
+              "tags": [
+                "消息队列",
+                "分布式",
+                "可靠性",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "分布式基础",
+                "distributed-cap"
+              ],
+              "dsl": "library/mq-message-reliability/lesson.learn",
+              "path": "library/mq-message-reliability/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 4,
+              "chapterOrder": 2,
+              "quiz": "library/mq-message-reliability/lesson.quiz",
+              "narrate": "library/mq-message-reliability/lesson.narrate",
+              "narrateAudio": "library/mq-message-reliability/audio/narrate.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spring",
+      "title": "Spring",
+      "order": 5,
+      "chapters": [
+        {
+          "id": "核心原理",
+          "title": "核心原理",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "spring-ioc-di",
+              "title": "Spring IOC 注入",
+              "subject": "Spring",
+              "chapter": "核心原理",
+              "order": 1,
+              "tags": [
+                "Spring",
+                "IOC",
+                "依赖注入",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础"
+              ],
+              "dsl": "library/spring-ioc-di/lesson.learn",
+              "path": "library/spring-ioc-di/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 5,
+              "chapterOrder": 1,
+              "quiz": "library/spring-ioc-di/lesson.quiz",
+              "narrate": "library/spring-ioc-di/lesson.narrate",
+              "narrateAudio": "library/spring-ioc-di/audio/narrate.json"
+            },
+            {
+              "id": "spring-transaction",
+              "title": "Spring 事务传播",
+              "subject": "Spring",
+              "chapter": "核心原理",
+              "order": 2,
+              "tags": [
+                "Spring",
+                "事务",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-transaction-isolation",
+                "spring-ioc-di"
+              ],
+              "dsl": "library/spring-transaction/lesson.learn",
+              "path": "library/spring-transaction/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 5,
+              "chapterOrder": 1,
+              "quiz": "library/spring-transaction/lesson.quiz",
+              "narrate": "library/spring-transaction/lesson.narrate",
+              "narrateAudio": "library/spring-transaction/audio/narrate.json"
+            },
+            {
+              "id": "spring-aop-proxy",
+              "title": "Spring AOP 原理",
+              "subject": "Spring",
+              "chapter": "核心原理",
+              "order": 3,
+              "tags": [
+                "Spring",
+                "AOP",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "spring-ioc-di"
+              ],
+              "dsl": "library/spring-aop-proxy/lesson.learn",
+              "path": "library/spring-aop-proxy/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 5,
+              "chapterOrder": 1,
+              "quiz": "library/spring-aop-proxy/lesson.quiz"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "工程实践",
+      "title": "工程实践",
+      "order": 6,
+      "chapters": [
+        {
+          "id": "系统设计",
+          "title": "系统设计",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "api-idempotent",
+              "title": "接口幂等设计",
+              "subject": "工程实践",
+              "chapter": "系统设计",
+              "order": 1,
+              "tags": [
+                "幂等",
+                "系统设计",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "mysql-transaction-isolation"
+              ],
+              "dsl": "library/api-idempotent/lesson.learn",
+              "path": "library/api-idempotent/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 6,
+              "chapterOrder": 1,
+              "quiz": "library/api-idempotent/lesson.quiz",
+              "narrate": "library/api-idempotent/lesson.narrate",
+              "narrateAudio": "library/api-idempotent/audio/narrate.json"
+            },
+            {
+              "id": "rate-limiter-bucket",
+              "title": "令牌桶限流",
+              "subject": "工程实践",
+              "chapter": "系统设计",
+              "order": 2,
+              "tags": [
+                "限流",
+                "高并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "redis-cache-breakdown"
+              ],
+              "dsl": "library/rate-limiter-bucket/lesson.learn",
+              "path": "library/rate-limiter-bucket/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 6,
+              "chapterOrder": 1,
+              "quiz": "library/rate-limiter-bucket/lesson.quiz",
+              "narrate": "library/rate-limiter-bucket/lesson.narrate",
+              "narrateAudio": "library/rate-limiter-bucket/audio/narrate.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "计网",
+      "title": "计网",
+      "order": 7,
+      "chapters": [
+        {
+          "id": "传输层",
+          "title": "传输层",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "tcp-three-handshake",
+              "title": "TCP 三次握手",
+              "subject": "计网",
+              "chapter": "传输层",
+              "order": 1,
+              "tags": [
+                "计网",
+                "TCP",
+                "后端八股"
+              ],
+              "prerequisites": [],
+              "dsl": "library/tcp-three-handshake/lesson.learn",
+              "path": "library/tcp-three-handshake/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 7,
+              "chapterOrder": 1,
+              "quiz": "library/tcp-three-handshake/lesson.quiz",
+              "narrate": "library/tcp-three-handshake/lesson.narrate",
+              "narrateAudio": "library/tcp-three-handshake/audio/narrate.json"
+            },
+            {
+              "id": "tcp-four-close",
+              "title": "TCP 四次挥手",
+              "subject": "计网",
+              "chapter": "传输层",
+              "order": 2,
+              "tags": [
+                "计网",
+                "TCP",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "tcp-three-handshake"
+              ],
+              "dsl": "library/tcp-four-close/lesson.learn",
+              "path": "library/tcp-four-close/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 7,
+              "chapterOrder": 1,
+              "quiz": "library/tcp-four-close/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "应用层",
+          "title": "应用层",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "http-https-tls",
+              "title": "HTTP 与 HTTPS",
+              "subject": "计网",
+              "chapter": "应用层",
+              "order": 1,
+              "tags": [
+                "计网",
+                "HTTP",
+                "HTTPS",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "tcp-three-handshake"
+              ],
+              "dsl": "library/http-https-tls/lesson.learn",
+              "path": "library/http-https-tls/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 7,
+              "chapterOrder": 2,
+              "quiz": "library/http-https-tls/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "io模型",
+          "title": "IO模型",
+          "order": 3,
+          "lessons": [
+            {
+              "id": "nio-epoll-io",
+              "title": "NIO 与 IO 多路复用",
+              "subject": "计网",
+              "chapter": "IO模型",
+              "order": 1,
+              "tags": [
+                "操作系统",
+                "NIO",
+                "epoll",
+                "后端八股"
+              ],
+              "prerequisites": [],
+              "dsl": "library/nio-epoll-io/lesson.learn",
+              "path": "library/nio-epoll-io/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 7,
+              "chapterOrder": 3,
+              "quiz": "library/nio-epoll-io/lesson.quiz"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jvm",
+      "title": "JVM",
+      "order": 8,
+      "chapters": [
+        {
+          "id": "内存与类加载",
+          "title": "内存与类加载",
+          "order": 0,
+          "lessons": [
+            {
+              "id": "jvm-memory-areas",
+              "title": "JVM 内存结构",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 0,
+              "tags": [
+                "JVM",
+                "内存",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "Java 基础"
+              ],
+              "dsl": "library/jvm-memory-areas/lesson.learn",
+              "path": "library/jvm-memory-areas/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-memory-areas/lesson.quiz",
+              "narrate": "library/jvm-memory-areas/lesson.narrate",
+              "narrateAudio": "library/jvm-memory-areas/audio/narrate.json"
+            },
+            {
+              "id": "jvm-class-loading",
+              "title": "类加载与双亲委派",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 1,
+              "tags": [
+                "JVM",
+                "类加载",
+                "JavaGuide"
+              ],
+              "prerequisites": [
+                "jvm-memory-areas"
+              ],
+              "dsl": "library/jvm-class-loading/lesson.learn",
+              "path": "library/jvm-class-loading/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-class-loading/lesson.quiz",
+              "narrate": "library/jvm-class-loading/lesson.narrate",
+              "narrateAudio": "library/jvm-class-loading/audio/narrate.json"
+            },
+            {
+              "id": "jvm-happens-before",
+              "title": "JMM 与 happens-before",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 3,
+              "tags": [
+                "JVM",
+                "JMM",
+                "并发",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "java-volatile-cas",
+                "jvm-memory-areas"
+              ],
+              "dsl": "library/jvm-happens-before/lesson.learn",
+              "path": "library/jvm-happens-before/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-happens-before/lesson.quiz"
+            },
+            {
+              "id": "jvm-oom-types",
+              "title": "JVM OOM 类型与排查",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 4,
+              "tags": [
+                "JVM",
+                "OOM",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "jvm-memory-areas"
+              ],
+              "dsl": "library/jvm-oom-types/lesson.learn",
+              "path": "library/jvm-oom-types/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-oom-types/lesson.quiz"
+            },
+            {
+              "id": "jvm-gc-algorithms",
+              "title": "GC 算法对比",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 5,
+              "tags": [
+                "JVM",
+                "GC",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "jvm-gc-generations"
+              ],
+              "dsl": "library/jvm-gc-algorithms/lesson.learn",
+              "path": "library/jvm-gc-algorithms/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-gc-algorithms/lesson.quiz"
+            },
+            {
+              "id": "jvm-object-alloc",
+              "title": "对象创建与内存分配",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 6,
+              "tags": [
+                "JVM",
+                "对象",
+                "内存",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "jvm-memory-areas"
+              ],
+              "dsl": "library/jvm-object-alloc/lesson.learn",
+              "path": "library/jvm-object-alloc/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/jvm-object-alloc/lesson.quiz"
+            },
+            {
+              "id": "java-ref-types",
+              "title": "四种引用类型",
+              "subject": "JVM",
+              "chapter": "内存与类加载",
+              "order": 7,
+              "tags": [
+                "JVM",
+                "引用",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "jvm-memory-areas",
+                "threadlocal-principle"
+              ],
+              "dsl": "library/java-ref-types/lesson.learn",
+              "path": "library/java-ref-types/index.html",
+              "createdAt": "2026-07-01",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 0,
+              "quiz": "library/java-ref-types/lesson.quiz"
+            }
+          ]
+        },
+        {
+          "id": "垃圾回收",
+          "title": "垃圾回收",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "jvm-gc-generations",
+              "title": "JVM 分代 GC",
+              "subject": "JVM",
+              "chapter": "垃圾回收",
+              "order": 1,
+              "tags": [
+                "JVM",
+                "GC",
+                "后端八股"
+              ],
+              "prerequisites": [
+                "Java 基础"
+              ],
+              "dsl": "library/jvm-gc-generations/lesson.learn",
+              "path": "library/jvm-gc-generations/index.html",
+              "createdAt": "2026-06-30",
+              "steps": 4,
+              "depths": 3,
+              "subjectOrder": 8,
+              "chapterOrder": 1,
+              "quiz": "library/jvm-gc-generations/lesson.quiz",
+              "narrate": "library/jvm-gc-generations/lesson.narrate",
+              "narrateAudio": "library/jvm-gc-generations/audio/narrate.json"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "api-idempotent",
+      "title": "接口幂等设计",
+      "subject": "工程实践",
+      "chapter": "系统设计",
+      "order": 1,
+      "tags": [
+        "幂等",
+        "系统设计",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-transaction-isolation"
+      ],
+      "dsl": "library/api-idempotent/lesson.learn",
+      "path": "library/api-idempotent/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 6,
+      "chapterOrder": 1,
+      "quiz": "library/api-idempotent/lesson.quiz",
+      "narrate": "library/api-idempotent/lesson.narrate",
+      "narrateAudio": "library/api-idempotent/audio/narrate.json"
+    },
+    {
+      "id": "arraylist-linkedlist",
+      "title": "ArrayList vs LinkedList",
+      "subject": "Java 基础",
+      "chapter": "集合框架",
+      "order": 2,
+      "tags": [
+        "Java",
+        "集合",
+        "ArrayList",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "hashmap-collision"
+      ],
+      "dsl": "library/arraylist-linkedlist/lesson.learn",
+      "path": "library/arraylist-linkedlist/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 1,
+      "quiz": "library/arraylist-linkedlist/lesson.quiz",
+      "narrate": "library/arraylist-linkedlist/lesson.narrate",
+      "narrateAudio": "library/arraylist-linkedlist/audio/narrate.json"
+    },
+    {
+      "id": "concurrent-hashmap",
+      "title": "ConcurrentHashMap",
+      "subject": "Java 并发",
+      "chapter": "集合框架",
+      "order": 5,
+      "tags": [
+        "Java",
+        "并发",
+        "ConcurrentHashMap",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "hashmap-collision",
+        "java-volatile-cas"
+      ],
+      "dsl": "library/concurrent-hashmap/lesson.learn",
+      "path": "library/concurrent-hashmap/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 1,
+      "quiz": "library/concurrent-hashmap/lesson.quiz",
+      "narrate": "library/concurrent-hashmap/lesson.narrate",
+      "narrateAudio": "library/concurrent-hashmap/audio/narrate.json"
+    },
+    {
+      "id": "copyonwrite-arraylist",
+      "title": "CopyOnWrite 读写",
+      "subject": "Java 基础",
+      "chapter": "集合框架",
+      "order": 6,
+      "tags": [
+        "Java",
+        "并发",
+        "CopyOnWrite",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "arraylist-linkedlist"
+      ],
+      "dsl": "library/copyonwrite-arraylist/lesson.learn",
+      "path": "library/copyonwrite-arraylist/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 1,
+      "quiz": "library/copyonwrite-arraylist/lesson.quiz",
+      "narrate": "library/copyonwrite-arraylist/lesson.narrate",
+      "narrateAudio": "library/copyonwrite-arraylist/audio/narrate.json"
+    },
+    {
+      "id": "dead-lock-condition",
+      "title": "死锁四条件",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 5,
+      "tags": [
+        "Java",
+        "并发",
+        "死锁",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "java-lock-upgrade"
+      ],
+      "dsl": "library/dead-lock-condition/lesson.learn",
+      "path": "library/dead-lock-condition/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/dead-lock-condition/lesson.quiz",
+      "narrate": "library/dead-lock-condition/lesson.narrate",
+      "narrateAudio": "library/dead-lock-condition/audio/narrate.json"
+    },
+    {
+      "id": "distributed-cap",
+      "title": "CAP 与一致性",
+      "subject": "分布式",
+      "chapter": "理论基础",
+      "order": 1,
+      "tags": [
+        "分布式",
+        "CAP",
+        "一致性",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Redis 基础",
+        "MySQL 基础"
+      ],
+      "dsl": "library/distributed-cap/lesson.learn",
+      "path": "library/distributed-cap/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 1,
+      "quiz": "library/distributed-cap/lesson.quiz",
+      "narrate": "library/distributed-cap/lesson.narrate",
+      "narrateAudio": "library/distributed-cap/audio/narrate.json"
+    },
+    {
+      "id": "distributed-transaction-tcc",
+      "title": "分布式事务 TCC",
+      "subject": "分布式",
+      "chapter": "理论基础",
+      "order": 2,
+      "tags": [
+        "分布式",
+        "事务",
+        "TCC",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "distributed-cap",
+        "spring-transaction"
+      ],
+      "dsl": "library/distributed-transaction-tcc/lesson.learn",
+      "path": "library/distributed-transaction-tcc/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 1,
+      "quiz": "library/distributed-transaction-tcc/lesson.quiz"
+    },
+    {
+      "id": "hashmap-collision",
+      "title": "HashMap 冲突",
+      "subject": "Java 基础",
+      "chapter": "集合框架",
+      "order": 1,
+      "tags": [
+        "Java",
+        "HashMap",
+        "集合",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础",
+        "equals/hashCode"
+      ],
+      "dsl": "library/hashmap-collision/lesson.learn",
+      "path": "library/hashmap-collision/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 1,
+      "narrate": "library/hashmap-collision/lesson.narrate",
+      "narrateAudio": "library/hashmap-collision/audio/narrate.json"
+    },
+    {
+      "id": "http-https-tls",
+      "title": "HTTP 与 HTTPS",
+      "subject": "计网",
+      "chapter": "应用层",
+      "order": 1,
+      "tags": [
+        "计网",
+        "HTTP",
+        "HTTPS",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "tcp-three-handshake"
+      ],
+      "dsl": "library/http-https-tls/lesson.learn",
+      "path": "library/http-https-tls/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 7,
+      "chapterOrder": 2,
+      "quiz": "library/http-https-tls/lesson.quiz"
+    },
+    {
+      "id": "java-aqs-reentrant",
+      "title": "AQS 与 ReentrantLock",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 7,
+      "tags": [
+        "Java",
+        "AQS",
+        "ReentrantLock",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "java-lock-upgrade",
+        "java-volatile-cas"
+      ],
+      "dsl": "library/java-aqs-reentrant/lesson.learn",
+      "path": "library/java-aqs-reentrant/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-aqs-reentrant/lesson.quiz",
+      "narrate": "library/java-aqs-reentrant/lesson.narrate",
+      "narrateAudio": "library/java-aqs-reentrant/audio/narrate.json"
+    },
+    {
+      "id": "java-concurrent-tools",
+      "title": "并发工具类",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 8,
+      "tags": [
+        "Java",
+        "JUC",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "java-aqs-reentrant",
+        "java-thread-pool"
+      ],
+      "dsl": "library/java-concurrent-tools/lesson.learn",
+      "path": "library/java-concurrent-tools/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-concurrent-tools/lesson.quiz",
+      "narrate": "library/java-concurrent-tools/lesson.narrate",
+      "narrateAudio": "library/java-concurrent-tools/audio/narrate.json"
+    },
+    {
+      "id": "java-equals-hashcode",
+      "title": "equals 与 hashCode",
+      "subject": "Java 基础",
+      "chapter": "语言核心",
+      "order": 1,
+      "tags": [
+        "Java",
+        "equals",
+        "hashCode",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "java-string-intern"
+      ],
+      "dsl": "library/java-equals-hashcode/lesson.learn",
+      "path": "library/java-equals-hashcode/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 0,
+      "quiz": "library/java-equals-hashcode/lesson.quiz",
+      "narrate": "library/java-equals-hashcode/lesson.narrate",
+      "narrateAudio": "library/java-equals-hashcode/audio/narrate.json"
+    },
+    {
+      "id": "java-lock-upgrade",
+      "title": "锁升级机制",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 3,
+      "tags": [
+        "Java",
+        "并发",
+        "synchronized",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础",
+        "java-thread-pool"
+      ],
+      "dsl": "library/java-lock-upgrade/lesson.learn",
+      "path": "library/java-lock-upgrade/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-lock-upgrade/lesson.quiz",
+      "narrate": "library/java-lock-upgrade/lesson.narrate",
+      "narrateAudio": "library/java-lock-upgrade/audio/narrate.json"
+    },
+    {
+      "id": "java-ref-types",
+      "title": "四种引用类型",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 7,
+      "tags": [
+        "JVM",
+        "引用",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "jvm-memory-areas",
+        "threadlocal-principle"
+      ],
+      "dsl": "library/java-ref-types/lesson.learn",
+      "path": "library/java-ref-types/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/java-ref-types/lesson.quiz"
+    },
+    {
+      "id": "java-string-intern",
+      "title": "String 与常量池",
+      "subject": "Java 基础",
+      "chapter": "语言核心",
+      "order": 0,
+      "tags": [
+        "Java",
+        "String",
+        "JVM",
+        "JavaGuide"
+      ],
+      "prerequisites": [],
+      "dsl": "library/java-string-intern/lesson.learn",
+      "path": "library/java-string-intern/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 0,
+      "quiz": "library/java-string-intern/lesson.quiz",
+      "narrate": "library/java-string-intern/lesson.narrate",
+      "narrateAudio": "library/java-string-intern/audio/narrate.json"
+    },
+    {
+      "id": "java-thread-lifecycle",
+      "title": "线程状态转换",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 1,
+      "tags": [
+        "Java",
+        "线程",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "Java 基础"
+      ],
+      "dsl": "library/java-thread-lifecycle/lesson.learn",
+      "path": "library/java-thread-lifecycle/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-thread-lifecycle/lesson.quiz",
+      "narrate": "library/java-thread-lifecycle/lesson.narrate",
+      "narrateAudio": "library/java-thread-lifecycle/audio/narrate.json"
+    },
+    {
+      "id": "java-thread-pool",
+      "title": "Java 线程池",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 2,
+      "tags": [
+        "Java",
+        "并发",
+        "线程池",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础",
+        "多线程入门"
+      ],
+      "dsl": "library/java-thread-pool/lesson.learn",
+      "path": "library/java-thread-pool/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-thread-pool/lesson.quiz",
+      "narrate": "library/java-thread-pool/lesson.narrate",
+      "narrateAudio": "library/java-thread-pool/audio/narrate.json"
+    },
+    {
+      "id": "java-volatile-cas",
+      "title": "volatile 与 CAS",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 4,
+      "tags": [
+        "Java",
+        "并发",
+        "volatile",
+        "CAS",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础",
+        "java-lock-upgrade"
+      ],
+      "dsl": "library/java-volatile-cas/lesson.learn",
+      "path": "library/java-volatile-cas/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/java-volatile-cas/lesson.quiz",
+      "narrate": "library/java-volatile-cas/lesson.narrate",
+      "narrateAudio": "library/java-volatile-cas/audio/narrate.json"
+    },
+    {
+      "id": "jvm-class-loading",
+      "title": "类加载与双亲委派",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 1,
+      "tags": [
+        "JVM",
+        "类加载",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "jvm-memory-areas"
+      ],
+      "dsl": "library/jvm-class-loading/lesson.learn",
+      "path": "library/jvm-class-loading/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-class-loading/lesson.quiz",
+      "narrate": "library/jvm-class-loading/lesson.narrate",
+      "narrateAudio": "library/jvm-class-loading/audio/narrate.json"
+    },
+    {
+      "id": "jvm-gc-algorithms",
+      "title": "GC 算法对比",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 5,
+      "tags": [
+        "JVM",
+        "GC",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "jvm-gc-generations"
+      ],
+      "dsl": "library/jvm-gc-algorithms/lesson.learn",
+      "path": "library/jvm-gc-algorithms/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-gc-algorithms/lesson.quiz"
+    },
+    {
+      "id": "jvm-gc-generations",
+      "title": "JVM 分代 GC",
+      "subject": "JVM",
+      "chapter": "垃圾回收",
+      "order": 1,
+      "tags": [
+        "JVM",
+        "GC",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础"
+      ],
+      "dsl": "library/jvm-gc-generations/lesson.learn",
+      "path": "library/jvm-gc-generations/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 1,
+      "quiz": "library/jvm-gc-generations/lesson.quiz",
+      "narrate": "library/jvm-gc-generations/lesson.narrate",
+      "narrateAudio": "library/jvm-gc-generations/audio/narrate.json"
+    },
+    {
+      "id": "jvm-happens-before",
+      "title": "JMM 与 happens-before",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 3,
+      "tags": [
+        "JVM",
+        "JMM",
+        "并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "java-volatile-cas",
+        "jvm-memory-areas"
+      ],
+      "dsl": "library/jvm-happens-before/lesson.learn",
+      "path": "library/jvm-happens-before/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-happens-before/lesson.quiz"
+    },
+    {
+      "id": "jvm-memory-areas",
+      "title": "JVM 内存结构",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 0,
+      "tags": [
+        "JVM",
+        "内存",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "Java 基础"
+      ],
+      "dsl": "library/jvm-memory-areas/lesson.learn",
+      "path": "library/jvm-memory-areas/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-memory-areas/lesson.quiz",
+      "narrate": "library/jvm-memory-areas/lesson.narrate",
+      "narrateAudio": "library/jvm-memory-areas/audio/narrate.json"
+    },
+    {
+      "id": "jvm-object-alloc",
+      "title": "对象创建与内存分配",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 6,
+      "tags": [
+        "JVM",
+        "对象",
+        "内存",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "jvm-memory-areas"
+      ],
+      "dsl": "library/jvm-object-alloc/lesson.learn",
+      "path": "library/jvm-object-alloc/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-object-alloc/lesson.quiz"
+    },
+    {
+      "id": "jvm-oom-types",
+      "title": "JVM OOM 类型与排查",
+      "subject": "JVM",
+      "chapter": "内存与类加载",
+      "order": 4,
+      "tags": [
+        "JVM",
+        "OOM",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "jvm-memory-areas"
+      ],
+      "dsl": "library/jvm-oom-types/lesson.learn",
+      "path": "library/jvm-oom-types/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 8,
+      "chapterOrder": 0,
+      "quiz": "library/jvm-oom-types/lesson.quiz"
+    },
+    {
+      "id": "mq-message-reliability",
+      "title": "MQ 消息可靠性",
+      "subject": "分布式",
+      "chapter": "消息队列",
+      "order": 1,
+      "tags": [
+        "消息队列",
+        "分布式",
+        "可靠性",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "分布式基础",
+        "distributed-cap"
+      ],
+      "dsl": "library/mq-message-reliability/lesson.learn",
+      "path": "library/mq-message-reliability/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 2,
+      "quiz": "library/mq-message-reliability/lesson.quiz",
+      "narrate": "library/mq-message-reliability/lesson.narrate",
+      "narrateAudio": "library/mq-message-reliability/audio/narrate.json"
+    },
+    {
+      "id": "mysql-binlog-2pc",
+      "title": "binlog 与两阶段提交",
+      "subject": "MySQL",
+      "chapter": "日志与事务",
+      "order": 2,
+      "tags": [
+        "MySQL",
+        "binlog",
+        "两阶段提交",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "mysql-redo-undo"
+      ],
+      "dsl": "library/mysql-binlog-2pc/lesson.learn",
+      "path": "library/mysql-binlog-2pc/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 2,
+      "quiz": "library/mysql-binlog-2pc/lesson.quiz",
+      "narrate": "library/mysql-binlog-2pc/lesson.narrate",
+      "narrateAudio": "library/mysql-binlog-2pc/audio/narrate.json"
+    },
+    {
+      "id": "mysql-btree-index",
+      "title": "MySQL B+树索引",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 1,
+      "tags": [
+        "MySQL",
+        "索引",
+        "B+树",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "SQL 基础"
+      ],
+      "dsl": "library/mysql-btree-index/lesson.learn",
+      "path": "library/mysql-btree-index/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-btree-index/lesson.quiz",
+      "narrate": "library/mysql-btree-index/lesson.narrate",
+      "narrateAudio": "library/mysql-btree-index/audio/narrate.json"
+    },
+    {
+      "id": "mysql-explain-slow",
+      "title": "EXPLAIN 与慢 SQL",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 4,
+      "tags": [
+        "MySQL",
+        "优化",
+        "EXPLAIN",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "mysql-btree-index"
+      ],
+      "dsl": "library/mysql-explain-slow/lesson.learn",
+      "path": "library/mysql-explain-slow/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-explain-slow/lesson.quiz",
+      "narrate": "library/mysql-explain-slow/lesson.narrate",
+      "narrateAudio": "library/mysql-explain-slow/audio/narrate.json"
+    },
+    {
+      "id": "mysql-index-failure",
+      "title": "索引失效场景",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 6,
+      "tags": [
+        "MySQL",
+        "索引",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-btree-index"
+      ],
+      "dsl": "library/mysql-index-failure/lesson.learn",
+      "path": "library/mysql-index-failure/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-index-failure/lesson.quiz"
+    },
+    {
+      "id": "mysql-lock-row-gap",
+      "title": "行锁与间隙锁",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 3,
+      "tags": [
+        "MySQL",
+        "锁",
+        "InnoDB",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "mysql-transaction-isolation"
+      ],
+      "dsl": "library/mysql-lock-row-gap/lesson.learn",
+      "path": "library/mysql-lock-row-gap/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-lock-row-gap/lesson.quiz",
+      "narrate": "library/mysql-lock-row-gap/lesson.narrate",
+      "narrateAudio": "library/mysql-lock-row-gap/audio/narrate.json"
+    },
+    {
+      "id": "mysql-master-slave",
+      "title": "MySQL 主从复制",
+      "subject": "MySQL",
+      "chapter": "高可用",
+      "order": 1,
+      "tags": [
+        "MySQL",
+        "主从",
+        "高可用",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-binlog-2pc"
+      ],
+      "dsl": "library/mysql-master-slave/lesson.learn",
+      "path": "library/mysql-master-slave/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 3,
+      "quiz": "library/mysql-master-slave/lesson.quiz"
+    },
+    {
+      "id": "mysql-mvcc-readview",
+      "title": "MVCC 与 ReadView",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 5,
+      "tags": [
+        "MySQL",
+        "MVCC",
+        "事务",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-transaction-isolation",
+        "mysql-redo-undo"
+      ],
+      "dsl": "library/mysql-mvcc-readview/lesson.learn",
+      "path": "library/mysql-mvcc-readview/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-mvcc-readview/lesson.quiz"
+    },
+    {
+      "id": "mysql-redo-undo",
+      "title": "redo 与 undo 日志",
+      "subject": "MySQL",
+      "chapter": "日志与事务",
+      "order": 1,
+      "tags": [
+        "MySQL",
+        "InnoDB",
+        "redo",
+        "undo",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "mysql-transaction-isolation"
+      ],
+      "dsl": "library/mysql-redo-undo/lesson.learn",
+      "path": "library/mysql-redo-undo/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 2,
+      "quiz": "library/mysql-redo-undo/lesson.quiz",
+      "narrate": "library/mysql-redo-undo/lesson.narrate",
+      "narrateAudio": "library/mysql-redo-undo/audio/narrate.json"
+    },
+    {
+      "id": "mysql-sharding",
+      "title": "分库分表原理",
+      "subject": "MySQL",
+      "chapter": "高可用",
+      "order": 2,
+      "tags": [
+        "MySQL",
+        "分库分表",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-master-slave",
+        "mysql-btree-index"
+      ],
+      "dsl": "library/mysql-sharding/lesson.learn",
+      "path": "library/mysql-sharding/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 4,
+      "chapterOrder": 3,
+      "quiz": "library/mysql-sharding/lesson.quiz"
+    },
+    {
+      "id": "mysql-transaction-isolation",
+      "title": "事务隔离级别",
+      "subject": "MySQL",
+      "chapter": "索引与事务",
+      "order": 2,
+      "tags": [
+        "MySQL",
+        "事务",
+        "隔离级别",
+        "MVCC",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "SQL 基础",
+        "mysql-btree-index"
+      ],
+      "dsl": "library/mysql-transaction-isolation/lesson.learn",
+      "path": "library/mysql-transaction-isolation/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 1,
+      "quiz": "library/mysql-transaction-isolation/lesson.quiz",
+      "narrate": "library/mysql-transaction-isolation/lesson.narrate",
+      "narrateAudio": "library/mysql-transaction-isolation/audio/narrate.json"
+    },
+    {
+      "id": "nio-epoll-io",
+      "title": "NIO 与 IO 多路复用",
+      "subject": "计网",
+      "chapter": "IO模型",
+      "order": 1,
+      "tags": [
+        "操作系统",
+        "NIO",
+        "epoll",
+        "后端八股"
+      ],
+      "prerequisites": [],
+      "dsl": "library/nio-epoll-io/lesson.learn",
+      "path": "library/nio-epoll-io/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 7,
+      "chapterOrder": 3,
+      "quiz": "library/nio-epoll-io/lesson.quiz"
+    },
+    {
+      "id": "rate-limiter-bucket",
+      "title": "令牌桶限流",
+      "subject": "工程实践",
+      "chapter": "系统设计",
+      "order": 2,
+      "tags": [
+        "限流",
+        "高并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "redis-cache-breakdown"
+      ],
+      "dsl": "library/rate-limiter-bucket/lesson.learn",
+      "path": "library/rate-limiter-bucket/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 6,
+      "chapterOrder": 1,
+      "quiz": "library/rate-limiter-bucket/lesson.quiz",
+      "narrate": "library/rate-limiter-bucket/lesson.narrate",
+      "narrateAudio": "library/rate-limiter-bucket/audio/narrate.json"
+    },
+    {
+      "id": "redis-cache-avalanche",
+      "title": "缓存穿透与雪崩",
+      "subject": "Redis 缓存",
+      "chapter": "缓存三兄弟",
+      "order": 2,
+      "tags": [
+        "Redis",
+        "缓存",
+        "高并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Redis 基础",
+        "redis-cache-breakdown"
+      ],
+      "dsl": "library/redis-cache-avalanche/lesson.learn",
+      "path": "library/redis-cache-avalanche/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 1,
+      "quiz": "library/redis-cache-avalanche/lesson.quiz",
+      "narrate": "library/redis-cache-avalanche/lesson.narrate",
+      "narrateAudio": "library/redis-cache-avalanche/audio/narrate.json"
+    },
+    {
+      "id": "redis-cache-breakdown",
+      "title": "Redis 缓存击穿",
+      "subject": "Redis 缓存",
+      "chapter": "缓存三兄弟",
+      "order": 1,
+      "tags": [
+        "Redis",
+        "缓存",
+        "高并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Redis 基础"
+      ],
+      "dsl": "library/redis-cache-breakdown/lesson.learn",
+      "path": "library/redis-cache-breakdown/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 1,
+      "quiz": "library/redis-cache-breakdown/lesson.quiz",
+      "narrate": "library/redis-cache-breakdown/lesson.narrate",
+      "narrateAudio": "library/redis-cache-breakdown/audio/narrate.json"
+    },
+    {
+      "id": "redis-cluster-sentinel",
+      "title": "Redis 哨兵与集群",
+      "subject": "Redis 缓存",
+      "chapter": "持久化与高可用",
+      "order": 3,
+      "tags": [
+        "Redis",
+        "哨兵",
+        "集群",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "redis-replication"
+      ],
+      "dsl": "library/redis-cluster-sentinel/lesson.learn",
+      "path": "library/redis-cluster-sentinel/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 4,
+      "quiz": "library/redis-cluster-sentinel/lesson.quiz"
+    },
+    {
+      "id": "redis-distributed-lock",
+      "title": "Redis 分布式锁",
+      "subject": "Redis 缓存",
+      "chapter": "高级应用",
+      "order": 1,
+      "tags": [
+        "Redis",
+        "分布式锁",
+        "高并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "redis-cache-breakdown",
+        "java-volatile-cas"
+      ],
+      "dsl": "library/redis-distributed-lock/lesson.learn",
+      "path": "library/redis-distributed-lock/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 2,
+      "quiz": "library/redis-distributed-lock/lesson.quiz",
+      "narrate": "library/redis-distributed-lock/lesson.narrate",
+      "narrateAudio": "library/redis-distributed-lock/audio/narrate.json"
+    },
+    {
+      "id": "redis-eviction-policy",
+      "title": "Redis 内存淘汰",
+      "subject": "Redis 缓存",
+      "chapter": "基础原理",
+      "order": 3,
+      "tags": [
+        "Redis",
+        "内存",
+        "淘汰",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "redis-five-types",
+        "redis-single-thread"
+      ],
+      "dsl": "library/redis-eviction-policy/lesson.learn",
+      "path": "library/redis-eviction-policy/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 1,
+      "quiz": "library/redis-eviction-policy/lesson.quiz"
+    },
+    {
+      "id": "redis-five-types",
+      "title": "Redis 五大数据结构",
+      "subject": "Redis 缓存",
+      "chapter": "基础原理",
+      "order": 0,
+      "tags": [
+        "Redis",
+        "数据结构",
+        "JavaGuide"
+      ],
+      "prerequisites": [],
+      "dsl": "library/redis-five-types/lesson.learn",
+      "path": "library/redis-five-types/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 0,
+      "quiz": "library/redis-five-types/lesson.quiz",
+      "narrate": "library/redis-five-types/lesson.narrate",
+      "narrateAudio": "library/redis-five-types/audio/narrate.json"
+    },
+    {
+      "id": "redis-hot-key",
+      "title": "Redis 热点 Key",
+      "subject": "Redis 缓存",
+      "chapter": "高级应用",
+      "order": 2,
+      "tags": [
+        "Redis",
+        "热点",
+        "高并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "redis-cache-breakdown",
+        "redis-single-thread"
+      ],
+      "dsl": "library/redis-hot-key/lesson.learn",
+      "path": "library/redis-hot-key/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 3,
+      "chapterOrder": 3,
+      "quiz": "library/redis-hot-key/lesson.quiz"
+    },
+    {
+      "id": "redis-persistence",
+      "title": "RDB 与 AOF",
+      "subject": "Redis 缓存",
+      "chapter": "持久化与高可用",
+      "order": 1,
+      "tags": [
+        "Redis",
+        "持久化",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "redis-single-thread"
+      ],
+      "dsl": "library/redis-persistence/lesson.learn",
+      "path": "library/redis-persistence/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 3,
+      "quiz": "library/redis-persistence/lesson.quiz",
+      "narrate": "library/redis-persistence/lesson.narrate",
+      "narrateAudio": "library/redis-persistence/audio/narrate.json"
+    },
+    {
+      "id": "redis-replication",
+      "title": "Redis 主从复制",
+      "subject": "Redis 缓存",
+      "chapter": "持久化与高可用",
+      "order": 2,
+      "tags": [
+        "Redis",
+        "主从",
+        "哨兵",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "redis-persistence"
+      ],
+      "dsl": "library/redis-replication/lesson.learn",
+      "path": "library/redis-replication/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 3,
+      "quiz": "library/redis-replication/lesson.quiz",
+      "narrate": "library/redis-replication/lesson.narrate",
+      "narrateAudio": "library/redis-replication/audio/narrate.json"
+    },
+    {
+      "id": "redis-single-thread",
+      "title": "Redis 单线程模型",
+      "subject": "Redis 缓存",
+      "chapter": "基础原理",
+      "order": 1,
+      "tags": [
+        "Redis",
+        "原理",
+        "JavaGuide"
+      ],
+      "prerequisites": [
+        "redis-five-types"
+      ],
+      "dsl": "library/redis-single-thread/lesson.learn",
+      "path": "library/redis-single-thread/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 2,
+      "chapterOrder": 0,
+      "quiz": "library/redis-single-thread/lesson.quiz",
+      "narrate": "library/redis-single-thread/lesson.narrate",
+      "narrateAudio": "library/redis-single-thread/audio/narrate.json"
+    },
+    {
+      "id": "spring-aop-proxy",
+      "title": "Spring AOP 原理",
+      "subject": "Spring",
+      "chapter": "核心原理",
+      "order": 3,
+      "tags": [
+        "Spring",
+        "AOP",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "spring-ioc-di"
+      ],
+      "dsl": "library/spring-aop-proxy/lesson.learn",
+      "path": "library/spring-aop-proxy/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 5,
+      "chapterOrder": 1,
+      "quiz": "library/spring-aop-proxy/lesson.quiz"
+    },
+    {
+      "id": "spring-ioc-di",
+      "title": "Spring IOC 注入",
+      "subject": "Spring",
+      "chapter": "核心原理",
+      "order": 1,
+      "tags": [
+        "Spring",
+        "IOC",
+        "依赖注入",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "Java 基础"
+      ],
+      "dsl": "library/spring-ioc-di/lesson.learn",
+      "path": "library/spring-ioc-di/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 5,
+      "chapterOrder": 1,
+      "quiz": "library/spring-ioc-di/lesson.quiz",
+      "narrate": "library/spring-ioc-di/lesson.narrate",
+      "narrateAudio": "library/spring-ioc-di/audio/narrate.json"
+    },
+    {
+      "id": "spring-transaction",
+      "title": "Spring 事务传播",
+      "subject": "Spring",
+      "chapter": "核心原理",
+      "order": 2,
+      "tags": [
+        "Spring",
+        "事务",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "mysql-transaction-isolation",
+        "spring-ioc-di"
+      ],
+      "dsl": "library/spring-transaction/lesson.learn",
+      "path": "library/spring-transaction/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 5,
+      "chapterOrder": 1,
+      "quiz": "library/spring-transaction/lesson.quiz",
+      "narrate": "library/spring-transaction/lesson.narrate",
+      "narrateAudio": "library/spring-transaction/audio/narrate.json"
+    },
+    {
+      "id": "tcp-four-close",
+      "title": "TCP 四次挥手",
+      "subject": "计网",
+      "chapter": "传输层",
+      "order": 2,
+      "tags": [
+        "计网",
+        "TCP",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "tcp-three-handshake"
+      ],
+      "dsl": "library/tcp-four-close/lesson.learn",
+      "path": "library/tcp-four-close/index.html",
+      "createdAt": "2026-07-01",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 7,
+      "chapterOrder": 1,
+      "quiz": "library/tcp-four-close/lesson.quiz"
+    },
+    {
+      "id": "tcp-three-handshake",
+      "title": "TCP 三次握手",
+      "subject": "计网",
+      "chapter": "传输层",
+      "order": 1,
+      "tags": [
+        "计网",
+        "TCP",
+        "后端八股"
+      ],
+      "prerequisites": [],
+      "dsl": "library/tcp-three-handshake/lesson.learn",
+      "path": "library/tcp-three-handshake/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 7,
+      "chapterOrder": 1,
+      "quiz": "library/tcp-three-handshake/lesson.quiz",
+      "narrate": "library/tcp-three-handshake/lesson.narrate",
+      "narrateAudio": "library/tcp-three-handshake/audio/narrate.json"
+    },
+    {
+      "id": "threadlocal-principle",
+      "title": "ThreadLocal 原理",
+      "subject": "Java 并发",
+      "chapter": "线程与锁",
+      "order": 6,
+      "tags": [
+        "Java",
+        "ThreadLocal",
+        "并发",
+        "后端八股"
+      ],
+      "prerequisites": [
+        "java-thread-pool"
+      ],
+      "dsl": "library/threadlocal-principle/lesson.learn",
+      "path": "library/threadlocal-principle/index.html",
+      "createdAt": "2026-06-30",
+      "steps": 4,
+      "depths": 3,
+      "subjectOrder": 1,
+      "chapterOrder": 2,
+      "quiz": "library/threadlocal-principle/lesson.quiz",
+      "narrate": "library/threadlocal-principle/lesson.narrate",
+      "narrateAudio": "library/threadlocal-principle/audio/narrate.json"
+    }
+  ]
+}

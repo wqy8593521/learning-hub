@@ -1,0 +1,49 @@
+# spring-transaction.quiz
+bank Spring 事务传播
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 事务边界
+    style pick_one
+    ask Spring 事务通过什么实现？
+    opt AOP 代理
+    opt 过滤器
+    opt 拦截器链 only
+    opt 手动 commit
+    answer 0
+    explain @Transactional 由 AOP 在方法前后开启/提交/回滚事务。
+
+  q REQUIRED
+    style pick_one
+    ask REQUIRED 传播行为是？
+    opt 有则加入，无则新建
+    opt 总是新建
+    opt 不支持事务
+    opt 只读
+    answer 0
+    explain 默认传播行为，内外层同一事务。
+
+  q REQUIRES_NEW
+    style pick_one
+    ask REQUIRES_NEW 的特点是？
+    opt 挂起外层，新建独立事务
+    opt 加入外层事务
+    opt 不开启事务
+    opt 嵌套保存点
+    answer 0
+    explain 内层独立提交/回滚，不受外层影响，适合审计日志。
+
+  q 回滚规则
+    style true_false
+    ask 默认 checked Exception 不会触发回滚
+    true
+    explain 默认 rollbackFor RuntimeException 和 Error。
+
+trigger
+  after_step 0 事务边界
+  after_step 1 REQUIRED
+  after_step 2 REQUIRES_NEW
+  after_step 3 回滚规则
+  end pick 2

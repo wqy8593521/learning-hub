@@ -1,0 +1,64 @@
+# String 与常量池 — VML
+lesson String 与常量池
+tags Java, String, JVM
+
+step 字面量创建
+  frames 3
+  cap "abc"直接进池 | 堆中仅一份 | 多引用共享
+  @all
+    box 280 60 200 70 label=字符串常量池 stroke=blue
+  @0
+    box 300 80 120 44 label="abc" stroke=green
+    circle 120 100 9 fill=green
+    line 129 100 300 100 stroke=green draw
+  @1
+    circle 500 100 9 fill=green
+    line 420 100 491 100 stroke=green draw
+    text 2引用1对象 380 170 fill=green
+  @2
+    compare 80 200 300 new String|堆新对象|可重复 vs 字面量|常量池|共享
+
+step new与intern
+  frames 4
+  cap new在堆建新对象 | intern查池复用 | 池无则放入
+  @all
+    cols 代码:30 堆:310 常量池:600
+  @0
+    box 310 70 140 50 label=new对象 stroke=orange
+    arrow 代码 堆 new
+  @1
+    arrow 代码 常量池 intern
+    box 600 70 120 44 label=查池 stroke=blue
+  @2
+    box 600 70 120 44 label=已有✓ stroke=green blink
+    line 380 95 600 95 stroke=green draw
+  @3
+    box 310 70 140 50 label=堆对象 stroke=orange expired
+    box 600 130 120 44 label=入池 stroke=green
+
+step 不可变性
+  frames 3
+  cap String类final | 内部char[]不可变 | 修改=新建对象
+  @0
+    box 300 70 160 56 label="hello" stroke=green
+    lock 300 60
+  @1
+    box 300 70 160 56 label="hello" stroke=muted opacity=0.3
+    box 480 70 160 56 label="hello!" stroke=orange blink
+    path M380 98 Q430 50 480 98 stroke=orange draw
+  @2
+    compare 80 200 300 String|不可变|线程安全 vs StringBuilder|可变|拼接
+
+step 拼接原理
+  frames 3
+  cap +拼接编译优化 | 循环+产生大量对象 | StringBuilder复用
+  @0
+    codeblock 36 70 1 w=400 String s = "a" + "b";
+    box 300 130 120 44 label=1个对象 stroke=green
+  @1
+    badge ×1000 40 200 pulse
+    box 300 200 200 60 label=循环+垃圾 stroke=red
+    meter 120 280 400 GC压力 grow max=100
+  @2
+    box 300 130 180 50 label=StringBuilder stroke=green
+    text append复用 380 200 fill=green

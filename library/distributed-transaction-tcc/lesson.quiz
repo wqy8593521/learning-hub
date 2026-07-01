@@ -1,0 +1,49 @@
+# distributed-transaction-tcc.quiz
+bank 分布式事务 TCC
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 本地事务局限
+    style pick_one
+    ask 跨微服务调用时本地 @Transactional 为什么不够？
+    opt 无法协调其他服务的数据库
+    opt 太慢
+    opt 不支持 MySQL
+    opt 只能读
+    answer 0
+    explain 每个服务独立事务，需分布式协议保证全局一致。
+
+  q TCC三阶段
+    style pick_one
+    ask TCC 的三个阶段是？
+    opt Try、Confirm、Cancel
+    opt Begin、Commit、Rollback
+    opt Read、Write、Delete
+    opt Send、Ack、Nack
+    answer 0
+    explain Try 预留→Confirm 确认→Cancel 取消。
+
+  q Try预留
+    style true_false
+    ask TCC 的 Try 阶段会真正扣减库存
+    false
+    explain Try 只冻结/预留资源，Confirm 才真正执行。
+
+  q 失败Cancel
+    style pick_one
+    ask TCC 相比 2PC 的主要优势？
+    opt 不长时间锁资源，性能更好
+    opt 强一致实时
+    opt 无需业务改造
+    opt 只支持单库
+    answer 0
+    explain TCC 在业务层实现，Try 后资源可释放，适合高并发。
+
+trigger
+  after_step 0 本地事务局限
+  after_step 1 TCC三阶段
+  after_step 2 Try预留
+  after_step 3 失败Cancel
+  end pick 2

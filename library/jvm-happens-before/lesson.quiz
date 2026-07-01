@@ -1,0 +1,49 @@
+# jvm-happens-before.quiz
+bank JMM 与 happens-before
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 可见性问题
+    style pick_one
+    ask 线程读到共享变量旧值，属于？
+    opt 可见性问题
+    opt 死锁
+    opt 类加载
+    opt GC
+    answer 0
+    explain 工作内存缓存导致未看到主内存最新值。
+
+  q happens-before
+    style pick_one
+    ask happens-before 保证的是？
+    opt 一个操作的结果对另一个操作可见
+    opt 两个操作同时执行
+    opt 一定按代码顺序执行
+    opt 不发生 GC
+    answer 0
+    explain hb 是 JMM 可见性偏序，不等于物理时间先后。
+
+  q volatile语义
+    style true_false
+    ask volatile 写对后续 volatile 读有 happens-before 关系
+    true
+    explain volatile 写 happens-before 后续对同一变量的读。
+
+  q 双重检查锁
+    style pick_one
+    ask DCL 单例中 instance 为什么要 volatile？
+    opt 防止指令重排导致半初始化对象
+    opt 加快速度
+    opt 减少内存
+    opt 替代 synchronized
+    answer 0
+    explain new 对象非原子，可能先暴露引用再完成构造。
+
+trigger
+  after_step 0 可见性问题
+  after_step 1 happens-before
+  after_step 2 volatile语义
+  after_step 3 双重检查锁
+  end pick 2

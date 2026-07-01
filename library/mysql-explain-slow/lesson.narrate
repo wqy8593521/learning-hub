@@ -1,0 +1,36 @@
+# EXPLAIN 与慢 SQL — 口语旁白
+lesson EXPLAIN 与慢 SQL
+
+step EXPLAIN字段
+  @0: EXPLAIN 是分析 SQL 执行计划的第一步，看 MySQL 打算怎么查数据。
+  @0 L1: 重点关注 type 访问类型、key 用的索引、rows 预估扫描行数。
+  @1: type 越好越快，key 为 NULL 说明没走索引，rows 越大越可能慢。
+  @1 L1: Extra 列提示 Using filesort、Using temporary 等额外开销。
+  @2: 慢 SQL 优化流程：先 EXPLAIN，再找索引问题，最后看是否需要改 SQL。
+  @2 L1: 不要凭感觉加索引，用 EXPLAIN 验证。
+
+step type等级
+  @0: type 从好到差大致是：system、const、eq_ref、ref、range、index、ALL。
+  @0 L1: const 是主键或唯一索引等值，最快；ALL 是全表扫描，最慢。
+  @1: ref 是非唯一索引等值，range 是范围扫描，index 是索引全扫描。
+  @1 L1: 生产环境至少要 ref 以上，ALL 和 index 在大表上要警惕。
+  @2: 看到 type=ALL 先想能不能加索引或改查询条件。
+  @2 L1: eq_ref 常见于 join 时主键关联，每次只匹配一行。
+  @3: 背熟 type 等级顺序，面试能快速判断 SQL 好坏。
+  @3 L1: rows 和 filtered 配合看，filtered 低说明回表过滤多。
+
+step 索引失效
+  @0: 对索引列做函数或运算，比如 where year(create_time)=2024，索引失效。
+  @0 L1: 隐式类型转换，比如字符串列和数字比较，也会导致失效。
+  @1: 不满足最左前缀，联合索引跳列查询用不上。
+  @1 L1: 用 OR 连接不同列，可能其中一个走不了索引。
+  @2: like 以通配符开头 '%abc' 没法用 B+ 树有序性。
+  @2 L1: 优化时先排查这三大类：函数、类型转换、最左前缀。
+
+step 优化手段
+  @0: 建合适的联合索引，让查询覆盖索引，减少回表。
+  @0 L1: 避免 SELECT *，只查需要的列，更容易覆盖索引。
+  @1: 深分页用延迟关联：先查 id 再 join，避免 offset 太大扫大量行。
+  @1 L1: 大表 count 考虑近似值或冗余计数，别每次全表扫。
+  @2: 定期分析慢查询日志，用 pt-query-digest 找 TOP 慢 SQL 优先优化。
+  @2 L1: 加索引是手段不是目的，要看选择性 and 写入代价。

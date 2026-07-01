@@ -1,0 +1,53 @@
+# mysql-binlog-2pc.quiz
+bank binlog 与两阶段提交
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q binlog作用
+    style pick_one
+    ask binlog 主要用于？
+    opt 主从复制和数据恢复
+    opt 崩溃重做物理页
+    opt MVCC 读
+    opt 索引查找
+    answer 0
+    explain binlog 是 Server 层逻辑日志，从库重放保持同步。
+
+  q 写入时机
+    style pick_one
+    ask ROW 格式 binlog 记录？
+    opt 行的前后镜像
+    opt 仅 SQL 文本
+    opt 仅索引
+    opt 连接信息
+    answer 0
+    explain ROW 记录每行变更，避免 statement 模式下函数不确定性。
+
+  q 两阶段协调
+    style pick_one
+    ask 两阶段提交的正确顺序？
+    opt redo prepare → binlog → redo commit
+    opt binlog → commit → redo
+    opt undo → redo → binlog
+    opt 只写 binlog
+    answer 0
+    explain 协调 InnoDB redo 与 Server binlog 一致性。
+
+  q 崩溃恢复
+    style pick_one
+    ask redo 有 prepare 但 binlog 无记录则？
+    opt 回滚事务
+    opt 提交事务
+    opt 忽略
+    opt 删库
+    answer 0
+    explain 说明 binlog 未成功，事务未真正提交，应回滚。
+
+trigger
+  after_step 0 binlog作用
+  after_step 1 写入时机
+  after_step 2 两阶段协调
+  after_step 3 崩溃恢复
+  end pick 2

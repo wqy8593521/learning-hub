@@ -1,0 +1,49 @@
+# redis-single-thread.quiz
+bank Redis 单线程模型
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 事件循环
+    style pick_one
+    ask Redis 主线程模型是？
+    opt 单线程 + IO 多路复用
+    opt 多线程竞争锁
+    opt 多进程
+    opt 每连接一线程
+    answer 0
+    explain epoll/kqueue 监听就绪事件，单线程串行处理命令。
+
+  q 为何快
+    style pick_one
+    ask Redis 快的核心原因不包括？
+    opt 多表 JOIN
+    opt 内存操作
+    opt 高效数据结构
+    opt 避免线程切换
+    answer 0
+    explain Redis 是 KV 内存库，无 SQL JOIN。
+
+  q 6.0多线程IO
+    style true_false
+    ask Redis 6.0 后命令执行仍是单线程
+    true
+    explain 6.0 仅网络 IO 可多线程，命令执行仍串行保原子。
+
+  q 阻塞点
+    style pick_one
+    ask 生产环境应避免？
+    opt KEYS * 遍历全库
+    opt GET 单 key
+    opt SET 单 key
+    opt INCR
+    answer 0
+    explain KEYS  O(N) 阻塞主线程，用 SCAN 代替。
+
+trigger
+  after_step 0 事件循环
+  after_step 1 为何快
+  after_step 2 6.0多线程IO
+  after_step 3 阻塞点
+  end pick 2

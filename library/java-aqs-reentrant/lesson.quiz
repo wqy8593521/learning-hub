@@ -1,0 +1,49 @@
+# java-aqs-reentrant.quiz
+bank AQS 与 ReentrantLock
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q AQS核心
+    style pick_one
+    ask AQS 用什么数据结构管理等待线程？
+    opt CLH 双向队列
+    opt 数组
+    opt 红黑树
+    opt 哈希表
+    answer 0
+    explain state + CLH 队列，CAS 竞争 state，失败入队阻塞。
+
+  q 可重入
+    style pick_one
+    ask 可重入锁 state=2 表示？
+    opt 同一线程加了 2 次锁
+    opt 两个线程持有
+    opt 锁已释放
+    opt 死锁
+    answer 0
+    explain 同线程重入 state 递增，减到 0 才真正释放。
+
+  q 公平与非公平
+    style pick_one
+    ask ReentrantLock 默认是？
+    opt 非公平锁
+    opt 公平锁
+    opt 无锁
+    opt 读写锁
+    answer 0
+    explain 默认非公平，新线程可插队 CAS，吞吐更高。
+
+  q 对比synchronized
+    style true_false
+    ask ReentrantLock 支持 tryLock 超时获取锁
+    true
+    explain tryLock(timeout) 是 Lock 相对 synchronized 的优势之一。
+
+trigger
+  after_step 0 AQS核心
+  after_step 1 可重入
+  after_step 2 公平与非公平
+  after_step 3 对比synchronized
+  end pick 2

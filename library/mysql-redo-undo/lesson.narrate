@@ -1,0 +1,34 @@
+# redo 与 undo 日志 — 口语旁白
+lesson redo 与 undo 日志
+
+step 崩溃恢复
+  @0: 事务提交时先写 redo log，脏页异步刷盘，崩溃后靠 redo 重做已提交事务。
+  @0 L1: 这叫 WAL 先写日志后写数据，保证持久性。
+  @1: 如果写完 redo 还没刷脏页就宕机，重启时用 redo 把数据页恢复到提交状态。
+  @1 L1: redo 是物理日志，记录的是数据页的修改，不是 SQL 语句。
+  @2: undo 负责回滚和 MVCC，redo 负责持久性，职责完全不同。
+  @2 L1: 崩溃恢复时 redo 前滚，undo 回滚未提交事务。
+
+step redo两阶段
+  @0: 事务提交和 binlog 协调用两阶段：先 redo prepare，再写 binlog，最后 redo commit。
+  @0 L1: prepare 表示事务已准备好提交，commit 标记最终提交。
+  @1: 这样保证 redo 和 binlog 一致，主从复制不会丢数据。
+  @1 L1: 崩溃恢复时根据 redo 状态和 binlog 判断提交还是回滚。
+  @2: 理解 redo 两阶段是理解 binlog 和 InnoDB 协调的基础。
+  @2 L1: 下一课 binlog 与两阶段提交会展开讲。
+
+step undo回滚
+  @0: 修改数据前，先把旧值写入 undo log，形成版本链。
+  @0 L1: 事务回滚时沿 undo 链把数据改回去，保证原子性。
+  @1: MVCC 快照读也靠 undo 链读历史版本，不需要加锁。
+  @1 L1: undo 是逻辑日志，存的是反向操作。
+  @2: 长事务会导致 undo 链很长，占用大量空间，影响 purge 效率。
+  @2 L1: 所以要及时提交事务，别在事务里干慢活。
+
+step 职责对比
+  @0: redo 保证持久性，崩溃后已提交的不丢；undo 保证原子性和 MVCC。
+  @0 L1: binlog 是 Server 层逻辑日志，用于主从复制和数据归档。
+  @1: redo 是 InnoDB 私有的，循环写；binlog 追加写，可归档。
+  @1 L1: 三者配合：undo 回滚未提交，redo 恢复已提交，binlog 同步从库。
+  @2: 面试画三角：InnoDB redo、InnoDB undo、Server binlog，各管什么。
+  @2 L1: 崩溃恢复和主从一致都依赖它们协调。

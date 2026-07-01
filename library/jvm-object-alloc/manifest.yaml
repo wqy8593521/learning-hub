@@ -1,0 +1,20 @@
+id: jvm-object-alloc
+title: 对象创建与内存分配
+subject: JVM
+chapter: 内存与类加载
+subjectOrder: 8
+chapterOrder: 0
+order: 6
+tags:
+  - JVM
+  - 对象
+  - 内存
+  - 后端八股
+prerequisites:
+  - jvm-memory-areas
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

@@ -1,0 +1,19 @@
+id: mysql-index-failure
+title: 索引失效场景
+subject: MySQL
+chapter: 索引与事务
+subjectOrder: 4
+chapterOrder: 1
+order: 6
+tags:
+  - MySQL
+  - 索引
+  - 后端八股
+prerequisites:
+  - mysql-btree-index
+vml: 1
+quiz: true
+level: 秋招
+author: learning-hub
+createdAt: 2026-07-01
+steps: 4

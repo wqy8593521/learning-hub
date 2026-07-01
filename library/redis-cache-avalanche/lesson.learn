@@ -1,0 +1,65 @@
+# 穿透与雪崩 — 动画强化版
+lesson 缓存穿透与雪崩
+tags Redis, 缓存, 高并发
+
+step 穿透打穿
+  frames 3
+  cap 查不存在的id | 缓存永远miss | 每次请求直达DB
+  @all
+    cols 客户端:30 Redis:310 MySQL:600
+    arrow 客户端 Redis GET
+  @0
+    box 320 65 120 44 label=id:-1 stroke=red
+    text GET 50 75 fill=muted
+  @1
+    box 320 65 120 44 label=nil stroke=red expired
+    arrow Redis MySQL 查询
+  @2
+    threads 8 zone=客户端 grow
+    badge ×N 40 160 pulse
+    meter 120 230 400 DB连接 grow max=100 pulse
+    arrow 客户端 MySQL 打穿
+
+step 布隆挡刀
+  frames 3
+  cap 请求先过布隆 | 不存在直接拦 | 可能存在再查缓存
+  @all
+    cols 客户端:30 Redis:310 MySQL:600
+    flow 620 50 请求|布隆过滤|挡掉!|查Redis
+  @0
+    buckets 16 80 130
+    arrow 客户端 Redis 查?
+  @1
+    line 50 120 114 130 stroke=red draw
+    box 40 145 100 36 label=拦截! stroke=red
+  @2
+    buckets 16 80 130 hi=5
+    arrow 客户端 Redis 放行
+    box 320 65 120 44 label=可能存在 stroke=green
+
+step 雪崩来袭
+  frames 3
+  cap 大批key同时过期 | 并发全部miss | DB连接池打满
+  @all
+    cols 客户端:30 Redis:310 MySQL:600
+  @0
+    box 200 55 90 40 label=k1 sub=0s stroke=red expired
+    box 310 55 90 40 label=k2 sub=0s stroke=red expired
+    box 420 55 90 40 label=k3 sub=0s stroke=red expired
+  @1
+    threads 10 zone=客户端 grow
+    arrow 客户端 Redis GET
+    arrow Redis MySQL 查询
+  @2
+    badge ×10000 600 140 pulse
+    meter 120 240 400 DB连接 grow max=100 pulse
+    lock 600 100
+
+step 三板斧
+  frames 2
+  cap 穿透用布隆 | 雪崩加抖动 | 击穿用互斥锁
+  @1
+    table 60 70 场景,手段,动画/穿透,布隆+空值,挡刀/雪崩,TTL抖动,过期/击穿,互斥锁,锁
+    compare 80 210 300 穿透|不存在key|布隆 vs 雪崩|批量过期|随机TTL
+  @1 L2
+    note 100 310 560 30 三概念面试必区分·击穿见击穿课

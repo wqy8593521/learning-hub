@@ -1,0 +1,62 @@
+# 死锁四条件 — VML
+lesson 死锁四条件
+tags Java, 并发, 死锁
+
+step 经典死锁
+  frames 4
+  cap T1拿锁A等B | T2拿锁B等A | 互相等待永不动
+  @all
+    cols 线程T1:200 锁A:350 锁B:500
+  @0
+    circle 200 80 9 fill=green
+    lock 350 70
+    text T1持A 220 86 fill=green
+  @1
+    circle 500 80 9 fill=orange
+    lock 500 70
+    text T2持B 520 86 fill=orange
+  @2
+    path M220 120 Q350 160 500 120 stroke=red draw
+    path M520 120 Q450 160 350 120 stroke=red draw
+    text 互等! 380 160 fill=red pulse
+  @3
+    state 300 运行,等锁,死锁,僵死
+    queue 380 220 4 filled=4 label=永久等待
+
+step 四条件
+  frames 4
+  cap 互斥资源独占 | 持有且等待 | 不可剥夺 | 循环等待
+  @all
+    flow 620 50 互斥|占有等待|不可剥夺|循环等待|→死锁
+  @0
+    lock 380 80
+    text ①互斥 380 130 fill=red
+  @1
+    circle 200 180 9 fill=green
+    lock 380 180
+    text ②占有等 380 230 fill=orange
+  @2
+    lock 380 230
+    text ③不可剥夺 380 280 fill=purple
+  @3
+    path M200 300 Q380 340 560 300 stroke=red draw
+    text ④循环等 380 330 fill=red pulse
+
+step 检测与预防
+  frames 3
+  cap 破坏任一条件即可 | 固定加锁顺序 | 超时tryLock
+  @0
+    compare 80 55 300 无序加锁|A→B和B→A|死锁 vs 固定顺序|都先A后B|安全
+  @1
+    timeline 100 T1锁A|T1锁B|T2等A|顺序通过
+    circle 200 200 9 fill=green
+  @2
+    codeblock 36 260 1 w=420 tryLock(timeout)|超时释放|重试
+
+step 排查工具
+  frames 2
+  cap jstack看线程栈 | 找BLOCKED互相等 | 图形化看循环链
+  @1
+    stack 100 70 main,service,lockA,waitB
+    stack 400 70 main,dao,lockB,waitA
+    callout 250 180 500 50 循环等待链

@@ -1,0 +1,53 @@
+# redis-five-types.quiz
+bank Redis 五大数据结构
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q String
+    style pick_one
+    ask Redis String 的 INCR 适合？
+    opt 原子计数
+    opt 存大文件
+    opt 图数据库
+    opt 事务回滚
+    answer 0
+    explain String 支持原子自增，常用于计数器、限流。
+
+  q Hash
+    style pick_one
+    ask 存储用户多个字段用哪种结构更合适？
+    opt Hash
+    opt List
+    opt Set
+    opt ZSet
+    answer 0
+    explain Hash 字段级读写，比整个 JSON String 更灵活省带宽。
+
+  q List
+    style pick_one
+    ask List 实现消息队列常用？
+    opt LPUSH + RPOP
+    opt GET + SET
+    opt HGETALL
+    opt ZRANGE
+    answer 0
+    explain 左进右出 FIFO；也可用 BRPOP 阻塞消费。
+
+  q Set与ZSet
+    style pick_one
+    ask 排行榜按分数排序用？
+    opt ZSet
+    opt Set
+    opt Hash
+    opt String
+    answer 0
+    explain ZSet 每个 member 带 score，支持范围排名。
+
+trigger
+  after_step 0 String
+  after_step 1 Hash
+  after_step 2 List
+  after_step 3 Set与ZSet
+  end pick 2

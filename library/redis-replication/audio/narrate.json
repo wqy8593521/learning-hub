@@ -1,0 +1,635 @@
+{
+  "version": 1,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generatedAt": "2026-07-01",
+  "clips": {
+    "0-0-0": {
+      "audio": "audio/s0-f0-d0.mp3",
+      "text": "Slave 启动后向 Master 发送 PSYNC 命令，请求同步数据。",
+      "duration": 6,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.608,
+          "text": "Slave 启动后向 Master 发送 PSYNC 命令"
+        },
+        {
+          "start": 4.608,
+          "end": 5.76,
+          "text": "请求同步数据"
+        }
+      ]
+    },
+    "0-0-1": {
+      "audio": "audio/s0-f0-d1.mp3",
+      "text": "首次连接走全量同步，之后尽量走增量同步。",
+      "duration": 4.848,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3270399999999998,
+          "text": "首次连接走全量同步"
+        },
+        {
+          "start": 2.3270399999999998,
+          "end": 4.6540799999999996,
+          "text": "之后尽量走增量同步"
+        }
+      ]
+    },
+    "0-0-2": {
+      "audio": "audio/s0-f0-d2.mp3",
+      "text": "首次连接走全量同步，之后尽量走增量同步。",
+      "duration": 4.848,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3270399999999998,
+          "text": "首次连接走全量同步"
+        },
+        {
+          "start": 2.3270399999999998,
+          "end": 4.6540799999999996,
+          "text": "之后尽量走增量同步"
+        }
+      ]
+    },
+    "0-1-0": {
+      "audio": "audio/s0-f1-d0.mp3",
+      "text": "Master 和 Slave 建立长连接，Master 持续把写命令推给 Slave。",
+      "duration": 5.928,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.68736,
+          "text": "Master 和 Slave 建立长连接"
+        },
+        {
+          "start": 2.68736,
+          "end": 5.69088,
+          "text": "Master 持续把写命令推给 Slave"
+        }
+      ]
+    },
+    "0-1-1": {
+      "audio": "audio/s0-f1-d1.mp3",
+      "text": "复制是异步的，Slave 数据可能略滞后于 Master。",
+      "duration": 4.656,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.0727423999999999,
+          "text": "复制是异步的"
+        },
+        {
+          "start": 1.0727423999999999,
+          "end": 4.46976,
+          "text": "Slave 数据可能略滞后于 Master"
+        }
+      ]
+    },
+    "0-1-2": {
+      "audio": "audio/s0-f1-d2.mp3",
+      "text": "复制是异步的，Slave 数据可能略滞后于 Master。",
+      "duration": 4.656,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.0727423999999999,
+          "text": "复制是异步的"
+        },
+        {
+          "start": 1.0727423999999999,
+          "end": 4.46976,
+          "text": "Slave 数据可能略滞后于 Master"
+        }
+      ]
+    },
+    "0-2-0": {
+      "audio": "audio/s0-f2-d0.mp3",
+      "text": "一主多从架构：Master 写，Slave 读，实现读写分离和故障备份。",
+      "duration": 6.528,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8302038709677415,
+          "text": "一主多从架构：Master 写"
+        },
+        {
+          "start": 2.8302038709677415,
+          "end": 4.043148387096774,
+          "text": "Slave 读"
+        },
+        {
+          "start": 4.043148387096774,
+          "end": 6.26688,
+          "text": "实现读写分离和故障备份"
+        }
+      ]
+    },
+    "0-2-1": {
+      "audio": "audio/s0-f2-d1.mp3",
+      "text": "从节点也可以再接从节点，形成链式复制减轻 Master 压力。",
+      "duration": 6.048,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3654399999999995,
+          "text": "从节点也可以再接从节点"
+        },
+        {
+          "start": 2.3654399999999995,
+          "end": 5.80608,
+          "text": "形成链式复制减轻 Master 压力"
+        }
+      ]
+    },
+    "0-2-2": {
+      "audio": "audio/s0-f2-d2.mp3",
+      "text": "从节点也可以再接从节点，形成链式复制减轻 Master 压力。",
+      "duration": 6.048,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3654399999999995,
+          "text": "从节点也可以再接从节点"
+        },
+        {
+          "start": 2.3654399999999995,
+          "end": 5.80608,
+          "text": "形成链式复制减轻 Master 压力"
+        }
+      ]
+    },
+    "1-0-0": {
+      "audio": "audio/s1-f0-d0.mp3",
+      "text": "首次同步或偏移量对不上时，Master 执行 BGSAVE 生成 RDB 快照。",
+      "duration": 6.624,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.3123781818181817,
+          "text": "首次同步或偏移量对不上时"
+        },
+        {
+          "start": 2.3123781818181817,
+          "end": 6.359039999999999,
+          "text": "Master 执行 BGSAVE 生成 RDB 快照"
+        }
+      ]
+    },
+    "1-0-1": {
+      "audio": "audio/s1-f0-d1.mp3",
+      "text": "生成期间新的写命令会缓存在 replication buffer 里。",
+      "duration": 5.04,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.8384,
+          "text": "生成期间新的写命令会缓存在 replication buffer 里"
+        }
+      ]
+    },
+    "1-0-2": {
+      "audio": "audio/s1-f0-d2.mp3",
+      "text": "生成期间新的写命令会缓存在 replication buffer 里。",
+      "duration": 5.04,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.8384,
+          "text": "生成期间新的写命令会缓存在 replication buffer 里"
+        }
+      ]
+    },
+    "1-1-0": {
+      "audio": "audio/s1-f1-d0.mp3",
+      "text": "RDB 文件发给 Slave，Slave 清空自己数据加载 RDB。",
+      "duration": 5.496,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2612114285714284,
+          "text": "RDB 文件发给 Slave"
+        },
+        {
+          "start": 2.2612114285714284,
+          "end": 5.276159999999999,
+          "text": "Slave 清空自己数据加载 RDB"
+        }
+      ]
+    },
+    "1-1-1": {
+      "audio": "audio/s1-f1-d1.mp3",
+      "text": "加载完再回放 buffer 里积累的命令，追上 Master。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1742030769230767,
+          "text": "加载完再回放 buffer 里积累的命令"
+        },
+        {
+          "start": 3.1742030769230767,
+          "end": 4.58496,
+          "text": "追上 Master"
+        }
+      ]
+    },
+    "1-1-2": {
+      "audio": "audio/s1-f1-d2.mp3",
+      "text": "加载完再回放 buffer 里积累的命令，追上 Master。",
+      "duration": 4.776,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.1742030769230767,
+          "text": "加载完再回放 buffer 里积累的命令"
+        },
+        {
+          "start": 3.1742030769230767,
+          "end": 4.58496,
+          "text": "追上 Master"
+        }
+      ]
+    },
+    "1-2-0": {
+      "audio": "audio/s1-f2-d0.mp3",
+      "text": "全量同步开销大，网络传输 rdb 期间 Master 内存和 IO 压力大。",
+      "duration": 6.768,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.516032,
+          "text": "全量同步开销大"
+        },
+        {
+          "start": 1.516032,
+          "end": 6.49728,
+          "text": "网络传输 rdb 期间 Master 内存和 IO 压力大"
+        }
+      ]
+    },
+    "1-2-1": {
+      "audio": "audio/s1-f2-d1.mp3",
+      "text": "所以要尽量避免频繁全量，靠增量同步和合理的 backlog。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2903466666666668,
+          "text": "所以要尽量避免频繁全量"
+        },
+        {
+          "start": 2.2903466666666668,
+          "end": 5.62176,
+          "text": "靠增量同步和合理的 backlog"
+        }
+      ]
+    },
+    "1-2-2": {
+      "audio": "audio/s1-f2-d2.mp3",
+      "text": "所以要尽量避免频繁全量，靠增量同步和合理的 backlog。",
+      "duration": 5.856,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.2903466666666668,
+          "text": "所以要尽量避免频繁全量"
+        },
+        {
+          "start": 2.2903466666666668,
+          "end": 5.62176,
+          "text": "靠增量同步和合理的 backlog"
+        }
+      ]
+    },
+    "1-3-0": {
+      "audio": "audio/s1-f3-d0.mp3",
+      "text": "Master bgsave RDB",
+      "duration": 2.232,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.14272,
+          "text": "Master bgsave RDB"
+        }
+      ]
+    },
+    "1-3-1": {
+      "audio": "audio/s1-f3-d1.mp3",
+      "text": "传RDB+缓冲命令",
+      "duration": 2.784,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.67264,
+          "text": "传RDB+缓冲命令"
+        }
+      ]
+    },
+    "1-3-2": {
+      "audio": "audio/s1-f3-d2.mp3",
+      "text": "Slave加载并回放",
+      "duration": 2.352,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.25792,
+          "text": "Slave加载并回放"
+        }
+      ]
+    },
+    "2-0-0": {
+      "audio": "audio/s2-f0-d0.mp3",
+      "text": "断线重连后，Slave 带上自己的复制偏移量请求 PSYNC。",
+      "duration": 5.976,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.0624,
+          "text": "断线重连后"
+        },
+        {
+          "start": 1.0624,
+          "end": 5.73696,
+          "text": "Slave 带上自己的复制偏移量请求 PSYNC"
+        }
+      ]
+    },
+    "2-0-1": {
+      "audio": "audio/s2-f0-d1.mp3",
+      "text": "如果偏移量还在 Master 的 replication backlog 缓冲区内，只传增量命令。",
+      "duration": 6.528,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.371611428571428,
+          "text": "如果偏移量还在 Master 的 replication backlog 缓冲区内"
+        },
+        {
+          "start": 5.371611428571428,
+          "end": 6.266879999999999,
+          "text": "只传增量命令"
+        }
+      ]
+    },
+    "2-0-2": {
+      "audio": "audio/s2-f0-d2.mp3",
+      "text": "如果偏移量还在 Master 的 replication backlog 缓冲区内，只传增量命令。",
+      "duration": 6.528,
+      "cues": [
+        {
+          "start": 0,
+          "end": 5.371611428571428,
+          "text": "如果偏移量还在 Master 的 replication backlog 缓冲区内"
+        },
+        {
+          "start": 5.371611428571428,
+          "end": 6.266879999999999,
+          "text": "只传增量命令"
+        }
+      ]
+    },
+    "2-1-0": {
+      "audio": "audio/s2-f1-d0.mp3",
+      "text": "增量同步快得多，不用重新传整个 RDB。",
+      "duration": 4.224,
+      "cues": [
+        {
+          "start": 0,
+          "end": 1.6697223529411764,
+          "text": "增量同步快得多"
+        },
+        {
+          "start": 1.6697223529411764,
+          "end": 4.05504,
+          "text": "不用重新传整个 RDB"
+        }
+      ]
+    },
+    "2-1-1": {
+      "audio": "audio/s2-f1-d1.mp3",
+      "text": "backlog 大小要配够，太小会导致频繁全量同步。",
+      "duration": 5.136,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.5724660869565215,
+          "text": "backlog 大小要配够"
+        },
+        {
+          "start": 2.5724660869565215,
+          "end": 4.93056,
+          "text": "太小会导致频繁全量同步"
+        }
+      ]
+    },
+    "2-1-2": {
+      "audio": "audio/s2-f1-d2.mp3",
+      "text": "backlog 大小要配够，太小会导致频繁全量同步。",
+      "duration": 5.136,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.5724660869565215,
+          "text": "backlog 大小要配够"
+        },
+        {
+          "start": 2.5724660869565215,
+          "end": 4.93056,
+          "text": "太小会导致频繁全量同步"
+        }
+      ]
+    },
+    "2-2-0": {
+      "audio": "audio/s2-f2-d0.mp3",
+      "text": "偏移量对不上说明落后太多，只能退化为全量同步。",
+      "duration": 5.184,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.8437942857142855,
+          "text": "偏移量对不上说明落后太多"
+        },
+        {
+          "start": 2.8437942857142855,
+          "end": 4.97664,
+          "text": "只能退化为全量同步"
+        }
+      ]
+    },
+    "2-2-1": {
+      "audio": "audio/s2-f2-d1.mp3",
+      "text": "理解全量和增量的切换条件是复制原理的核心。",
+      "duration": 4.632,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.446719999999999,
+          "text": "理解全量和增量的切换条件是复制原理的核心"
+        }
+      ]
+    },
+    "2-2-2": {
+      "audio": "audio/s2-f2-d2.mp3",
+      "text": "理解全量和增量的切换条件是复制原理的核心。",
+      "duration": 4.632,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.446719999999999,
+          "text": "理解全量和增量的切换条件是复制原理的核心"
+        }
+      ]
+    },
+    "3-0-0": {
+      "audio": "audio/s3-f0-d0.mp3",
+      "text": "Sentinel 集群监控 Master 和 Slave 的健康，Master 宕机时自动故障转移。",
+      "duration": 6.888,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.25088,
+          "text": "Sentinel 集群监控 Master 和 Slave 的健康"
+        },
+        {
+          "start": 4.25088,
+          "end": 6.612480000000001,
+          "text": "Master 宕机时自动故障转移"
+        }
+      ]
+    },
+    "3-0-1": {
+      "audio": "audio/s3-f0-d1.mp3",
+      "text": "多个 Sentinel 投票选举，避免脑裂误判。",
+      "duration": 3.912,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.6288639999999996,
+          "text": "多个 Sentinel 投票选举"
+        },
+        {
+          "start": 2.6288639999999996,
+          "end": 3.7555199999999997,
+          "text": "避免脑裂误判"
+        }
+      ]
+    },
+    "3-0-2": {
+      "audio": "audio/s3-f0-d2.mp3",
+      "text": "多个 Sentinel 投票选举，避免脑裂误判。",
+      "duration": 3.912,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.6288639999999996,
+          "text": "多个 Sentinel 投票选举"
+        },
+        {
+          "start": 2.6288639999999996,
+          "end": 3.7555199999999997,
+          "text": "避免脑裂误判"
+        }
+      ]
+    },
+    "3-1-0": {
+      "audio": "audio/s3-f1-d0.mp3",
+      "text": "选一个 Slave 提升为新 Master，其他 Slave 改复制新 Master。",
+      "duration": 5.4,
+      "cues": [
+        {
+          "start": 0,
+          "end": 2.6660571428571425,
+          "text": "选一个 Slave 提升为新 Master"
+        },
+        {
+          "start": 2.6660571428571425,
+          "end": 5.183999999999999,
+          "text": "其他 Slave 改复制新 Master"
+        }
+      ]
+    },
+    "3-1-1": {
+      "audio": "audio/s3-f1-d1.mp3",
+      "text": "客户端通过 Sentinel 获取当前 Master 地址，实现自动切换。",
+      "duration": 5.976,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.62658064516129,
+          "text": "客户端通过 Sentinel 获取当前 Master 地址"
+        },
+        {
+          "start": 4.62658064516129,
+          "end": 5.73696,
+          "text": "实现自动切换"
+        }
+      ]
+    },
+    "3-1-2": {
+      "audio": "audio/s3-f1-d2.mp3",
+      "text": "客户端通过 Sentinel 获取当前 Master 地址，实现自动切换。",
+      "duration": 5.976,
+      "cues": [
+        {
+          "start": 0,
+          "end": 4.62658064516129,
+          "text": "客户端通过 Sentinel 获取当前 Master 地址"
+        },
+        {
+          "start": 4.62658064516129,
+          "end": 5.73696,
+          "text": "实现自动切换"
+        }
+      ]
+    },
+    "3-2-0": {
+      "audio": "audio/s3-f2-d0.mp3",
+      "text": "主从复制加哨兵是高可用标配，但复制是异步的，切换可能丢最后几条写。",
+      "duration": 7.344,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.055104,
+          "text": "主从复制加哨兵是高可用标配"
+        },
+        {
+          "start": 3.055104,
+          "end": 4.70016,
+          "text": "但复制是异步的"
+        },
+        {
+          "start": 4.70016,
+          "end": 7.0502400000000005,
+          "text": "切换可能丢最后几条写"
+        }
+      ]
+    },
+    "3-2-1": {
+      "audio": "audio/s3-f2-d1.mp3",
+      "text": "要更强一致性需要集群或半同步机制。",
+      "duration": 4.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.96288,
+          "text": "要更强一致性需要集群或半同步机制"
+        }
+      ]
+    },
+    "3-2-2": {
+      "audio": "audio/s3-f2-d2.mp3",
+      "text": "要更强一致性需要集群或半同步机制。",
+      "duration": 4.128,
+      "cues": [
+        {
+          "start": 0,
+          "end": 3.96288,
+          "text": "要更强一致性需要集群或半同步机制"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+# ArrayList vs LinkedList — VML
+lesson ArrayList vs LinkedList
+tags Java, 集合, 后端八股
+
+step 底层结构
+  frames 3
+  cap ArrayList连续数组 | LinkedList双向链表 | 内存布局完全不同
+  @0
+    buckets 8 80 130
+    text 连续内存 380 50 fill=green
+  @1
+    tree list 380 90 6
+    text 节点分散 380 50 fill=orange
+  @2
+    compare 80 200 300 ArrayList|数组|连续 vs LinkedList|链表|节点
+
+step 随机访问
+  frames 3
+  cap 数组下标O(1)直达 | 链表要从头遍历 | get(index)差很大
+  @all
+    cols ArrayList:200 LinkedList:500
+  @0
+    line 200 130 280 130 stroke=green draw
+    text arr[3] 220 140 fill=green
+    math 200 180 "O(1)"
+  @1
+    path M500 130 Q560 160 620 190 stroke=orange draw
+    path M620 190 Q560 220 500 250 stroke=orange draw
+    math 500 280 "O(n)"
+  @2
+    meter 200 200 120 ArrayList grow max=100
+    meter 500 200 120 LinkedList grow max=20
+
+step 头尾插入
+  frames 3
+  cap 数组尾部摊还O(1) | 头部插入要搬移 | 链表头插O(1)
+  @all
+    cols 尾部:30 数组:310
+  @0
+    buckets 8 80 130
+    arrow 尾部 数组 追加
+    text 尾部快 220 200 fill=green
+  @1
+    path M114 130 Q60 100 114 70 stroke=red draw
+    text 头部搬移 220 200 fill=red pulse
+  @2
+    tree list 380 90 4
+    circle 380 70 8 fill=green
+    text 头插O(1) 380 200 fill=green
+
+step 选型结论
+  frames 2
+  cap 查多用ArrayList | 头尾插多用LinkedList | 实际ArrayList更常见
+  @1
+    table 60 80 操作,Array,Linked/get(i),O(1),O(n)/头插,O(n),O(1)/尾插,O(1),O(1)
+    flow 620 50 查多?|ArrayList|头插多?|LinkedList|默认ArrayList

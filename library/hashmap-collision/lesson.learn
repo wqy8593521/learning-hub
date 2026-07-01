@@ -1,0 +1,73 @@
+# HashMap 冲突 — VML
+lesson HashMap 冲突
+tags Java, HashMap, 集合
+
+step hash计算
+  frames 2
+  cap put算出hashCode | 扰动h^(h>>>16) | 相同hash不同key可碰撞
+  @0
+    label key→hash 380 28
+    box 120 50 140 56 label="Aa" stroke=blue
+    box 310 50 120 56 sub=? stroke=warn opacity=0.4
+  @1
+    box 120 50 140 56 label="Aa" stroke=blue
+    line 260 78 310 78 stroke=blue draw
+    box 310 50 120 56 sub=2112 stroke=warn
+    box 120 130 140 56 label="BB" stroke=blue
+    line 260 158 310 158 stroke=blue draw
+    text 2112相同! 370 156 pulse fill=red
+  @1 L1
+    note 460 55 200 50 hash=h^(h>>>16)扰动
+  @1 L2
+    note 100 220 560 48 equals相同则hashCode必同·不保证唯一
+
+step 定位桶
+  frames 2
+  cap hash落到数组格 | index=hash&(n-1) | n为2幂等价取模
+  @0
+    label table[] length=16 380 28
+    box 200 42 160 44 sub=hash=2112 stroke=warn
+    text &(n-1)→? 380 62 fill=muted
+    buckets 16 80 130
+  @1
+    text 2112&15=0 380 62 fade fill=green
+    line 360 86 114 130 stroke=green draw
+    buckets 16 80 130 hi=0
+  @1 L1
+    text n为2幂→位与等价取模 380 290 fill=lyellow
+  @1 L2
+    note 120 305 520 30 (n-1)掩码保留低log₂(n)位
+
+step 链表冲突
+  frames 3
+  cap 同桶再put挂链表 | 头插法新节点在前 | get用equals比对
+  @0
+    label bucket[0]冲突链 380 28
+    chain "Aa"
+  @1
+    chain "Aa" "BB"
+  @2
+    chain "Aa" "BB" "CC"
+    text 3个key挤同桶 380 220 pulse fill=red
+  @1+ L1
+    note 80 240 600 40 冲突用链表·最坏O(n)查找
+  @2 L2
+    note 80 290 600 38 get:hash定位桶→链表equals(k)
+
+step 树化扩容
+  frames 3
+  cap 链表8节点查找慢 | ≥8转红黑树 | 扩容2倍rehash
+  @0
+    label 链表阶段 380 28
+    tree list 380 100 8
+  @1
+    label 树化 380 28
+    tree rb 380 110
+  @2
+    label 扩容rehash 380 28
+    text 16桶→32桶 380 80 fade fill=green
+    text 冲突分散 380 200 fill=lgreen
+  @1 L1
+    text 条件:链≥8且cap≥64 380 250 fill=lyellow
+  @2 L2
+    note 100 270 560 40 loadFactor=0.75·index=hash&(newCap-1)

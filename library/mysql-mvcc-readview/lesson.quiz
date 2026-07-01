@@ -1,0 +1,49 @@
+# mysql-mvcc-readview.quiz
+bank MVCC 与 ReadView
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 行多版本
+    style pick_one
+    ask InnoDB 多版本数据存在哪？
+    opt undo log 版本链
+    opt binlog
+    opt redo log
+    opt 临时表
+    answer 0
+    explain roll_ptr 指向 undo，沿链回溯历史版本。
+
+  q ReadView生成
+    style pick_one
+    ask ReadView 的 m_ids 表示？
+    opt 生成时刻活跃未提交事务 ID 集合
+    opt 所有历史事务
+    opt 已提交事务
+    opt 锁等待队列
+    answer 0
+    explain 用活跃事务判断行版本是否对当前读可见。
+
+  q 可见性判断
+    style pick_one
+    ask RR 与 RC 在 ReadView 上的区别？
+    opt RR 事务内复用同一快照，RC 每次读新建
+    opt 完全相同
+    opt RC 加锁更多
+    opt RR 不用 MVCC
+    answer 0
+    explain RC 语句级快照；RR 事务级快照，配合间隙锁防幻读。
+
+  q 当前读
+    style true_false
+    ask SELECT ... FOR UPDATE 属于当前读，会加锁
+    true
+    explain 当前读读最新版本并加锁，不走快照 MVCC。
+
+trigger
+  after_step 0 行多版本
+  after_step 1 ReadView生成
+  after_step 2 可见性判断
+  after_step 3 当前读
+  end pick 2

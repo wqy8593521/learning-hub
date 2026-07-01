@@ -1,0 +1,49 @@
+# spring-ioc-di.quiz
+bank Spring IOC 注入
+shuffle pool
+shuffle options
+pick 1
+
+pool
+  q 容器启动
+    style pick_one
+    ask Spring 启动时首先做什么？
+    opt 扫描并注册 BeanDefinition
+    opt 直接 new 所有对象
+    opt 连接数据库
+    opt 启动 Tomcat
+    answer 0
+    explain 组件扫描 → 解析元数据 → 注册 BeanDefinition → 实例化。
+
+  q 依赖注入
+    style pick_one
+    ask @Autowired 默认按什么注入？
+    opt 按类型 type
+    opt 按名称 name
+    opt 随机
+    opt 按包名
+    answer 0
+    explain 默认 byType，多个候选配合 @Qualifier。
+
+  q 循环依赖
+    style pick_one
+    ask 三级缓存主要解决？
+    opt 单例 Bean 的循环依赖
+    opt prototype 循环依赖
+    opt 多线程竞争
+    opt SQL 注入
+    answer 0
+    explain 单例 setter/字段注入可通过提前暴露半成品解决；prototype 不行。
+
+  q 作用域
+    style true_false
+    ask @Scope("prototype") 每次 getBean 创建新实例
+    true
+    explain prototype 非单例，每次获取新建。
+
+trigger
+  after_step 0 容器启动
+  after_step 1 依赖注入
+  after_step 2 循环依赖
+  after_step 3 作用域
+  end pick 2
